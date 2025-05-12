@@ -1,0 +1,93 @@
+[{
+  "_id": {
+    "$oid": "6817f08c4ad0ba5692ff8d9e"
+  },
+  "nombre": "Boda en Jardines del Hotel",
+  "descripcion": "Ceremonia de matrimonio al aire libre con recepción incluida",
+  "fecha": {
+    "$date": "2025-07-05T16:00:00.000Z"
+  },
+  "servicios": [
+    {
+      "$oid": "6817e257d22118c9e111d949"
+    },
+    {
+      "$oid": "6817e25ed22118c9e111d94c"
+    },
+    {
+      "$oid": "6817e269d22118c9e111d94f"
+    }
+  ],
+  "hotel": {
+    "$oid": "6817d28c3c3d3be5d2bb69ef"
+  },
+  "status": "ACTIVO",
+  "createdAt": {
+    "$date": "2025-05-04T22:56:12.608Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-04T22:56:12.608Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6817f0f44ad0ba5692ff8da2"
+  },
+  "nombre": "Retiro Corporativo",
+  "descripcion": "Jornadas de integración y capacitación para empleados",
+  "fecha": {
+    "$date": "2025-08-10T10:00:00.000Z"
+  },
+  "servicios": [
+    {
+      "$oid": "6817e272d22118c9e111d952"
+    },
+    {
+      "$oid": "6817e279d22118c9e111d955"
+    },
+    {
+      "$oid": "6817e27fd22118c9e111d958"
+    }
+  ],
+  "hotel": {
+    "$oid": "6817d30d3c3d3be5d2bb69f2"
+  },
+  "status": "ACTIVO",
+  "createdAt": {
+    "$date": "2025-05-04T22:57:56.408Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-04T22:57:56.408Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6817f2334ad0ba5692ff8da9"
+  },
+  "nombre": "Conferencia Ejecutiva",
+  "descripcion": "Evento empresarial para ejecutivos de alto nivel",
+  "fecha": {
+    "$date": "2025-06-20T09:00:00.000Z"
+  },
+  "servicios": [
+    {
+      "$oid": "6817e237d22118c9e111d940"
+    },
+    {
+      "$oid": "6817e247d22118c9e111d943"
+    },
+    {
+      "$oid": "6817e24ed22118c9e111d946"
+    }
+  ],
+  "hotel": {
+    "$oid": "6817d4dd3c3d3be5d2bb6a06"
+  },
+  "status": "ACTIVO",
+  "createdAt": {
+    "$date": "2025-05-04T23:03:15.097Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-04T23:03:15.097Z"
+  }
+}]

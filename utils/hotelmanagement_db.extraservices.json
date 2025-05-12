@@ -1,0 +1,216 @@
+[{
+  "_id": {
+    "$oid": "6817de1750f1fcb2508c233a"
+  },
+  "name": "Parqueo VIP",
+  "description": "Espacio de parqueo exclusivo con seguridad 24/7",
+  "cost": 15,
+  "hotel": {
+    "$oid": "6817d2653c3d3be5d2bb69ec"
+  },
+  "status": true,
+  "createdAt": {
+    "$date": "2025-05-04T21:37:27.163Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-04T21:37:27.163Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6817de3150f1fcb2508c233e"
+  },
+  "name": "Desayuno Buffet",
+  "description": "Desayuno completo estilo buffet servido cada mañana",
+  "cost": 10,
+  "hotel": {
+    "$oid": "6817d2653c3d3be5d2bb69ec"
+  },
+  "status": true,
+  "createdAt": {
+    "$date": "2025-05-04T21:37:53.353Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-04T21:37:53.353Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6817de3b50f1fcb2508c2342"
+  },
+  "name": "Spa & Masajes",
+  "description": "Acceso al spa con servicio de masajes relajantes",
+  "cost": 30,
+  "hotel": {
+    "$oid": "6817d2653c3d3be5d2bb69ec"
+  },
+  "status": true,
+  "createdAt": {
+    "$date": "2025-05-04T21:38:03.266Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-04T21:38:03.266Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6817de6c50f1fcb2508c2346"
+  },
+  "name": "Transporte al Aeropuerto",
+  "description": "Servicio de transporte privado desde/hacia el aeropuerto",
+  "cost": 20,
+  "hotel": {
+    "$oid": "6817d28c3c3d3be5d2bb69ef"
+  },
+  "status": true,
+  "createdAt": {
+    "$date": "2025-05-04T21:38:52.699Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-04T21:38:52.699Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6817de7e50f1fcb2508c234a"
+  },
+  "name": "Gimnasio Premium",
+  "description": "Acceso ilimitado al gimnasio del hotel con entrenador personal",
+  "cost": 12,
+  "hotel": {
+    "$oid": "6817d28c3c3d3be5d2bb69ef"
+  },
+  "status": true,
+  "createdAt": {
+    "$date": "2025-05-04T21:39:10.164Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-04T21:39:10.164Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6817de8350f1fcb2508c234e"
+  },
+  "name": "Servicio a la Habitación",
+  "description": "Comida y bebidas entregadas directamente en la habitación",
+  "cost": 8,
+  "hotel": {
+    "$oid": "6817d28c3c3d3be5d2bb69ef"
+  },
+  "status": true,
+  "createdAt": {
+    "$date": "2025-05-04T21:39:15.125Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-04T21:39:15.125Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6817de9950f1fcb2508c2352"
+  },
+  "name": "Alquiler de Bicicletas",
+  "description": "Bicicletas disponibles para recorrer los alrededores del hotel",
+  "cost": 5,
+  "hotel": {
+    "$oid": "6817d30d3c3d3be5d2bb69f2"
+  },
+  "status": true,
+  "createdAt": {
+    "$date": "2025-05-04T21:39:37.886Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-04T21:39:37.886Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6817dea750f1fcb2508c2356"
+  },
+  "name": "Cena Gourmet",
+  "description": "Cena de alta cocina preparada por chef internacional",
+  "cost": 25,
+  "hotel": {
+    "$oid": "6817d30d3c3d3be5d2bb69f2"
+  },
+  "status": true,
+  "createdAt": {
+    "$date": "2025-05-04T21:39:51.098Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-04T21:39:51.098Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6817deb150f1fcb2508c235a"
+  },
+  "name": "Tour Turístico",
+  "description": "Excursión guiada a los principales puntos turísticos de la zona",
+  "cost": 18,
+  "hotel": {
+    "$oid": "6817d30d3c3d3be5d2bb69f2"
+  },
+  "status": true,
+  "createdAt": {
+    "$date": "2025-05-04T21:40:01.861Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-04T21:40:01.861Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6817e05950f1fcb2508c235e"
+  },
+  "name": "Lavandería Express",
+  "description": "Lavado y planchado de ropa en menos de 24 horas",
+  "cost": 7,
+  "hotel": {
+    "$oid": "6817d4dd3c3d3be5d2bb6a06"
+  },
+  "status": true,
+  "createdAt": {
+    "$date": "2025-05-04T21:47:05.786Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-04T21:47:05.786Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6817e06b8ac79398f5e5abec"
+  },
+  "name": "Minibar Ilimitado",
+  "description": "Acceso libre a bebidas y snacks en el minibar de la habitación",
+  "cost": 22,
+  "hotel": {
+    "$oid": "6817d4dd3c3d3be5d2bb6a06"
+  },
+  "status": true,
+  "createdAt": {
+    "$date": "2025-05-04T21:47:23.717Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-04T21:47:23.717Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6817e074d22118c9e111d93b"
+  },
+  "name": "Servicio de Niñera",
+  "description": "Cuidado infantil por personal calificado durante tu estadía",
+  "cost": 15,
+  "hotel": {
+    "$oid": "6817d4dd3c3d3be5d2bb6a06"
+  },
+  "status": true,
+  "createdAt": {
+    "$date": "2025-05-04T21:47:32.569Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-04T21:47:32.569Z"
+  }
+}]

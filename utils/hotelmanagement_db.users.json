@@ -1,0 +1,112 @@
+[{
+  "_id": {
+    "$oid": "6817c274f87c5b24440f2a5b"
+  },
+  "email": "admin1@hotel.com",
+  "name": "Carlos",
+  "password": "$argon2id$v=19$m=65536,t=3,p=4$3m7atrsk6xUAeFpK0/+UJA$95i9K8z9UGzlhDXDir3Xz0q9q0r91Oh3vUPQam59aeo",
+  "phone": "11112222",
+  "profilePicture": "Usuario-1746390666148.png",
+  "role": "ADMIN_ROLE",
+  "status": true,
+  "surname": "PARA PRUEBASz",
+  "username": "adminhotel1"
+},
+{
+  "_id": {
+    "$oid": "6817c274f87c5b24440f2a5c"
+  },
+  "email": "admin2@hotel.com",
+  "name": "Laura",
+  "password": "$argon2id$v=19$m=65536,t=3,p=4$ha51vZbHV1xA2iwESM3pig$+dut3EBXs1I6UhqDtjjQfmzoW2too7fiXohiriHPCSc",
+  "phone": "22223333",
+  "profilePicture": null,
+  "role": "HOTEL_ADMIN_ROLE",
+  "status": true,
+  "surname": "PARA PRUEBAS",
+  "username": "adminhotel2"
+},
+{
+  "_id": {
+    "$oid": "6817c274f87c5b24440f2a5d"
+  },
+  "email": "user1@hotel.com",
+  "name": "Pedro",
+  "password": "$argon2id$v=19$m=65536,t=3,p=4$ha51vZbHV1xA2iwESM3pig$+dut3EBXs1I6UhqDtjjQfmzoW2too7fiXohiriHPCSc",
+  "phone": "33334444",
+  "profilePicture": null,
+  "role": "HOTEL_ADMIN_ROLE",
+  "status": true,
+  "surname": "PARA PRUEBAS",
+  "username": "usuario1"
+},
+{
+  "_id": {
+    "$oid": "6817c4690e4675677cbea779"
+  },
+  "name": "Carlos",
+  "surname": "Perez",
+  "username": "Cperez",
+  "email": "cperez@gmail.com",
+  "password": "$argon2id$v=19$m=65536,t=3,p=4$ha51vZbHV1xA2iwESM3pig$+dut3EBXs1I6UhqDtjjQfmzoW2too7fiXohiriHPCSc",
+  "profilePicture": "Usuario-1746388073331.png",
+  "phone": "45147458",
+  "role": "USER_ROLE",
+  "status": true
+},
+{
+  "_id": {
+    "$oid": "6817c4a80e4675677cbea77d"
+  },
+  "name": "Emanuel",
+  "surname": "Lopez",
+  "username": "Emanuel Lopez",
+  "email": "emanuel@gmail.com",
+  "password": "$argon2id$v=19$m=65536,t=3,p=4$zH+FXIoZGyZ9HkOi49L4vA$oqglbGP0CKDPcW1tMrNEgLfLQ44E0u3D4EXdWUiykQ0",
+  "profilePicture": "Usuario-1746388136493.png",
+  "phone": "74851245",
+  "role": "USER_ROLE",
+  "status": true
+},
+{
+  "_id": {
+    "$oid": "6817c51f0e4675677cbea781"
+  },
+  "name": "Josue ",
+  "surname": "Perez",
+  "username": "Jperez",
+  "email": "JPcorreo@gmail.com",
+  "password": "$argon2id$v=19$m=65536,t=3,p=4$ha51vZbHV1xA2iwESM3pig$+dut3EBXs1I6UhqDtjjQfmzoW2too7fiXohiriHPCSc",
+  "profilePicture": "Usuario-1746388255330.png",
+  "phone": "52147693",
+  "role": "USER_ROLE",
+  "status": true
+},
+{
+  "_id": {
+    "$oid": "6817cbd8a1c7cacb1bc7c8dc"
+  },
+  "name": "Gabriela",
+  "surname": "Monterrozo",
+  "username": "Gmonterro",
+  "email": "gaby@gmail.com",
+  "password": "$argon2id$v=19$m=65536,t=3,p=4$ha51vZbHV1xA2iwESM3pig$+dut3EBXs1I6UhqDtjjQfmzoW2too7fiXohiriHPCSc",
+  "profilePicture": "Usuario-1746389976727.png",
+  "phone": "74589612",
+  "role": "USER_ROLE",
+  "status": true
+},
+{
+  "_id": {
+    "$oid": "6817cd1aa1c7cacb1bc7c8ec"
+  },
+  "name": "Daniel",
+  "surname": "Bolivar",
+  "username": "Boli",
+  "email": "danyCd@gmail.com",
+  "password": "$argon2id$v=19$m=65536,t=3,p=4$+nxZjnvns7l2QS+wzjX5+Q$15dMFbOP0+ED/i9dcpEL8O3ew3GihdVZjQXKcO47wv4",
+  "profilePicture": "Usuario-1746390298559.png",
+  "phone": "78547136",
+  "role": "USER_ROLE",
+  "status": true
+}]

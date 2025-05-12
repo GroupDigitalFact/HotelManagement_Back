@@ -1,0 +1,168 @@
+[{
+  "_id": {
+    "$oid": "6817c274f87c5b24440f2a58"
+  },
+  "name": "Alquiler de Sillas",
+  "createdAt": {
+    "$date": "2025-05-04T19:39:32.568Z"
+  },
+  "description": "Servicio de alquiler de sillas para eventos corporativos y sociales.",
+  "status": true,
+  "updatedAt": {
+    "$date": "2025-05-05T00:04:23.817Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6817c274f87c5b24440f2a59"
+  },
+  "name": "Alquiler de Mesas",
+  "createdAt": {
+    "$date": "2025-05-04T19:39:32.656Z"
+  },
+  "description": "Servicio de alquiler de mesas para recepciones y banquetes.",
+  "status": true,
+  "updatedAt": {
+    "$date": "2025-05-05T00:04:23.874Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6817c274f87c5b24440f2a5a"
+  },
+  "name": "Sistema de Sonido Profesional",
+  "createdAt": {
+    "$date": "2025-05-04T19:39:32.701Z"
+  },
+  "description": "Servicio de alquiler de sistema de sonido de alta calidad para eventos.",
+  "status": true,
+  "updatedAt": {
+    "$date": "2025-05-05T00:04:23.898Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6817e237d22118c9e111d940"
+  },
+  "name": "Servicio de Spa Actualizado",
+  "description": "Acceso completo al spa del hotel",
+  "status": true,
+  "createdAt": {
+    "$date": "2025-05-04T21:55:03.175Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-04T21:59:53.589Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6817e247d22118c9e111d943"
+  },
+  "name": "Coffee Break Ejecutivo",
+  "description": "Servicio de café, té, bocadillos y pasteles para los asistentes",
+  "status": true,
+  "createdAt": {
+    "$date": "2025-05-04T21:55:19.533Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-04T21:55:19.533Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6817e24ed22118c9e111d946"
+  },
+  "name": "Traducción Simultánea",
+  "description": "Equipo de traducción en tiempo real para participantes internacionales",
+  "status": true,
+  "createdAt": {
+    "$date": "2025-05-04T21:55:26.853Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-04T21:55:26.853Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6817e257d22118c9e111d949"
+  },
+  "name": "Decoración Floral",
+  "description": "Servicio completo de flores y decoración temática para la ceremonia",
+  "status": true,
+  "createdAt": {
+    "$date": "2025-05-04T21:55:35.236Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-04T21:55:35.236Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6817e25ed22118c9e111d94c"
+  },
+  "name": "Banquete Nupcial",
+  "description": "Cena formal con opciones personalizadas para los invitados",
+  "status": true,
+  "createdAt": {
+    "$date": "2025-05-04T21:55:42.332Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-04T21:55:42.332Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6817e269d22118c9e111d94f"
+  },
+  "name": "Fotografía Profesional",
+  "description": "Cobertura fotográfica del evento por fotógrafos especializados en bodas",
+  "status": true,
+  "createdAt": {
+    "$date": "2025-05-04T21:55:53.278Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-04T21:55:53.278Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6817e272d22118c9e111d952"
+  },
+  "name": "Taller de Team Building",
+  "description": "Actividades organizadas para fortalecer el trabajo en equipo",
+  "status": true,
+  "createdAt": {
+    "$date": "2025-05-04T21:56:02.000Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-04T21:56:02.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6817e279d22118c9e111d955"
+  },
+  "name": "Almuerzo Ejecutivo",
+  "description": "Menú ejecutivo servido durante el retiro",
+  "status": true,
+  "createdAt": {
+    "$date": "2025-05-04T21:56:09.304Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-04T21:56:09.304Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6817e27fd22118c9e111d958"
+  },
+  "name": "Transporte Privado",
+  "description": "Traslado de ida y vuelta para el grupo corporativo",
+  "status": true,
+  "createdAt": {
+    "$date": "2025-05-04T21:56:15.580Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-04T21:56:15.580Z"
+  }
+}]

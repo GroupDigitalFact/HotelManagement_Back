@@ -1,0 +1,94 @@
+[{
+  "_id": {
+    "$oid": "6817d2653c3d3be5d2bb69ec"
+  },
+  "name": "Hotel San Miguel",
+  "address": "Ciudad de Guatemala zona 13 1av-2calle",
+  "qualification": "5 estrellas",
+  "category": "Lujoso",
+  "amenities": [
+    "Piscina",
+    "WiFi",
+    "Desayuno incluido"
+  ],
+  "admin": {
+    "$oid": "6817c274f87c5b24440f2a5d"
+  },
+  "status": true,
+  "createdAt": {
+    "$date": "2025-05-04T20:47:33.994Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-04T20:47:33.994Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6817d28c3c3d3be5d2bb69ef"
+  },
+  "name": "Hotel Flamingo",
+  "address": "Ciudad de Guatemala zona 10 1av-2calle",
+  "qualification": "4 estrellas",
+  "category": "Estandar",
+  "amenities": [
+    "Piscina",
+    "WiFi",
+    "Desayuno incluido"
+  ],
+  "admin": {
+    "$oid": "6817c274f87c5b24440f2a5d"
+  },
+  "status": true,
+  "createdAt": {
+    "$date": "2025-05-04T20:48:12.728Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-04T20:48:12.728Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6817d30d3c3d3be5d2bb69f2"
+  },
+  "name": "Hotel Paraíso",
+  "address": "Nueva dirección, Zona 14",
+  "qualification": "5 estrellas",
+  "category": "Boutique",
+  "amenities": [
+    "Spa",
+    "Restaurante gourmet",
+    "WiFi rápido"
+  ],
+  "admin": {
+    "$oid": "6817c274f87c5b24440f2a5c"
+  },
+  "status": true,
+  "createdAt": {
+    "$date": "2025-05-04T20:50:21.027Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-04T20:54:48.016Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6817d4dd3c3d3be5d2bb6a06"
+  },
+  "name": "Hotel las palmas",
+  "address": "Ciudad de Guatemala zona 1 1av-2calle",
+  "qualification": "3 estrellas",
+  "category": "Económico",
+  "amenities": [
+    "Desayuno incluido"
+  ],
+  "admin": {
+    "$oid": "6817c274f87c5b24440f2a5c"
+  },
+  "status": true,
+  "createdAt": {
+    "$date": "2025-05-04T20:58:05.046Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-04T20:58:05.046Z"
+  }
+}]

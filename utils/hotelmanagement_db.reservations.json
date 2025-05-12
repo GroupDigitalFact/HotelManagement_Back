@@ -1,0 +1,298 @@
+[{
+  "_id": {
+    "$oid": "6817f6304ad0ba5692ff8dbf"
+  },
+  "user": {
+    "$oid": "6817cd1aa1c7cacb1bc7c8ec"
+  },
+  "room": {
+    "$oid": "6817d85750f1fcb2508c22a2"
+  },
+  "dateEntry": {
+    "$date": "2025-05-05T06:00:00.000Z"
+  },
+  "departureDate": {
+    "$date": "2025-05-10T06:00:00.000Z"
+  },
+  "state": "activa",
+  "extraServices": [
+    {
+      "$oid": "6817de1750f1fcb2508c233a"
+    }
+  ],
+  "cardNumber": "1234567812345678",
+  "CVV": "123",
+  "expired": {
+    "$date": "2025-01-04T06:00:00.000Z"
+  },
+  "createdAt": {
+    "$date": "2025-05-04T23:20:16.953Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-04T23:20:16.953Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6817f6674ad0ba5692ff8dc5"
+  },
+  "user": {
+    "$oid": "6817cd1aa1c7cacb1bc7c8ec"
+  },
+  "room": {
+    "$oid": "6817d86a50f1fcb2508c22a7"
+  },
+  "dateEntry": {
+    "$date": "2025-05-05T06:00:00.000Z"
+  },
+  "departureDate": {
+    "$date": "2025-05-10T06:00:00.000Z"
+  },
+  "state": "activa",
+  "extraServices": [
+    {
+      "$oid": "6817de3150f1fcb2508c233e"
+    }
+  ],
+  "cardNumber": "1234567812345678",
+  "CVV": "123",
+  "expired": {
+    "$date": "2025-01-04T06:00:00.000Z"
+  },
+  "createdAt": {
+    "$date": "2025-05-04T23:21:11.357Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-04T23:21:11.357Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6817f6a04ad0ba5692ff8dcb"
+  },
+  "user": {
+    "$oid": "6817cd1aa1c7cacb1bc7c8ec"
+  },
+  "room": {
+    "$oid": "6817d87d50f1fcb2508c22ac"
+  },
+  "dateEntry": {
+    "$date": "2025-05-05T06:00:00.000Z"
+  },
+  "departureDate": {
+    "$date": "2025-05-10T06:00:00.000Z"
+  },
+  "state": "activa",
+  "extraServices": [
+    {
+      "$oid": "6817de3b50f1fcb2508c2342"
+    }
+  ],
+  "cardNumber": "1234567812345678",
+  "CVV": "123",
+  "expired": {
+    "$date": "2025-01-04T06:00:00.000Z"
+  },
+  "createdAt": {
+    "$date": "2025-05-04T23:22:08.200Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-04T23:22:08.200Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6817f6f74ad0ba5692ff8dd4"
+  },
+  "user": {
+    "$oid": "6817cbd8a1c7cacb1bc7c8dc"
+  },
+  "room": {
+    "$oid": "6817d88850f1fcb2508c22b1"
+  },
+  "dateEntry": {
+    "$date": "2025-05-05T06:00:00.000Z"
+  },
+  "departureDate": {
+    "$date": "2025-05-10T06:00:00.000Z"
+  },
+  "state": "activa",
+  "extraServices": [
+    {
+      "$oid": "6817de3150f1fcb2508c233e"
+    }
+  ],
+  "cardNumber": "1234567812345678",
+  "CVV": "123",
+  "expired": {
+    "$date": "2025-01-04T06:00:00.000Z"
+  },
+  "createdAt": {
+    "$date": "2025-05-04T23:23:35.490Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-04T23:23:35.490Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6817f7444ad0ba5692ff8dda"
+  },
+  "user": {
+    "$oid": "6817cbd8a1c7cacb1bc7c8dc"
+  },
+  "room": {
+    "$oid": "6817da3250f1fcb2508c230d"
+  },
+  "dateEntry": {
+    "$date": "2025-05-05T06:00:00.000Z"
+  },
+  "departureDate": {
+    "$date": "2025-05-10T06:00:00.000Z"
+  },
+  "state": "activa",
+  "extraServices": [
+    {
+      "$oid": "6817e074d22118c9e111d93b"
+    }
+  ],
+  "cardNumber": "1234567812345678",
+  "CVV": "123",
+  "expired": {
+    "$date": "2025-01-04T06:00:00.000Z"
+  },
+  "createdAt": {
+    "$date": "2025-05-04T23:24:52.201Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-04T23:24:52.201Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6817f7674ad0ba5692ff8de0"
+  },
+  "user": {
+    "$oid": "6817cbd8a1c7cacb1bc7c8dc"
+  },
+  "room": {
+    "$oid": "6817d9e850f1fcb2508c22ff"
+  },
+  "dateEntry": {
+    "$date": "2025-05-05T06:00:00.000Z"
+  },
+  "departureDate": {
+    "$date": "2025-05-10T06:00:00.000Z"
+  },
+  "state": "activa",
+  "extraServices": [
+    {
+      "$oid": "6817e06b8ac79398f5e5abec"
+    }
+  ],
+  "cardNumber": "1234567812345678",
+  "CVV": "123",
+  "expired": {
+    "$date": "2025-01-04T06:00:00.000Z"
+  },
+  "createdAt": {
+    "$date": "2025-05-04T23:25:27.292Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-04T23:25:27.292Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6817f7794ad0ba5692ff8de6"
+  },
+  "user": {
+    "$oid": "6817c4a80e4675677cbea77d"
+  },
+  "room": {
+    "$oid": "6817d9e050f1fcb2508c22fa"
+  },
+  "dateEntry": {
+    "$date": "2025-05-05T06:00:00.000Z"
+  },
+  "departureDate": {
+    "$date": "2025-05-10T06:00:00.000Z"
+  },
+  "state": "activa",
+  "extraServices": [
+    {
+      "$oid": "6817e06b8ac79398f5e5abec"
+    }
+  ],
+  "cardNumber": "1234567812345678",
+  "CVV": "123",
+  "expired": {
+    "$date": "2025-01-04T06:00:00.000Z"
+  },
+  "createdAt": {
+    "$date": "2025-05-04T23:25:45.376Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-04T23:25:45.376Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6817f7e94ad0ba5692ff8df6"
+  },
+  "user": {
+    "$oid": "6817c4a80e4675677cbea77d"
+  },
+  "room": {
+    "$oid": "6817d8e050f1fcb2508c22bb"
+  },
+  "dateEntry": {
+    "$date": "2025-05-05T06:00:00.000Z"
+  },
+  "departureDate": {
+    "$date": "2025-05-10T06:00:00.000Z"
+  },
+  "state": "activa",
+  "extraServices": [],
+  "cardNumber": "1234567812345678",
+  "CVV": "123",
+  "expired": {
+    "$date": "2025-01-04T06:00:00.000Z"
+  },
+  "createdAt": {
+    "$date": "2025-05-04T23:27:37.509Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-04T23:27:37.509Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6817f9614ad0ba5692ff8e00"
+  },
+  "user": {
+    "$oid": "6817c4a80e4675677cbea77d"
+  },
+  "room": {
+    "$oid": "6817d8fa50f1fcb2508c22c0"
+  },
+  "dateEntry": {
+    "$date": "2025-05-05T06:00:00.000Z"
+  },
+  "departureDate": {
+    "$date": "2025-05-10T06:00:00.000Z"
+  },
+  "state": "cancelada",
+  "extraServices": [],
+  "cardNumber": "1234567812345678",
+  "CVV": "123",
+  "expired": {
+    "$date": "2025-01-04T06:00:00.000Z"
+  },
+  "createdAt": {
+    "$date": "2025-05-04T23:33:53.211Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-04T23:36:01.348Z"
+  }
+}]

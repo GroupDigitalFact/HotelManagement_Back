@@ -1,0 +1,380 @@
+[{
+  "_id": {
+    "$oid": "6817d85750f1fcb2508c22a2"
+  },
+  "tipo": "simple",
+  "capacidad": 2,
+  "precio": 50,
+  "hotel": {
+    "$oid": "6817d2653c3d3be5d2bb69ec"
+  },
+  "numeroCuarto": 101,
+  "status": "OCUPADA",
+  "createdAt": {
+    "$date": "2025-05-04T21:12:55.436Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-04T23:20:16.956Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6817d86a50f1fcb2508c22a7"
+  },
+  "tipo": "doble",
+  "capacidad": 4,
+  "precio": 60,
+  "hotel": {
+    "$oid": "6817d2653c3d3be5d2bb69ec"
+  },
+  "numeroCuarto": 102,
+  "status": "OCUPADA",
+  "createdAt": {
+    "$date": "2025-05-04T21:13:15.000Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-04T23:21:11.359Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6817d87d50f1fcb2508c22ac"
+  },
+  "tipo": "suite",
+  "capacidad": 3,
+  "precio": 80,
+  "hotel": {
+    "$oid": "6817d2653c3d3be5d2bb69ec"
+  },
+  "numeroCuarto": 103,
+  "status": "OCUPADA",
+  "createdAt": {
+    "$date": "2025-05-04T21:13:33.087Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-04T23:22:08.202Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6817d88850f1fcb2508c22b1"
+  },
+  "tipo": "familiar",
+  "capacidad": 5,
+  "precio": 90,
+  "hotel": {
+    "$oid": "6817d2653c3d3be5d2bb69ec"
+  },
+  "numeroCuarto": 104,
+  "status": "OCUPADA",
+  "createdAt": {
+    "$date": "2025-05-04T21:13:44.044Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-04T23:23:35.493Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6817d8a850f1fcb2508c22b6"
+  },
+  "tipo": "lujo",
+  "capacidad": 2,
+  "precio": 120,
+  "hotel": {
+    "$oid": "6817d2653c3d3be5d2bb69ec"
+  },
+  "numeroCuarto": 105,
+  "status": "DISPONIBLE",
+  "createdAt": {
+    "$date": "2025-05-04T21:14:16.567Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-04T21:14:16.567Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6817d8e050f1fcb2508c22bb"
+  },
+  "tipo": "simple",
+  "capacidad": 1,
+  "precio": 45,
+  "hotel": {
+    "$oid": "6817d28c3c3d3be5d2bb69ef"
+  },
+  "numeroCuarto": 201,
+  "status": "OCUPADA",
+  "createdAt": {
+    "$date": "2025-05-04T21:15:12.256Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-04T23:27:37.511Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6817d8fa50f1fcb2508c22c0"
+  },
+  "tipo": "doble",
+  "capacidad": 2,
+  "precio": 55,
+  "hotel": {
+    "$oid": "6817d28c3c3d3be5d2bb69ef"
+  },
+  "numeroCuarto": 202,
+  "status": "DISPONIBLE",
+  "createdAt": {
+    "$date": "2025-05-04T21:15:38.692Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-04T23:36:01.352Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6817d90250f1fcb2508c22c5"
+  },
+  "tipo": "suite",
+  "capacidad": 4,
+  "precio": 75,
+  "hotel": {
+    "$oid": "6817d28c3c3d3be5d2bb69ef"
+  },
+  "numeroCuarto": 203,
+  "status": "DISPONIBLE",
+  "createdAt": {
+    "$date": "2025-05-04T21:15:46.406Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-04T21:15:46.406Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6817d96d50f1fcb2508c22ca"
+  },
+  "tipo": "familiar",
+  "capacidad": 6,
+  "precio": 95,
+  "hotel": {
+    "$oid": "6817d28c3c3d3be5d2bb69ef"
+  },
+  "numeroCuarto": 204,
+  "status": "DISPONIBLE",
+  "createdAt": {
+    "$date": "2025-05-04T21:17:33.899Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-04T21:17:33.899Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6817d97550f1fcb2508c22cf"
+  },
+  "tipo": "lujo",
+  "capacidad": 3,
+  "precio": 110,
+  "hotel": {
+    "$oid": "6817d28c3c3d3be5d2bb69ef"
+  },
+  "numeroCuarto": 205,
+  "status": "DISPONIBLE",
+  "createdAt": {
+    "$date": "2025-05-04T21:17:41.440Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-04T21:17:41.440Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6817d99350f1fcb2508c22d4"
+  },
+  "tipo": "simple",
+  "capacidad": 1,
+  "precio": 48,
+  "hotel": {
+    "$oid": "6817d30d3c3d3be5d2bb69f2"
+  },
+  "numeroCuarto": 301,
+  "status": "DISPONIBLE",
+  "createdAt": {
+    "$date": "2025-05-04T21:18:11.907Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-04T21:18:11.907Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6817d99b50f1fcb2508c22d9"
+  },
+  "tipo": "doble",
+  "capacidad": 2,
+  "precio": 58,
+  "hotel": {
+    "$oid": "6817d30d3c3d3be5d2bb69f2"
+  },
+  "numeroCuarto": 302,
+  "status": "DISPONIBLE",
+  "createdAt": {
+    "$date": "2025-05-04T21:18:19.108Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-04T21:18:19.108Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6817d9a150f1fcb2508c22de"
+  },
+  "tipo": "suite",
+  "capacidad": 3,
+  "precio": 78,
+  "hotel": {
+    "$oid": "6817d30d3c3d3be5d2bb69f2"
+  },
+  "numeroCuarto": 303,
+  "status": "DISPONIBLE",
+  "createdAt": {
+    "$date": "2025-05-04T21:18:25.482Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-04T21:18:25.482Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6817d9ac50f1fcb2508c22e3"
+  },
+  "tipo": "familiar",
+  "capacidad": 5,
+  "precio": 88,
+  "hotel": {
+    "$oid": "6817d30d3c3d3be5d2bb69f2"
+  },
+  "numeroCuarto": 304,
+  "status": "DISPONIBLE",
+  "createdAt": {
+    "$date": "2025-05-04T21:18:36.748Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-04T21:18:36.748Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6817d9b850f1fcb2508c22e8"
+  },
+  "tipo": "lujo",
+  "capacidad": 2,
+  "precio": 125,
+  "hotel": {
+    "$oid": "6817d30d3c3d3be5d2bb69f2"
+  },
+  "numeroCuarto": 305,
+  "status": "DISPONIBLE",
+  "createdAt": {
+    "$date": "2025-05-04T21:18:48.369Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-04T21:18:48.369Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6817d9d150f1fcb2508c22f0"
+  },
+  "tipo": "simple",
+  "capacidad": 1,
+  "precio": 40,
+  "hotel": {
+    "$oid": "6817d4dd3c3d3be5d2bb6a06"
+  },
+  "numeroCuarto": 401,
+  "status": "DISPONIBLE",
+  "createdAt": {
+    "$date": "2025-05-04T21:19:13.408Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-04T21:19:13.408Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6817d9d750f1fcb2508c22f5"
+  },
+  "tipo": "doble",
+  "capacidad": 3,
+  "precio": 60,
+  "hotel": {
+    "$oid": "6817d4dd3c3d3be5d2bb6a06"
+  },
+  "numeroCuarto": 402,
+  "status": "DISPONIBLE",
+  "createdAt": {
+    "$date": "2025-05-04T21:19:19.706Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-04T21:19:19.706Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6817d9e050f1fcb2508c22fa"
+  },
+  "tipo": "suite",
+  "capacidad": 4,
+  "precio": 85,
+  "hotel": {
+    "$oid": "6817d4dd3c3d3be5d2bb6a06"
+  },
+  "numeroCuarto": 403,
+  "status": "OCUPADA",
+  "createdAt": {
+    "$date": "2025-05-04T21:19:28.878Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-04T23:25:45.377Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6817d9e850f1fcb2508c22ff"
+  },
+  "tipo": "familiar",
+  "capacidad": 6,
+  "precio": 100,
+  "hotel": {
+    "$oid": "6817d4dd3c3d3be5d2bb6a06"
+  },
+  "numeroCuarto": 404,
+  "status": "OCUPADA",
+  "createdAt": {
+    "$date": "2025-05-04T21:19:36.942Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-04T23:25:27.293Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6817da3250f1fcb2508c230d"
+  },
+  "tipo": "doble",
+  "capacidad": 5,
+  "precio": 455,
+  "hotel": {
+    "$oid": "6817d4dd3c3d3be5d2bb6a06"
+  },
+  "numeroCuarto": 10,
+  "status": "OCUPADA",
+  "createdAt": {
+    "$date": "2025-05-04T21:20:50.957Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-04T23:24:52.203Z"
+  }
+}]
