@@ -22,7 +22,16 @@ export default router;
  *       tags:
  *         - Event
  *       summary: Crear un nuevo evento
- *       description: Permite crear un nuevo evento asociado a un hotel.
+ *       description: |
+ *         Permite crear un nuevo evento asociado a un hotel.
+ *         
+ *         **Roles permitidos:** ADMIN_ROLE, HOTEL_ADMIN_ROLE
+ *         
+ *         **Recomendaciones para optimizar el uso de la API:**
+ *         - Valide los datos de entrada antes de enviarlos.
+ *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
+ *         - En caso de errores de validación, revise los mensajes detallados en la respuesta.
+ *         - Para optimizar el rendimiento, evite enviar grandes volúmenes de datos innecesarios.
  *       requestBody:
  *         required: true
  *         content:
@@ -33,26 +42,29 @@ export default router;
  *                 hotelId:
  *                   type: string
  *                   description: Identificador único del hotel.
- *                   example: 609bda8f1c4ae34d5c8f9b2d
  *                 nombre:
  *                   type: string
  *                   description: Nombre del evento.
- *                   example: Conferencia de Negocios
  *                 descripcion:
  *                   type: string
  *                   description: Descripción del evento.
- *                   example: Evento enfocado en estrategias de negocios.
  *                 fecha:
  *                   type: string
  *                   format: date
  *                   description: Fecha del evento.
- *                   example: 2025-05-15
  *                 servicios:
  *                   type: array
  *                   items:
  *                     type: string
  *                   description: Lista de identificadores de servicios asociados.
- *                   example: ["609bda8f1c4ae34d5c8f9b2b", "609bda8f1c4ae34d5c8f9b2c"]
+ *             example:
+ *               {
+ *                 "hotelId": "609bda8f1c4ae34d5c8f9b2d",
+ *                 "nombre": "Conferencia de Negocios",
+ *                 "descripcion": "Evento enfocado en estrategias de negocios.",
+ *                 "fecha": "2025-05-15",
+ *                 "servicios": ["609bda8f1c4ae34d5c8f9b2b", "609bda8f1c4ae34d5c8f9b2c"]
+ *               }
  *       responses:
  *         '201':
  *           description: Evento creado exitosamente.
@@ -94,7 +106,16 @@ export default router;
  *       tags:
  *         - Event
  *       summary: Actualizar un evento
- *       description: Permite actualizar los datos de un evento existente.
+ *       description: |
+ *         Permite actualizar los datos de un evento existente.
+ *         
+ *         **Roles permitidos:** ADMIN_ROLE, HOTEL_ADMIN_ROLE
+ *         
+ *         **Recomendaciones para optimizar el uso de la API:**
+ *         - Valide los datos de entrada antes de enviarlos.
+ *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
+ *         - En caso de errores de validación, revise los mensajes detallados en la respuesta.
+ *         - Para optimizar el rendimiento, actualice solo los campos necesarios.
  *       parameters:
  *         - in: path
  *           name: hotelId
@@ -118,16 +139,19 @@ export default router;
  *                 nombre:
  *                   type: string
  *                   description: Nombre del evento.
- *                   example: Conferencia de Negocios
  *                 descripcion:
  *                   type: string
  *                   description: Descripción del evento.
- *                   example: Evento enfocado en estrategias de negocios.
  *                 fecha:
  *                   type: string
  *                   format: date
  *                   description: Fecha del evento.
- *                   example: 2025-05-15
+ *             example:
+ *               {
+ *                 "nombre": "Conferencia de Negocios",
+ *                 "descripcion": "Evento enfocado en estrategias de negocios.",
+ *                 "fecha": "2025-05-15"
+ *               }
  *       responses:
  *         '200':
  *           description: Evento actualizado exitosamente.
@@ -169,7 +193,16 @@ export default router;
  *       tags:
  *         - Event
  *       summary: Eliminar un evento
- *       description: Permite eliminar un evento asociado a un hotel.
+ *       description: |
+ *         Permite eliminar un evento asociado a un hotel.
+ *         
+ *         **Roles permitidos:** ADMIN_ROLE, HOTEL_ADMIN_ROLE
+ *         
+ *         **Recomendaciones para optimizar el uso de la API:**
+ *         - Verifique que los identificadores enviados sean correctos.
+ *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
+ *         - En caso de errores de validación, revise los mensajes detallados en la respuesta.
+ *         - Para optimizar el rendimiento, evite realizar múltiples eliminaciones innecesarias.
  *       parameters:
  *         - in: path
  *           name: hotelId
@@ -222,7 +255,16 @@ export default router;
  *       tags:
  *         - Event
  *       summary: Obtener eventos por hotel
- *       description: Permite obtener todos los eventos asociados a un hotel.
+ *       description: |
+ *         Permite obtener todos los eventos asociados a un hotel.
+ *         
+ *         **Roles permitidos:** ADMIN_ROLE, HOTEL_ADMIN_ROLE
+ *         
+ *         **Recomendaciones para optimizar el uso de la API:**
+ *         - Utilice filtros o paginación si espera una gran cantidad de eventos.
+ *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
+ *         - Valide que el identificador del hotel sea correcto.
+ *         - Para optimizar el rendimiento, solicite solo los datos necesarios.
  *       parameters:
  *         - in: path
  *           name: hotelId

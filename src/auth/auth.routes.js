@@ -12,11 +12,26 @@ export default router;
 
 /**
  * @swagger
+ * tags:
+ *   - name: Auth
+ *     description: Endpoints de autenticación y registro de usuarios.
+ * 
  * paths:
  *   /auth/register:
  *     post:
+ *       tags:
+ *         - Auth
  *       summary: Registro de un nuevo usuario
- *       description: Permite registrar un nuevo usuario en el sistema.
+ *       description: |
+ *         Permite registrar un nuevo usuario en el sistema.
+ *         
+ *         **Roles permitidos:** Público (sin autenticación)
+ *         
+ *         **Recomendaciones para optimizar el uso de la API:**
+ *         - Valide todos los campos requeridos antes de enviar la solicitud.
+ *         - Utilice contraseñas seguras y únicas.
+ *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
+ *         - En caso de error de validación, revise los mensajes detallados en la respuesta.
  *       requestBody:
  *         required: true
  *         content:
@@ -43,7 +58,7 @@ export default router;
  *                 password:
  *                   type: string
  *                   description: Contraseña del usuario.
- *                   example: password123
+ *                   example: Password123!
  *                 phone:
  *                   type: string
  *                   description: Número de teléfono del usuario.
@@ -105,8 +120,18 @@ export default router;
  *                     example: Internal server error
  *   /auth/login:
  *     post:
+ *       tags:
+ *         - Auth
  *       summary: Inicio de sesión
- *       description: Permite a un usuario iniciar sesión en el sistema.
+ *       description: |
+ *         Permite a un usuario iniciar sesión en el sistema.
+ *         
+ *         **Roles permitidos:** Público (sin autenticación)
+ *         
+ *         **Recomendaciones para optimizar el uso de la API:**
+ *         - Valide los datos de entrada antes de enviarlos.
+ *         - Utilice credenciales válidas y seguras.
+ *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
  *       requestBody:
  *         required: true
  *         content:
@@ -125,7 +150,7 @@ export default router;
  *                 password:
  *                   type: string
  *                   description: Contraseña del usuario.
- *                   example: password123
+ *                   example: Password123!
  *       responses:
  *         '200':
  *           description: Inicio de sesión exitoso.

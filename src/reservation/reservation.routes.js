@@ -29,7 +29,16 @@ export default router
  *       tags:
  *         - Reservation
  *       summary: Crear una nueva reservación
- *       description: Permite realizar una reservación para una habitación específica.
+ *       description: |
+ *         Permite realizar una reservación para una habitación específica.
+ *         
+ *         **Roles permitidos:** ADMIN_ROLE, HOTEL_ADMIN_ROLE, USER_ROLE
+ *         
+ *         **Recomendaciones para optimizar el uso de la API:**
+ *         - Valide los datos de entrada antes de enviarlos.
+ *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
+ *         - Utilice filtros adecuados para evitar reservas duplicadas.
+ *         - Solicite solo los datos necesarios para optimizar el rendimiento.
  *       requestBody:
  *         required: true
  *         content:
@@ -40,36 +49,39 @@ export default router
  *                 roomId:
  *                   type: string
  *                   description: Identificador único de la habitación.
- *                   example: 609bda8f1c4ae34d5c8f9b2c
  *                 dateEntry:
  *                   type: string
  *                   format: date
  *                   description: Fecha de entrada de la reservación.
- *                   example: 2025-05-15
  *                 departureDate:
  *                   type: string
  *                   format: date
  *                   description: Fecha de salida de la reservación.
- *                   example: 2025-05-20
  *                 cardNumber:
  *                   type: string
  *                   description: Número de tarjeta utilizado para la reservación.
- *                   example: 1234567812345678
  *                 CVV:
  *                   type: string
  *                   description: Código de seguridad de la tarjeta.
- *                   example: 123
  *                 expired:
  *                   type: string
  *                   format: date
  *                   description: Fecha de expiración de la tarjeta.
- *                   example: 2025-12-31
  *                 extraServices:
  *                   type: array
  *                   items:
  *                     type: string
  *                   description: Lista de identificadores de servicios extra asociados.
- *                   example: ["609bda8f1c4ae34d5c8f9b2d", "609bda8f1c4ae34d5c8f9b2e"]
+ *             example:
+ *               {
+ *                 "roomId": "609bda8f1c4ae34d5c8f9b2c",
+ *                 "dateEntry": "2025-05-15",
+ *                 "departureDate": "2025-05-20",
+ *                 "cardNumber": "1234567812345678",
+ *                 "CVV": "123",
+ *                 "expired": "2025-12-31",
+ *                 "extraServices": ["609bda8f1c4ae34d5c8f9b2d", "609bda8f1c4ae34d5c8f9b2e"]
+ *               }
  *       responses:
  *         '201':
  *           description: Reservación creada exitosamente.
@@ -118,7 +130,15 @@ export default router
  *       tags:
  *         - Reservation
  *       summary: Cancelar una reservación
- *       description: Permite cancelar una reservación activa.
+ *       description: |
+ *         Permite cancelar una reservación activa.
+ *         
+ *         **Roles permitidos:** ADMIN_ROLE, HOTEL_ADMIN_ROLE, USER_ROLE
+ *         
+ *         **Recomendaciones para optimizar el uso de la API:**
+ *         - Valide que el reservationId sea válido antes de enviar la solicitud.
+ *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
+ *         - Solicite solo la cancelación de reservaciones activas.
  *       parameters:
  *         - in: path
  *           name: reservationId
@@ -172,7 +192,15 @@ export default router
  *       tags:
  *         - Reservation
  *       summary: Obtener mis reservaciones
- *       description: Permite al usuario autenticado obtener todas sus reservaciones.
+ *       description: |
+ *         Permite al usuario autenticado obtener todas sus reservaciones, estas se consigen buscando sus reservaciones apartir del id obtenido de su token.
+ *         
+ *         **Roles permitidos:** ADMIN_ROLE, HOTEL_ADMIN_ROLE, USER_ROLE
+ *         
+ *         **Recomendaciones para optimizar el uso de la API:**
+ *         - Asegúrese de enviar el token de autenticación correcto.
+ *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
+ *         - Utilice filtros o paginación si espera una gran cantidad de reservaciones.
  *       responses:
  *         '200':
  *           description: Lista de reservaciones obtenida exitosamente.
@@ -207,7 +235,15 @@ export default router
  *       tags:
  *         - Reservation
  *       summary: Obtener reservaciones de un usuario
- *       description: Permite a un administrador obtener todas las reservaciones de un usuario específico.
+ *       description: |
+ *         Permite a un administrador obtener todas las reservaciones de un usuario específico.
+ *         
+ *         **Roles permitidos:** ADMIN_ROLE
+ *         
+ *         **Recomendaciones para optimizar el uso de la API:**
+ *         - Valide que el identifier sea válido antes de enviar la solicitud.
+ *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
+ *         - Utilice filtros o paginación si espera una gran cantidad de reservaciones.
  *       parameters:
  *         - in: path
  *           name: identifier
@@ -249,7 +285,15 @@ export default router
  *       tags:
  *         - Reservation
  *       summary: Obtener reservaciones de un hotel
- *       description: Permite a un administrador de hotel obtener todas las reservaciones asociadas a su hotel.
+ *       description: |
+ *         Permite a un administrador de hotel obtener todas las reservaciones asociadas a su hotel.
+ *         
+ *         **Roles permitidos:** ADMIN_ROLE, HOTEL_ADMIN_ROLE
+ *         
+ *         **Recomendaciones para optimizar el uso de la API:**
+ *         - Valide que el identifier sea válido antes de enviar la solicitud.
+ *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
+ *         - Utilice filtros o paginación si espera una gran cantidad de reservaciones.
  *       parameters:
  *         - in: path
  *           name: identifier

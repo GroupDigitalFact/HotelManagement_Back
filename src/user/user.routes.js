@@ -35,7 +35,15 @@ export default router;
  *       tags:
  *         - User
  *       summary: Eliminar mi cuenta
- *       description: Permite al usuario autenticado eliminar su cuenta y liberar sus reservaciones.
+ *       description: |
+ *         Permite al usuario autenticado eliminar su cuenta y liberar sus reservaciones. Esto se hace apatir de la obtencion del id del usuario a traves de su token
+ *         
+ *         **Roles permitidos:** USER_ROLE, ADMIN_ROLE, HOTEL_ADMIN_ROLE
+ *         
+ *         **Recomendaciones para optimizar el uso de la API:**
+ *         - Asegúrese de enviar el token de autenticación correcto.
+ *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
+ *         - Confirme la acción antes de eliminar la cuenta, ya que es irreversible.
  *       responses:
  *         '200':
  *           description: Usuario eliminado exitosamente.
@@ -94,7 +102,15 @@ export default router;
  *       tags:
  *         - User
  *       summary: Eliminar un usuario (Administrador)
- *       description: Permite a un administrador eliminar un usuario específico.
+ *       description: |
+ *         Permite a un administrador eliminar un usuario específico.
+ *         
+ *         **Roles permitidos:** ADMIN_ROLE
+ *         
+ *         **Recomendaciones para optimizar el uso de la API:**
+ *         - Valide que el identificador del usuario sea correcto antes de enviar la solicitud.
+ *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
+ *         - Confirme la acción antes de eliminar la cuenta, ya que es irreversible.
  *       requestBody:
  *         required: true
  *         content:
@@ -151,7 +167,15 @@ export default router;
  *       tags:
  *         - User
  *       summary: Editar mi perfil
- *       description: Permite al usuario autenticado actualizar su información personal.
+ *       description: |
+ *         Permite al usuario autenticado actualizar su información personal.
+ *         
+ *         **Roles permitidos:** USER_ROLE, ADMIN_ROLE, HOTEL_ADMIN_ROLE
+ *         
+ *         **Recomendaciones para optimizar el uso de la API:**
+ *         - Valide los campos antes de enviarlos.
+ *         - Envíe solo los campos que desea actualizar para optimizar el rendimiento.
+ *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
  *       requestBody:
  *         required: true
  *         content:
@@ -218,7 +242,15 @@ export default router;
  *       tags:
  *         - User
  *       summary: Editar un usuario (Administrador)
- *       description: Permite a un administrador editar la información de un usuario específico.
+ *       description: |
+ *         Permite a un administrador editar la información de un usuario específico.
+ *         
+ *         **Roles permitidos:** ADMIN_ROLE
+ *         
+ *         **Recomendaciones para optimizar el uso de la API:**
+ *         - Valide los campos antes de enviarlos.
+ *         - Envíe solo los campos que desea actualizar para optimizar el rendimiento.
+ *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
  *       requestBody:
  *         required: true
  *         content:
@@ -289,7 +321,15 @@ export default router;
  *       tags:
  *         - User
  *       summary: Actualizar foto de perfil
- *       description: Permite al usuario autenticado actualizar su foto de perfil.
+ *       description: |
+ *         Permite al usuario autenticado actualizar su foto de perfil.
+ *         
+ *         **Roles permitidos:** USER_ROLE, ADMIN_ROLE, HOTEL_ADMIN_ROLE
+ *         
+ *         **Recomendaciones para optimizar el uso de la API:**
+ *         - Envíe una imagen válida en formato soportado.
+ *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
+ *         - El tamaño de la imagen debe ser razonable para optimizar el rendimiento.
  *       requestBody:
  *         required: true
  *         content:
@@ -348,7 +388,15 @@ export default router;
  *       tags:
  *         - User
  *       summary: Actualizar contraseña
- *       description: Permite al usuario autenticado actualizar su contraseña.
+ *       description: |
+ *         Permite al usuario autenticado actualizar su contraseña.
+ *         
+ *         **Roles permitidos:** USER_ROLE, ADMIN_ROLE, HOTEL_ADMIN_ROLE
+ *         
+ *         **Recomendaciones para optimizar el uso de la API:**
+ *         - Valide que la contraseña actual y la nueva sean correctas y seguras.
+ *         - No reutilice contraseñas anteriores.
+ *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
  *       requestBody:
  *         required: true
  *         content:
@@ -409,7 +457,15 @@ export default router;
  *       tags:
  *         - User
  *       summary: Obtener usuarios (Administrador)
- *       description: Permite a un administrador obtener una lista de usuarios registrados.
+ *       description: |
+ *         Permite a un administrador obtener una lista de usuarios registrados.
+ *         
+ *         **Roles permitidos:** ADMIN_ROLE
+ *         
+ *         **Recomendaciones para optimizar el uso de la API:**
+ *         - Utilice filtros y paginación para optimizar el rendimiento en consultas grandes.
+ *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
+ *         - Solicite solo los datos necesarios.
  *       requestBody:
  *         required: false
  *         content:

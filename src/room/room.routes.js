@@ -34,7 +34,15 @@ export default router
  *       tags:
  *         - Room
  *       summary: Obtener habitaciones disponibles por hotel
- *       description: Obtiene todas las habitaciones disponibles de un hotel específico.
+ *       description: |
+ *         Obtiene todas las habitaciones disponibles de un hotel específico.
+ *         
+ *         **Roles permitidos:** Público (sin autenticación)
+ *         
+ *         **Recomendaciones para optimizar el uso de la API:**
+ *         - Utilice filtros adecuados para evitar consultas innecesariamente grandes.
+ *         - Implemente paginación si espera grandes volúmenes de resultados.
+ *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
  *       parameters:
  *         - in: path
  *           name: idHotel
@@ -76,13 +84,29 @@ export default router
  *       tags:
  *         - Room
  *       summary: Registrar una habitación (Administrador)
- *       description: Permite a un administrador registrar una nueva habitación en un hotel.
+ *       description: |
+ *         Permite a un administrador registrar una nueva habitación en un hotel.
+ *         
+ *         **Roles permitidos:** ADMIN_ROLE
+ *         
+ *         **Recomendaciones para optimizar el uso de la API:**
+ *         - Valide todos los campos requeridos antes de enviar la solicitud.
+ *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
+ *         - En caso de error de validación, revise los mensajes detallados en la respuesta.
  *       requestBody:
  *         required: true
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Room'
+ *             example:
+ *               {
+ *                 "hotelId": "609bda8f1c4ae34d5c8f9b2a",
+ *                 "tipo": "Doble",
+ *                 "capacidad": 2,
+ *                 "precio": 100,
+ *                 "numeroCuarto": 101
+ *               }
  *       responses:
  *         '201':
  *           description: Habitación registrada exitosamente.
@@ -131,7 +155,15 @@ export default router
  *       tags:
  *         - Room
  *       summary: Eliminar una habitación (Administrador)
- *       description: Permite a un administrador eliminar una habitación específica.
+ *       description: |
+ *         Permite a un administrador eliminar una habitación específica.
+ *         
+ *         **Roles permitidos:** ADMIN_ROLE
+ *         
+ *         **Recomendaciones para optimizar el uso de la API:**
+ *         - Verifique que el identificador enviado sea correcto.
+ *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
+ *         - Evite realizar múltiples eliminaciones innecesarias para optimizar el rendimiento.
  *       parameters:
  *         - in: path
  *           name: roomId
@@ -175,7 +207,15 @@ export default router
  *       tags:
  *         - Room
  *       summary: Actualizar una habitación (Administrador)
- *       description: Permite a un administrador actualizar los datos de una habitación específica.
+ *       description: |
+ *         Permite a un administrador actualizar los datos de una habitación específica.
+ *         
+ *         **Roles permitidos:** ADMIN_ROLE
+ *         
+ *         **Recomendaciones para optimizar el uso de la API:**
+ *         - Valide los datos de entrada antes de enviarlos.
+ *         - Actualice solo los campos necesarios para optimizar el rendimiento.
+ *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
  *       parameters:
  *         - in: path
  *           name: roomId
@@ -189,6 +229,13 @@ export default router
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Room'
+ *             example:
+ *               {
+ *                 "tipo": "Suite",
+ *                 "capacidad": 4,
+ *                 "precio": 200,
+ *                 "numeroCuarto": 201
+ *               }
  *       responses:
  *         '200':
  *           description: Habitación actualizada exitosamente.
@@ -227,13 +274,29 @@ export default router
  *       tags:
  *         - Room
  *       summary: Registrar una habitación (Manager)
- *       description: Permite a un manager registrar una nueva habitación en un hotel.
+ *       description: |
+ *         Permite a un manager registrar una nueva habitación para el hotel en el que el sea encargado hotel.
+ *         
+ *         **Roles permitidos:** HOTEL_ADMIN_ROLE, ADMIN_ROLE
+ *         
+ *         **Recomendaciones para optimizar el uso de la API:**
+ *         - Valide todos los campos requeridos antes de enviar la solicitud.
+ *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
+ *         - En caso de error de validación, revise los mensajes detallados en la respuesta.
  *       requestBody:
  *         required: true
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Room'
+ *             example:
+ *               {
+ *                 "hotelId": "609bda8f1c4ae34d5c8f9b2a",
+ *                 "tipo": "Doble",
+ *                 "capacidad": 2,
+ *                 "precio": 100,
+ *                 "numeroCuarto": 102
+ *               }
  *       responses:
  *         '201':
  *           description: Habitación registrada exitosamente.
@@ -256,7 +319,7 @@ export default router
  *                 properties:
  *                   message:
  *                     type: string
- *                     example: Ya existe una habitación con el número 101 en este hotel
+ *                     example: Ya existe una habitación con el número 102 en este hotel
  *         '404':
  *           description: Hotel no encontrado.
  *           content:
@@ -282,7 +345,15 @@ export default router
  *       tags:
  *         - Room
  *       summary: Eliminar una habitación (Manager)
- *       description: Permite a un manager eliminar una habitación específica.
+ *       description: |
+ *         Permite a un manager eliminar una habitación específica.
+ *         
+ *         **Roles permitidos:** HOTEL_ADMIN_ROLE, ADMIN_ROLE
+ *         
+ *         **Recomendaciones para optimizar el uso de la API:**
+ *         - Verifique que el identificador enviado sea correcto.
+ *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
+ *         - Evite realizar múltiples eliminaciones innecesarias para optimizar el rendimiento.
  *       parameters:
  *         - in: path
  *           name: roomId
@@ -326,7 +397,15 @@ export default router
  *       tags:
  *         - Room
  *       summary: Actualizar una habitación (Manager)
- *       description: Permite a un manager actualizar los datos de una habitación específica.
+ *       description: |
+ *         Permite a un manager actualizar los datos de una habitación específica.
+ *         
+ *         **Roles permitidos:** HOTEL_ADMIN_ROLE, ADMIN_ROLE
+ *         
+ *         **Recomendaciones para optimizar el uso de la API:**
+ *         - Valide los datos de entrada antes de enviarlos.
+ *         - Actualice solo los campos necesarios para optimizar el rendimiento.
+ *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
  *       parameters:
  *         - in: path
  *           name: roomId
@@ -340,6 +419,13 @@ export default router
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Room'
+ *             example:
+ *               {
+ *                 "tipo": "Suite",
+ *                 "capacidad": 4,
+ *                 "precio": 250,
+ *                 "numeroCuarto": 202
+ *               }
  *       responses:
  *         '200':
  *           description: Habitación actualizada exitosamente.

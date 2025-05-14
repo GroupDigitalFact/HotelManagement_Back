@@ -25,7 +25,15 @@ export default router;
  *       tags:
  *         - Hotel
  *       summary: Buscar hoteles
- *       description: Permite buscar hoteles según criterios como nombre, dirección, calificación o categoría.
+ *       description: |
+ *         Permite buscar hoteles según criterios como nombre, dirección, calificación o categoría.  
+ *         **Roles permitidos:** Público (sin autenticación)
+ *         
+ *         **Recomendaciones para optimizar el uso de la API:**
+ *         - Valide los datos de entrada antes de enviarlos.
+ *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
+ *         - Utilice filtros adecuados para evitar consultas innecesariamente grandes.
+ *         - Implemente paginación si espera grandes volúmenes de resultados.
  *       parameters:
  *         - in: query
  *           name: name
@@ -76,12 +84,29 @@ export default router;
  *                   message:
  *                     type: string
  *                     example: Error al buscar hoteles
+ *       x-ejemplo-request:
+ *         summary: Ejemplo de búsqueda de hotel
+ *         value:
+ *           name: "Hotel Central"
+ *           address: "Centro"
+ *           qualification: "5"
+ *           category: "Lujo"
+ * 
  *   /hotel/searchHotelsAdmin:
  *     get:
  *       tags:
  *         - Hotel
  *       summary: Buscar hoteles para administradores
- *       description: Permite a los administradores buscar hoteles registrados en el sistema.
+ *       description: |
+ *         Permite a los administradores visualizar los hoteles en los cuales estos son encargados, buscando a partir del id del usuario del token.  
+ *         **Roles permitidos:** ADMIN_ROLE, HOTEL_ADMIN_ROLE
+ *         
+ *         **Recomendaciones para optimizar el uso de la API:**
+ *         - Valide el token de autenticación antes de realizar la consulta.
+ *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
+ *         - Implemente paginación si espera grandes volúmenes de resultados.
+ *       security:
+ *         - bearerAuth: []
  *       responses:
  *         '200':
  *           description: Lista de hoteles obtenida exitosamente.
@@ -101,18 +126,37 @@ export default router;
  *                   message:
  *                     type: string
  *                     example: Error al buscar hoteles para administradores
+ * 
  *   /hotel/registerHotel:
  *     post:
  *       tags:
  *         - Hotel
  *       summary: Registrar un nuevo hotel
- *       description: Permite registrar un nuevo hotel en el sistema.
+ *       description: |
+ *         Permite registrar un nuevo hotel en el sistema.  
+ *         **Roles permitidos:** ADMIN_ROLE
+ *         
+ *         **Recomendaciones para optimizar el uso de la API:**
+ *         - Valide todos los campos requeridos antes de enviar la solicitud.
+ *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
+ *         - En caso de error de validación, revise los mensajes detallados en la respuesta.
+ *       security:
+ *         - bearerAuth: []
  *       requestBody:
  *         required: true
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Hotel'
+ *             example:
+ *               {
+ *                 "name": "Hotel Central",
+ *                 "address": "Centro, Ciudad",
+ *                 "qualification": "5",
+ *                 "category": "Lujo",
+ *                 "amenities": ["Piscina", "WiFi", "Gimnasio"],
+ *                 "admin": "663b1c2f4b2e2a0012a3b456"
+ *               }
  *       responses:
  *         '201':
  *           description: Hotel registrado exitosamente.
@@ -149,12 +193,22 @@ export default router;
  *                   error:
  *                     type: string
  *                     example: Internal server error
+ * 
  *   /hotel/updateHotel/{id}:
  *     put:
  *       tags:
  *         - Hotel
  *       summary: Actualizar un hotel
- *       description: Permite actualizar los datos de un hotel existente.
+ *       description: |
+ *         Permite actualizar los datos de un hotel existente.  
+ *         **Roles permitidos:** ADMIN_ROLE, HOTEL_ADMIN_ROLE
+ *         
+ *         **Recomendaciones para optimizar el uso de la API:**
+ *         - Valide los datos de entrada antes de enviarlos.
+ *         - Actualice solo los campos necesarios para optimizar el rendimiento.
+ *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
+ *       security:
+ *         - bearerAuth: []
  *       parameters:
  *         - in: path
  *           name: id
@@ -168,6 +222,14 @@ export default router;
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Hotel'
+ *             example:
+ *               {
+ *                 "name": "Hotel Central Actualizado",
+ *                 "address": "Zona 2, Ciudad",
+ *                 "qualification": "4",
+ *                 "category": "Negocios",
+ *                 "amenities": ["WiFi", "Restaurante"]
+ *               }
  *       responses:
  *         '200':
  *           description: Hotel actualizado exitosamente.
@@ -204,12 +266,22 @@ export default router;
  *                   error:
  *                     type: string
  *                     example: Internal server error
+ * 
  *   /hotel/deleteHotel/{id}:
  *     delete:
  *       tags:
  *         - Hotel
  *       summary: Eliminar un hotel
- *       description: Permite eliminar un hotel y todas sus habitaciones y reservas asociadas.
+ *       description: |
+ *         Permite eliminar un hotel y todas sus habitaciones y reservas asociadas.  
+ *         **Roles permitidos:** ADMIN_ROLE, HOTEL_ADMIN_ROLE
+ *         
+ *         **Recomendaciones para optimizar el uso de la API:**
+ *         - Verifique que el identificador enviado sea correcto.
+ *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
+ *         - Evite realizar múltiples eliminaciones innecesarias para optimizar el rendimiento.
+ *       security:
+ *         - bearerAuth: []
  *       parameters:
  *         - in: path
  *           name: id
@@ -251,12 +323,22 @@ export default router;
  *                   error:
  *                     type: string
  *                     example: Internal server error
+ * 
  *   /hotel/estadisticasManager:
  *     get:
  *       tags:
  *         - Hotel
- *       summary: Obtener estadísticas generales de hoteles
- *       description: Permite a los administradores obtener estadísticas generales de los hoteles.
+ *       summary: Obtener estadísticas generales de hoteles del manager, estos los busca apartir de su id de usuario en el token.
+ *       description: |
+ *         Permite a los administradores obtener estadísticas generales de los hoteles.  
+ *         **Roles permitidos:** ADMIN_ROLE, HOTEL_ADMIN_ROLE
+ *         
+ *         **Recomendaciones para optimizar el uso de la API:**
+ *         - Utilice filtros o paginación si espera una gran cantidad de hoteles.
+ *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
+ *         - Solicite solo los datos necesarios para optimizar el rendimiento.
+ *       security:
+ *         - bearerAuth: []
  *       responses:
  *         '200':
  *           description: Estadísticas obtenidas exitosamente.
@@ -284,12 +366,22 @@ export default router;
  *                   message:
  *                     type: string
  *                     example: Error al obtener estadísticas
+ * 
  *   /hotel/estadisticasHotel/{id}:
  *     get:
  *       tags:
  *         - Hotel
  *       summary: Obtener estadísticas de un hotel específico
- *       description: Permite obtener estadísticas detalladas de un hotel específico.
+ *       description: |
+ *         Permite obtener estadísticas detalladas de un hotel específico.  
+ *         **Roles permitidos:** ADMIN_ROLE
+ *         
+ *         **Recomendaciones para optimizar el uso de la API:**
+ *         - Valide que el identificador del hotel sea correcto.
+ *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
+ *         - Solicite solo los datos necesarios para optimizar el rendimiento.
+ *       security:
+ *         - bearerAuth: []
  *       parameters:
  *         - in: path
  *           name: id
