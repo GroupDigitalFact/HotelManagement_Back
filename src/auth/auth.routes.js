@@ -173,6 +173,10 @@ export default router;
  *                         type: string
  *                         description: URL de la imagen de perfil del usuario.
  *                         example: profile.jpg
+ *                       role:
+ *                         type: string
+ *                         description: Rol del usuario autenticado.
+ *                         example: ADMIN_ROLE
  *         '400':
  *           description: Credenciales inválidas.
  *           content:
