@@ -76,7 +76,7 @@ export default router
  *                     type: string
  *                     example: Servicio adicional creado correctamente
  *                   extraService:
- *                     $ref: '#/components/schemas/ExtraService'
+ *                     $ref: '#/components/schemas/extraServices'
  *         '404':
  *           description: Hotel no encontrado.
  *           content:
@@ -158,7 +158,7 @@ export default router
  *                     type: string
  *                     example: Servicio adicional actualizado
  *                   extraService:
- *                     $ref: '#/components/schemas/ExtraService'
+ *                     $ref: '#/components/schemas/extraServices'
  *         '404':
  *           description: Servicio adicional no encontrado.
  *           content:
@@ -266,7 +266,7 @@ export default router
  *               schema:
  *                 type: array
  *                 items:
- *                   $ref: '#/components/schemas/ExtraService'
+ *                   $ref: '#/components/schemas/extraServices'
  *         '500':
  *           description: Error interno del servidor.
  *           content:
