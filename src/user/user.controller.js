@@ -14,10 +14,8 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export const getUsers = async (req, res) => {
     try {
-        const { limite = 5, desde = 0 } = req.query;
         const { username } = req.body;
         let query = { status: true };
-
         if (username) {
             query.username = username;
         }
@@ -25,8 +23,6 @@ export const getUsers = async (req, res) => {
         const [total, users] = await Promise.all([
             User.countDocuments(query),
             User.find(query)
-                .skip(Number(desde))
-                .limit(Number(limite))
         ]);
 
         if (username && users.length === 0) {

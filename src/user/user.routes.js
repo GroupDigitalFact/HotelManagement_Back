@@ -458,7 +458,7 @@ export default router;
  *         - User
  *       summary: Obtener usuarios (Administrador)
  *       description: |
- *         Permite a un administrador obtener una lista de usuarios registrados.
+ *         Permite a un administrador obtener una lista de usuarios registrados o buscar un usuario en especifico.
  *         
  *         **Roles permitidos:** ADMIN_ROLE
  *         
