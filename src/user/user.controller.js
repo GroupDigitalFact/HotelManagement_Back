@@ -11,6 +11,31 @@ import Room from "../room/room.model.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));  
 
+export const getUserClient = async (req, res) =>{
+    try{
+        const uid = req.usuario._id
+        
+        const user = await User.findById(uid);
+
+        if(!user){
+            return res.status(404).json({
+                message: "User not found"
+            })
+        }
+
+        return res.status(200).json({
+            user
+        })
+
+    }catch(err){
+        return res.status(500).json({
+            succes: false,
+            message: "Error al obtener al usuario",
+            error: err.message
+        });
+    }
+};
+
 
 export const getUsers = async (req, res) => {
     try {

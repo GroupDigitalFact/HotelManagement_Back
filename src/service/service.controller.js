@@ -27,7 +27,7 @@ export const createService = async (req, res) =>{
 export const getServices = async (req, res) =>{
     try{
         const services = await Service.find({status: true});
-        res.status(200).json(services);
+        res.status(200).json({services});
     }catch (error){
         res.status(500).json({error: "Error to find it"});
     }

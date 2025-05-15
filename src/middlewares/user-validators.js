@@ -86,3 +86,9 @@ export const getUserAdminValidator = [
     validarCampos,
     handleErrors
 ];
+
+export const getUserValidator = [
+    validateJWT, 
+    validarCampos,
+    handleErrors
+];
