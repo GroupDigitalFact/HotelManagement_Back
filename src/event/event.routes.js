@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { createEvent, updateEvent, deleteEvent, getEventsByHotel } from './event.controller.js';
+import { createEvent, updateEvent, deleteEvent, getEventsByHotel, listEvent } from './event.controller.js';
 import { createEventValidator, editDeleteEventValidator, DeleteEventValidator } from '../middlewares/event-validators.js';
 
 const router = Router();
@@ -314,5 +314,29 @@ router.delete('/delete/:hotelId/:eventId', DeleteEventValidator, deleteEvent);
  *                   example: Internal server error
  */
 router.get('/hotel/:hotelId', getEventsByHotel);
+
+/**
+ * @swagger
+ * /event/listEvent/:
+ *   get:
+ *     tags:
+ *       - Event
+ *     summary: Listar todos los eventos
+ *     description: |
+ *         Obtiene la lista completa de todos los eventos registrados en el sistema, sin filtrar por hotel.
+ *         
+ *         **Roles permitidos:** ADMIN_ROLE, HOTEL_ADMIN_ROLE
+ *         
+ *         **Recomendaciones para optimizar el uso de la API:**
+ *         - Utilice filtros o paginación si espera una gran cantidad de eventos.
+ *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
+ *     responses:
+ *       '200':
+ *         description: Lista de todos los eventos obtenida exitosamente.
+ *       '500':
+ *         description: Error interno del servidor.
+ */
+router.get('/listEvent/', listEvent);
+
 
 export default router;

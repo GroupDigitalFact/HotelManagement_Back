@@ -1,6 +1,30 @@
 import Hotel from '../hotel/hotel.model.js';
 import Event from './event.model.js';
 
+export const listEvent = async (req, res) =>{
+    try{
+        
+        const events = await Event.find();
+
+        if(!events){
+            return res.status(404).json({
+                message: "Events not found"
+            })
+        }
+
+        return res.status(200).json({
+            events
+        })
+
+    }catch(err){
+        return res.status(500).json({
+            succes: false,
+            message: "Error al obtener los eventos",
+            error: err.message
+        });
+    }
+};
+
 export const createEvent = async (req, res) => {
   try {
     const { hotelId, nombre, descripcion, fecha, servicios } = req.body;
