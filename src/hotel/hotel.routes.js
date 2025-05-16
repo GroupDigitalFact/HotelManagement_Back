@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { searchHotel, deleteHotel, searchHotelsAdmin, updateHotel, registerHotel, obtenerEstadisticasHotel, obtenerEstadisticasPorHotelId } from "./hotel.controller.js";
+import { searchHotel, deleteHotel, searchHotelsAdmin, updateHotel, registerHotel, obtenerEstadisticasHotel, obtenerEstadisticasPorHotelId, getHotels } from "./hotel.controller.js";
 import { searchHotelValidator, registerHotelValidator, updateHotelValidator, searchHotelManagerValidator, delteHotelValidator, estadisticasHotelValidator, estadisticasHotelAdminValidator } from "../middlewares/hotel-validators.js";
 
 const router = Router();
@@ -240,5 +240,29 @@ router.get('/estadisticasManager', estadisticasHotelValidator, obtenerEstadistic
  *         description: Error interno del servidor.
  */
 router.get('/estadisticasHotel/:id', estadisticasHotelAdminValidator, obtenerEstadisticasPorHotelId);
+
+/**
+ * @swagger
+ * /hotel/getHotels:
+ *   get:
+ *     tags:
+ *       - Hotel
+ *     summary: Obtener lista de todos los hoteles
+ *     description: |
+ *         Permite obtener la lista completa de hoteles registrados en el sistema.
+ *         
+ *         **Roles permitidos:** ADMIN_ROLE, HOTEL_ADMIN_ROLE
+ *         
+ *         **Recomendaciones para optimizar el uso de la API:**
+ *         - Utilice filtros o paginación si espera una gran cantidad de hoteles.
+ *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
+ *         - Solicite solo los datos necesarios para optimizar el rendimiento.
+ *     responses:
+ *       200:
+ *         description: Lista de hoteles obtenida exitosamente.
+ *       500:
+ *         description: Error interno del servidor.
+ */
+router.get("/getHotels", searchHotelValidator, getHotels);
 
 export default router;

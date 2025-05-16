@@ -4,6 +4,15 @@ import Room from '../room/room.model.js';
 import Reservation from '../reservation/reservation.model.js';
 import Invoice from '../invoice/invoice.model.js';
 
+export const getHotels = async (req, res) => {
+    try {
+      const hotels = await Hotel.find({ status: true }).populate('admin', 'name surname');
+      res.status(200).json({ hotels });
+    } catch (error) {
+      res.status(500).json({ error: "Error to find it" });
+    }
+  };
+
 export const searchHotel = async (req, res) => {
     try {
       const { name, address, qualification, category } = req.body;
@@ -81,15 +90,6 @@ export const registerHotel = async (req, res) => {
       res.status(500).json({ message: 'Error interno del servidor', error: error.message });
     }
   };
-
-  export const getHotels = async (req, res) =>{
-    try{
-        const hotels = await Hotel.find({status: true});
-        res.status(200).json({hotels});
-    }catch (error){
-        res.status(500).json({error: "Error to find it"});
-    }
-};
 
   export const searchHotelsAdmin = async (req, res) => {
     try {
