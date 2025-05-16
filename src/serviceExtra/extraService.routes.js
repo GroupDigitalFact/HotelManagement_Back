@@ -4,29 +4,15 @@ import { createExtraServiceValidator, updateExtraServiceValidator, deleteExtraSe
 
 const router = Router()
 
-router.post('/addExtraService/:hotelId', createExtraServiceValidator, createExtraService)
-
-router.put('/updateExtraService/:hotelId/:extraServiceId', updateExtraServiceValidator, updateExtraService)
-
-router.delete('/DeleteExtraService/:hotelId/:extraServiceId', deleteExtraServiceValidator, deleteExtraService)
-
-router.get('/list/:hotelId', getExtraServicesByHotel)
-
-export default router
 
 /**
  * @swagger
- * tags:
- *   - name: ExtraService
- *     description: Endpoints relacionados con la gestión de servicios adicionales.
- * 
- * paths:
- *   /extraService/addExtraService/{hotelId}:
- *     post:
- *       tags:
- *         - ExtraService
- *       summary: Crear un servicio adicional para un hotel
- *       description: |
+ * /extraService/addExtraService/{hotelId}:
+ *   post:
+ *     tags:
+ *       - ExtraService
+ *     summary: Crear un servicio adicional para un hotel
+ *     description: |
  *         Permite crear un nuevo servicio adicional asociado a un hotel.
  *         
  *         **Roles permitidos:** ADMIN_ROLE, HOTEL_ADMIN_ROLE
@@ -35,74 +21,52 @@ export default router
  *         - Valide todos los campos requeridos antes de enviar la solicitud.
  *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
  *         - En caso de error de validación, revise los mensajes detallados en la respuesta.
- *       parameters:
- *         - in: path
- *           name: hotelId
- *           required: true
- *           schema:
- *             type: string
- *           description: Identificador único del hotel.
- *       requestBody:
+ *     parameters:
+ *       - in: path
+ *         name: hotelId
  *         required: true
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 name:
- *                   type: string
- *                   description: Nombre del servicio adicional.
- *                 cost:
- *                   type: number
- *                   description: Costo del servicio adicional.
- *                 description:
- *                   type: string
- *                   description: Descripción del servicio adicional.
- *             example:
- *               {
- *                 "name": "Desayuno buffet",
- *                 "cost": 15.5,
- *                 "description": "Desayuno buffet disponible de 7am a 10am."
- *               }
- *       responses:
- *         '201':
- *           description: Servicio adicional creado correctamente.
- *           content:
- *             application/json:
- *               schema:
- *                 type: object
- *                 properties:
- *                   msg:
- *                     type: string
- *                     example: Servicio adicional creado correctamente
- *                   extraService:
- *                     $ref: '#/components/schemas/extraServices'
- *         '404':
- *           description: Hotel no encontrado.
- *           content:
- *             application/json:
- *               schema:
- *                 type: object
- *                 properties:
- *                   msg:
- *                     type: string
- *                     example: Hotel no ncontrado
- *         '500':
- *           description: Error interno del servidor.
- *           content:
- *             application/json:
- *               schema:
- *                 type: object
- *                 properties:
- *                   msg:
- *                     type: string
- *                     example: Error al crear servicio adicional
- *   /extraService/updateExtraService/{hotelId}/{extraServiceId}:
- *     put:
- *       tags:
- *         - ExtraService
- *       summary: Actualizar un servicio adicional
- *       description: |
+ *         schema:
+ *           type: string
+ *         description: Identificador único del hotel.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 description: Nombre del servicio adicional.
+ *               cost:
+ *                 type: number
+ *                 description: Costo del servicio adicional.
+ *               description:
+ *                 type: string
+ *                 description: Descripción del servicio adicional.
+ *           example:
+ *             name: "Desayuno buffet"
+ *             cost: 15.5
+ *             description: "Desayuno buffet disponible de 7am a 10am."
+ *     responses:
+ *       '201':
+ *         description: Servicio adicional creado correctamente.
+ *       '404':
+ *         description: Hotel no encontrado.
+ *       '500':
+ *         description: Error interno del servidor.
+ */
+router.post('/addExtraService/:hotelId', createExtraServiceValidator, createExtraService)
+
+
+/**
+ * @swagger
+ * /extraService/updateExtraService/{hotelId}/{extraServiceId}:
+ *   put:
+ *     tags:
+ *       - ExtraService
+ *     summary: Actualizar un servicio adicional
+ *     description: |
  *         Permite actualizar los datos de un servicio adicional existente.
  *         
  *         **Roles permitidos:** ADMIN_ROLE, HOTEL_ADMIN_ROLE
@@ -111,80 +75,58 @@ export default router
  *         - Valide los datos de entrada antes de enviarlos.
  *         - Actualice solo los campos necesarios para optimizar el rendimiento.
  *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
- *       parameters:
- *         - in: path
- *           name: hotelId
- *           required: true
- *           schema:
- *             type: string
- *           description: Identificador único del hotel.
- *         - in: path
- *           name: extraServiceId
- *           required: true
- *           schema:
- *             type: string
- *           description: Identificador único del servicio adicional.
- *       requestBody:
+ *     parameters:
+ *       - in: path
+ *         name: hotelId
  *         required: true
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 name:
- *                   type: string
- *                   description: Nombre del servicio adicional.
- *                 cost:
- *                   type: number
- *                   description: Costo del servicio adicional.
- *                 description:
- *                   type: string
- *                   description: Descripción del servicio adicional.
- *             example:
- *               {
- *                 "name": "Desayuno buffet premium",
- *                 "cost": 20,
- *                 "description": "Desayuno buffet con opciones premium."
- *               }
- *       responses:
- *         '200':
- *           description: Servicio adicional actualizado correctamente.
- *           content:
- *             application/json:
- *               schema:
- *                 type: object
- *                 properties:
- *                   msg:
- *                     type: string
- *                     example: Servicio adicional actualizado
- *                   extraService:
- *                     $ref: '#/components/schemas/extraServices'
- *         '404':
- *           description: Servicio adicional no encontrado.
- *           content:
- *             application/json:
- *               schema:
- *                 type: object
- *                 properties:
- *                   msg:
- *                     type: string
- *                     example: Servicio adicional no encontrado
- *         '500':
- *           description: Error interno del servidor.
- *           content:
- *             application/json:
- *               schema:
- *                 type: object
- *                 properties:
- *                   msg:
- *                     type: string
- *                     example: Error al actualizar servicio adicional
- *   /extraService/DeleteExtraService/{hotelId}/{extraServiceId}:
- *     delete:
- *       tags:
- *         - ExtraService
- *       summary: Eliminar un servicio adicional
- *       description: |
+ *         schema:
+ *           type: string
+ *         description: Identificador único del hotel.
+ *       - in: path
+ *         name: extraServiceId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Identificador único del servicio adicional.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 description: Nombre del servicio adicional.
+ *               cost:
+ *                 type: number
+ *                 description: Costo del servicio adicional.
+ *               description:
+ *                 type: string
+ *                 description: Descripción del servicio adicional.
+ *           example:
+ *             name: "Desayuno buffet premium"
+ *             cost: 20
+ *             description: "Desayuno buffet con opciones premium."
+ *     responses:
+ *       '200':
+ *         description: Servicio adicional actualizado correctamente.
+ *       '404':
+ *         description: Servicio adicional no encontrado.
+ *       '500':
+ *         description: Error interno del servidor.
+ */
+router.put('/updateExtraService/:hotelId/:extraServiceId', updateExtraServiceValidator, updateExtraService)
+
+
+/**
+ * @swagger
+ * /extraService/DeleteExtraService/{hotelId}/{extraServiceId}:
+ *   delete:
+ *     tags:
+ *       - ExtraService
+ *     summary: Eliminar un servicio adicional
+ *     description: |
  *         Permite eliminar un servicio adicional de un hotel.
  *         
  *         **Roles permitidos:** ADMIN_ROLE, HOTEL_ADMIN_ROLE
@@ -193,56 +135,38 @@ export default router
  *         - Verifique que los identificadores enviados sean correctos.
  *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
  *         - Evite realizar múltiples eliminaciones innecesarias para optimizar el rendimiento.
- *       parameters:
- *         - in: path
- *           name: hotelId
- *           required: true
- *           schema:
- *             type: string
- *           description: Identificador único del hotel.
- *         - in: path
- *           name: extraServiceId
- *           required: true
- *           schema:
- *             type: string
- *           description: Identificador único del servicio adicional.
- *       responses:
- *         '200':
- *           description: Servicio adicional eliminado correctamente.
- *           content:
- *             application/json:
- *               schema:
- *                 type: object
- *                 properties:
- *                   msg:
- *                     type: string
- *                     example: Servicio adicional eliminado correctamente
- *         '404':
- *           description: Servicio adicional no encontrado.
- *           content:
- *             application/json:
- *               schema:
- *                 type: object
- *                 properties:
- *                   msg:
- *                     type: string
- *                     example: Servicio adicional no encontrado
- *         '500':
- *           description: Error interno del servidor.
- *           content:
- *             application/json:
- *               schema:
- *                 type: object
- *                 properties:
- *                   msg:
- *                     type: string
- *                     example: Error al eliminar servicio adicional
- *   /extraService/list/{hotelId}:
- *     get:
- *       tags:
- *         - ExtraService
- *       summary: Listar servicios adicionales por hotel
- *       description: |
+ *     parameters:
+ *       - in: path
+ *         name: hotelId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Identificador único del hotel.
+ *       - in: path
+ *         name: extraServiceId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Identificador único del servicio adicional.
+ *     responses:
+ *       '200':
+ *         description: Servicio adicional eliminado correctamente.
+ *       '404':
+ *         description: Servicio adicional no encontrado.
+ *       '500':
+ *         description: Error interno del servidor.
+ */
+router.delete('/DeleteExtraService/:hotelId/:extraServiceId', deleteExtraServiceValidator, deleteExtraService)
+
+
+/**
+ * @swagger
+ * /extraService/list/{hotelId}:
+ *   get:
+ *     tags:
+ *       - ExtraService
+ *     summary: Listar servicios adicionales por hotel
+ *     description: |
  *         Obtiene todos los servicios adicionales asociados a un hotel.
  *         
  *         **Roles permitidos:** ADMIN_ROLE, HOTEL_ADMIN_ROLE
@@ -251,30 +175,20 @@ export default router
  *         - Utilice filtros o paginación si espera una gran cantidad de servicios adicionales.
  *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
  *         - Valide que el identificador del hotel sea correcto.
- *       parameters:
- *         - in: path
- *           name: hotelId
- *           required: true
- *           schema:
- *             type: string
- *           description: Identificador único del hotel.
- *       responses:
- *         '200':
- *           description: Lista de servicios adicionales obtenida exitosamente.
- *           content:
- *             application/json:
- *               schema:
- *                 type: array
- *                 items:
- *                   $ref: '#/components/schemas/extraServices'
- *         '500':
- *           description: Error interno del servidor.
- *           content:
- *             application/json:
- *               schema:
- *                 type: object
- *                 properties:
- *                   msg:
- *                     type: string
- *                     example: Error al obtener servicios adicional
+ *     parameters:
+ *       - in: path
+ *         name: hotelId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Identificador único del hotel.
+ *     responses:
+ *       '200':
+ *         description: Lista de servicios adicionales obtenida exitosamente.
+ *       '500':
+ *         description: Error interno del servidor.
  */
+router.get('/list/:hotelId', getExtraServicesByHotel)
+
+export default router
+

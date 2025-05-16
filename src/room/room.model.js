@@ -1,51 +1,5 @@
 import { Schema, model } from "mongoose";
 
-/**
- * @swagger
- * components:
- *   schemas:
- *     Room:
- *       type: object
- *       properties:
- *         id:
- *           type: string
- *           description: Identificador único de la habitación.
- *           example: 609bda8f1c4ae34d5c8f9b2a
- *         tipo:
- *           type: string
- *           description: Tipo de habitación.
- *           enum:
- *             - simple
- *             - doble
- *             - suite
- *             - familiar
- *             - lujo
- *           example: suite
- *         capacidad:
- *           type: number
- *           description: Capacidad máxima de personas en la habitación.
- *           example: 4
- *         precio:
- *           type: number
- *           description: Precio por noche de la habitación.
- *           example: 150.75
- *         hotel:
- *           type: string
- *           description: Identificador único del hotel al que pertenece la habitación.
- *           example: 609bda8f1c4ae34d5c8f9b2b
- *         numeroCuarto:
- *           type: number
- *           description: Número de la habitación dentro del hotel.
- *           example: 101
- *         status:
- *           type: string
- *           description: Estado de la habitación (DISPONIBLE u OCUPADA).
- *           enum:
- *             - DISPONIBLE
- *             - OCUPADA
- *           example: DISPONIBLE
- */
-
 const habitacionSchema = Schema({
     tipo: {
         type: String,
