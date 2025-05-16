@@ -3,6 +3,30 @@ import Room from './room.model.js';
 import Reservation from '../reservation/reservation.model.js';
 import jwt from 'jsonwebtoken';
 
+export const getRoom = async (req, res) =>{
+    try{
+        
+        const rooms = await Room.find({status: true});
+
+        if(!rooms){
+            return res.status(404).json({
+                message: "Rooms not found"
+            })
+        }
+
+        return res.status(200).json({
+            rooms
+        })
+
+    }catch(err){
+        return res.status(500).json({
+            succes: false,
+            message: "Error al obtener al usuario",
+            error: err.message
+        });
+    }
+};
+
 export const AllRoomsByHotel = async (req, res) => {
   try {
     const { idHotel, hotelName } = req.body;

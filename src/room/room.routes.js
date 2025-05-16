@@ -1,5 +1,13 @@
 import { Router } from "express";
-import { AllRoomsByHotel, registerRoom, deleteAdminRoom, updateRoomAdmin, createRoomManager, deleteRoomManager, updateRoomManager } from "./room.controller.js";
+import { AllRoomsByHotel, 
+        registerRoom, 
+        deleteAdminRoom, 
+        updateRoomAdmin, 
+        createRoomManager, 
+        deleteRoomManager, 
+        updateRoomManager,
+        getRoom
+        } from "./room.controller.js";
 import { searchRoomValidator,registerValidator, RoomAdminValidator,updateRoomValidator } from "../middlewares/room-validators.js";
 
 const router = Router();
@@ -18,7 +26,7 @@ router.delete('/manager/:roomId', updateRoomValidator, deleteRoomManager);
 
 router.put('/managerUpdate/:roomId', updateRoomValidator, updateRoomManager);
 
-
+router.get('/getRoom/', getRoom)
 
 export default router
 
