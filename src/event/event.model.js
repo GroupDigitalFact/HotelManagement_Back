@@ -25,6 +25,11 @@ const eventoSchema = new Schema({
         ref: 'Hotel',
         required: true
     },
+    user: {
+            type: Schema.Types.ObjectId,
+            ref: 'User',
+            required: true
+        },
     status: {
         type: String,
         required: true,
