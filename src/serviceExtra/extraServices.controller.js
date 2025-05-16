@@ -2,7 +2,29 @@ import Hotel from '../hotel/hotel.model.js';
 import ExtraService from './extraServices.model.js';
 import { validationResult } from 'express-validator';      
 
+export const listServiceExtra = async (req, res) =>{
+    try{
+        
+        const extraService = await ExtraService.find({status: true});
 
+        if(!extraService){
+            return res.status(404).json({
+                message: "Service extra not found"
+            })
+        }
+
+        return res.status(200).json({
+            extraService
+        })
+
+    }catch(err){
+        return res.status(500).json({
+            succes: false,
+            message: "Error al obtener el servicio extra",
+            error: err.message
+        });
+    }
+};
 
 export const createExtraService = async (req, res) => {
     const { hotelId } = req.params

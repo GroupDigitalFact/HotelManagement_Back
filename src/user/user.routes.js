@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { deleteUser, deleteUserAdmin, editProfile, editUserAdmin, getUserAdminHotel, updateProfilePicture, updatePassword, getUsers, getUserClient } from "./user.controller.js";
+import { deleteUser, deleteUserAdmin, editProfile, editUserAdmin, getUserAdminHotel, updateProfilePicture, updatePassword, getUsers, getUserClient, getUserHotel } from "./user.controller.js";
 import { deleteUserValidator, deleteUserAdminValidator, updateUserValidator, updateUserAdminValidator, updateProfilePictureValidator, updatePasswordValidator, getUserAdminValidator, getUserValidator} from "../middlewares/user-validators.js";
 import { uploadProfilePicture } from "../middlewares/multer-uploads.js";
 
@@ -321,6 +321,30 @@ router.get("/user/", getUserValidator, getUserClient );
  *         description: Error interno del servidor.
  */
 router.get("/getUserAdminHotel", getUserAdminHotel);
+
+/**
+ * @swagger
+ * /user/getUserHotel/:
+ *   get:
+ *     tags:
+ *       - User
+ *     summary: Obtener usuarios con rol de hotel
+ *     description: |
+ *         Permite obtener una lista de usuarios que tienen el rol asociado a hotel (por ejemplo, HOTEL_ROLE o similar).
+ *         
+ *         **Roles permitidos:** ADMIN_ROLE, HOTEL_ADMIN_ROLE
+ *         
+ *         **Recomendaciones para optimizar el uso de la API:**
+ *         - Solicite solo los datos necesarios para optimizar el rendimiento.
+ *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
+ *     responses:
+ *       '200':
+ *         description: Lista de usuarios de hotel obtenida exitosamente.
+ *       '500':
+ *         description: Error interno del servidor.
+ */
+router.get("/getUserHotel/", getUserHotel);
+// filepath: c:\Users\rmora\OneDrive\Documentos\IN6BM\DigitalFact\HotelManagement_Back\src\user\user.routes.js
 
 export default router;
 

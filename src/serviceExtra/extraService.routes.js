@@ -1,6 +1,6 @@
 import { Router } from "express"
-import { createExtraService, updateExtraService, deleteExtraService, getExtraServicesByHotel } from "./extraServices.controller.js"
-import { createExtraServiceValidator, updateExtraServiceValidator, deleteExtraServiceValidator} from "../middlewares/extraService-validators.js"
+import { createExtraService, updateExtraService, deleteExtraService, getExtraServicesByHotel, listServiceExtra } from "./extraServices.controller.js"
+import { createExtraServiceValidator, updateExtraServiceValidator, deleteExtraServiceValidator } from "../middlewares/extraService-validators.js"
 
 const router = Router()
 
@@ -189,6 +189,30 @@ router.delete('/DeleteExtraService/:hotelId/:extraServiceId', deleteExtraService
  *         description: Error interno del servidor.
  */
 router.get('/list/:hotelId', getExtraServicesByHotel)
+
+
+/**
+ * @swagger
+ * /extraService/serviceExtraList/:
+ *   get:
+ *     tags:
+ *       - ExtraService
+ *     summary: Listar todos los servicios adicionales
+ *     description: |
+ *         Obtiene la lista completa de todos los servicios adicionales disponibles en el sistema, sin filtrar por hotel.
+ *         
+ *         **Roles permitidos:** ADMIN_ROLE, HOTEL_ADMIN_ROLE
+ *         
+ *         **Recomendaciones para optimizar el uso de la API:**
+ *         - Utilice filtros o paginación si espera una gran cantidad de servicios adicionales.
+ *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
+ *     responses:
+ *       '200':
+ *         description: Lista de todos los servicios adicionales obtenida exitosamente.
+ *       '500':
+ *         description: Error interno del servidor.
+ */
+router.get('/serviceExtraList/', listServiceExtra)
 
 export default router
 
