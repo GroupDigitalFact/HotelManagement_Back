@@ -6,7 +6,7 @@ import jwt from 'jsonwebtoken';
 export const getRoom = async (req, res) =>{
     try{
         
-        const rooms = await Room.find({status: true});
+        const rooms = await Room.find();
 
         if(!rooms){
             return res.status(404).json({

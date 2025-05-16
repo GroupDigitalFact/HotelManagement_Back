@@ -36,6 +36,31 @@ export const getUserClient = async (req, res) =>{
     }
 };
 
+export const getUserAdminHotel = async (req, res) =>{
+    try{
+        const role = 'HOTEL_ADMIN_ROLE'
+        
+        const user = await User.findOne({role});
+
+        if(!user){
+            return res.status(404).json({
+                message: "User not found"
+            })
+        }
+
+        return res.status(200).json({
+            user
+        })
+
+    }catch(err){
+        return res.status(500).json({
+            succes: false,
+            message: "Error al obtener al usuario",
+            error: err.message
+        });
+    }
+};
+
 
 export const getUsers = async (req, res) => {
     try {

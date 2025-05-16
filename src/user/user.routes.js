@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { deleteUser, deleteUserAdmin, editProfile, editUserAdmin, updateProfilePicture, updatePassword, getUsers, getUserClient } from "./user.controller.js";
+import { deleteUser, deleteUserAdmin, editProfile, editUserAdmin, getUserAdminHotel, updateProfilePicture, updatePassword, getUsers, getUserClient } from "./user.controller.js";
 import { deleteUserValidator, deleteUserAdminValidator, updateUserValidator, updateUserAdminValidator, updateProfilePictureValidator, updatePasswordValidator, getUserAdminValidator, getUserValidator} from "../middlewares/user-validators.js";
 import { uploadProfilePicture } from "../middlewares/multer-uploads.js";
 
@@ -21,6 +21,8 @@ router.put("/updatePassword", updatePasswordValidator, updatePassword)
 router.post("/getUsers", getUserAdminValidator, getUsers);
 
 router.get("/user/", getUserValidator, getUserClient );
+
+router.get("/getUserAdminHotel", getUserAdminHotel);
 
 export default router;
 
