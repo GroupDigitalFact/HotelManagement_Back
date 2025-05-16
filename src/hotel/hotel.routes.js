@@ -1,9 +1,10 @@
 import { Router } from "express";
-import { searchHotel, deleteHotel, searchHotelsAdmin, updateHotel, registerHotel, obtenerEstadisticasHotel, obtenerEstadisticasPorHotelId } from "./hotel.controller.js";
+import { getHotels, searchHotel, deleteHotel, searchHotelsAdmin, updateHotel, registerHotel, obtenerEstadisticasHotel, obtenerEstadisticasPorHotelId } from "./hotel.controller.js";
 import { searchHotelValidator, registerHotelValidator, updateHotelValidator, searchHotelManagerValidator, delteHotelValidator, estadisticasHotelValidator, estadisticasHotelAdminValidator } from "../middlewares/hotel-validators.js";
 
 const router = Router();
 
+router.get("/getHotels", searchHotelValidator, getHotels);
 router.get("/searchHotel",  searchHotelValidator, searchHotel);
 router.get("/searchHotelsAdmin", searchHotelManagerValidator, searchHotelsAdmin);
 router.post("/registerHotel", registerHotelValidator, registerHotel);
@@ -13,6 +14,8 @@ router.get('/estadisticasManager', estadisticasHotelValidator, obtenerEstadistic
 router.get('/estadisticasHotel/:id', estadisticasHotelAdminValidator, obtenerEstadisticasPorHotelId);
 
 export default router;
+
+
 /**
  * @swagger
  * tags:
@@ -20,7 +23,52 @@ export default router;
  *     description: Endpoints relacionados con la gestión de hoteles.
  * 
  * paths:
- *   /hotel/searchHotel:
+ *   /hotel/searchHotel:/**
+ * @swagger
+ * paths:
+ *   /hotel/getHotels:
+ *     get:
+ *       tags:
+ *         - Hotel
+ *       summary: Obtener lista de hoteles
+ *       description: |
+ *         Permite obtener una lista de todos los hoteles disponibles.  
+ *         **Roles permitidos:** Público (sin autenticación)
+ *         
+ *         **Recomendaciones para optimizar el uso de la API:**
+ *         - Utilice filtros o paginación si espera una gran cantidad de resultados.
+ *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
+ *       parameters:
+ *         - in: query
+ *           name: page
+ *           schema:
+ *             type: integer
+ *           description: Número de página para la paginación.
+ *         - in: query
+ *           name: limit
+ *           schema:
+ *             type: integer
+ *           description: Cantidad de resultados por página.
+ *       responses:
+ *         '200':
+ *           description: Lista de hoteles obtenida exitosamente.
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 type: array
+ *                 items:
+ *                   $ref: '#/components/schemas/Hotel'
+ *         '500':
+ *           description: Error interno del servidor.
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 type: object
+ *                 properties:
+ *                   message:
+ *                     type: string
+ *                     example: Error al obtener la lista de hoteles
+ *
  *     get:
  *       tags:
  *         - Hotel

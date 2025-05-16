@@ -82,6 +82,15 @@ export const registerHotel = async (req, res) => {
     }
   };
 
+  export const getHotels = async (req, res) =>{
+    try{
+        const hotels = await Hotel.find({status: true});
+        res.status(200).json({hotels});
+    }catch (error){
+        res.status(500).json({error: "Error to find it"});
+    }
+};
+
   export const searchHotelsAdmin = async (req, res) => {
     try {
       const token = req.header('Authorization');
