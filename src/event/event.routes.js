@@ -1,27 +1,25 @@
 import { Router } from 'express';
-import { createEvent, updateEvent, deleteEvent, getEventsByHotel, listEvent } from './event.controller.js';
+import { createEvent, updateEvent, deleteEvent, listEvent } from './event.controller.js';
 import { createEventValidator, editDeleteEventValidator, DeleteEventValidator } from '../middlewares/event-validators.js';
 
 const router = Router();
 
-
 /**
  * @swagger
- * /event/create:
+ * /event/createEvent:
  *   post:
  *     tags:
  *       - Event
  *     summary: Crear un nuevo evento
  *     description: |
- *         Permite crear un nuevo evento asociado a un hotel.
+ *         Permite crear un nuevo evento en el sistema.
  *         
- *         **Roles permitidos:** ADMIN_ROLE, HOTEL_ADMIN_ROLE
+ *         **Roles permitidos:** USER_ROLE, ADMIN_ROLE, HOTEL_ADMIN_ROLE
  *         
  *         **Recomendaciones para optimizar el uso de la API:**
- *         - Valide los datos de entrada antes de enviarlos.
+ *         - Valide todos los campos requeridos antes de enviar la solicitud.
+ *         - No haga referencia a ningún modelo en la petición.
  *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
- *         - En caso de errores de validación, revise los mensajes detallados en la respuesta.
- *         - Para optimizar el rendimiento, evite enviar grandes volúmenes de datos innecesarios.
  *     requestBody:
  *       required: true
  *       content:
@@ -31,7 +29,7 @@ const router = Router();
  *             properties:
  *               hotelId:
  *                 type: string
- *                 description: Identificador único del hotel.
+ *                 description: ID del hotel asociado al evento.
  *               nombre:
  *                 type: string
  *                 description: Nombre del evento.
@@ -41,81 +39,71 @@ const router = Router();
  *               fecha:
  *                 type: string
  *                 format: date
- *                 description: Fecha del evento.
+ *                 description: Fecha del evento (YYYY-MM-DD).
  *               servicios:
  *                 type: array
  *                 items:
  *                   type: string
- *                 description: Lista de identificadores de servicios asociados.
+ *                 description: Lista de servicios asociados al evento.
+ *               hotel:
+ *                 type: string
+ *                 description: ID del hotel (debe ser un ID válido).
  *           example:
- *             hotelId: "609bda8f1c4ae34d5c8f9b2d"
- *             nombre: "Conferencia de Negocios"
- *             descripcion: "Evento enfocado en estrategias de negocios."
- *             fecha: "2025-05-15"
- *             servicios: ["609bda8f1c4ae34d5c8f9b2b", "609bda8f1c4ae34d5c8f9b2c"]
+ *             hotelId: "663b1c2f4b2e2a0012a3b456"
+ *             nombre: "Conferencia de Tecnología"
+ *             descripcion: "Evento sobre innovación tecnológica."
+ *             fecha: "2025-06-15"
+ *             servicios: ["WiFi", "Coffe Break"]
+ *             hotel: "663b1c2f4b2e2a0012a3b456"
  *     responses:
- *       '201':
- *         description: Evento creado exitosamente.
+ *       200:
+ *         description: Evento creado con éxito.
  *         content:
  *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: Evento creado con éxito
- *       '404':
- *         description: Hotel no encontrado.
+ *             example:
+ *               message: "Evento creado con exito"
+ *               event:
+ *                 nombre: "Conferencia de Tecnología"
+ *                 descripcion: "Evento sobre innovación tecnológica."
+ *                 fecha: "2025-06-15"
+ *                 servicios: ["WiFi", "Coffe Break"]
+ *                 hotel: "663b1c2f4b2e2a0012a3b456"
+ *       400:
+ *         description: Error al crear el evento (por ejemplo, ya existe un evento para esa fecha).
  *         content:
  *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: Hotel no encontrado
- *       '500':
+ *             example:
+ *               message: "Error al crear el evento"
+ *               error: "Ya existe un evento para esta fecha"
+ *       500:
  *         description: Error interno del servidor.
  *         content:
  *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: Error al crear evento
- *                 error:
- *                   type: string
- *                   example: Internal server error
+ *             example:
+ *               message: "Error al crear evento"
+ *               error: "Descripción del error"
  */
-router.post('/create', createEventValidator, createEvent);
+router.post('/createEvent', createEventValidator, createEvent);
 
 /**
  * @swagger
- * /event/edit/{hotelId}/{eventId}:
+ * /event/editarEvento/{uid}:
  *   put:
  *     tags:
  *       - Event
- *     summary: Actualizar un evento
+ *     summary: Actualizar un evento existente
  *     description: |
  *         Permite actualizar los datos de un evento existente.
  *         
- *         **Roles permitidos:** ADMIN_ROLE, HOTEL_ADMIN_ROLE
+ *         **Roles permitidos:** USER_ROLE, ADMIN_ROLE, HOTEL_ADMIN_ROLE
  *         
  *         **Recomendaciones para optimizar el uso de la API:**
- *         - Valide los datos de entrada antes de enviarlos.
+ *         - Envíe solo los campos que desea actualizar.
+ *         - No haga referencia a ningún modelo en la petición.
  *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
- *         - En caso de errores de validación, revise los mensajes detallados en la respuesta.
- *         - Para optimizar el rendimiento, actualice solo los campos necesarios.
  *     parameters:
  *       - in: path
- *         name: hotelId
- *         required: true
- *         schema:
- *           type: string
- *         description: Identificador único del hotel.
- *       - in: path
- *         name: eventId
+ *         name: uid
  *         required: true
  *         schema:
  *           type: string
@@ -129,191 +117,104 @@ router.post('/create', createEventValidator, createEvent);
  *             properties:
  *               nombre:
  *                 type: string
- *                 description: Nombre del evento.
+ *                 description: Nuevo nombre del evento.
  *               descripcion:
  *                 type: string
- *                 description: Descripción del evento.
+ *                 description: Nueva descripción del evento.
  *               fecha:
  *                 type: string
  *                 format: date
- *                 description: Fecha del evento.
+ *                 description: Nueva fecha del evento (YYYY-MM-DD).
+ *               servicios:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                 description: Lista de servicios asociados al evento.
  *           example:
- *             nombre: "Conferencia de Negocios"
- *             descripcion: "Evento enfocado en estrategias de negocios."
- *             fecha: "2025-05-15"
+ *             nombre: "Conferencia de Innovación"
+ *             descripcion: "Evento actualizado sobre innovación."
+ *             fecha: "2025-07-01"
+ *             servicios: ["WiFi", "Almuerzo"]
  *     responses:
- *       '200':
- *         description: Evento actualizado exitosamente.
+ *       200:
+ *         description: Evento actualizado con éxito.
  *         content:
  *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: Evento actualizado
- *       '404':
- *         description: Evento no encontrado.
+ *             example:
+ *               message: "Evento actualizado con exito"
+ *               event:
+ *                 nombre: "Conferencia de Innovación"
+ *                 descripcion: "Evento actualizado sobre innovación."
+ *                 fecha: "2025-07-01"
+ *                 servicios: ["WiFi", "Almuerzo"]
+ *       400:
+ *         description: Error al actualizar el evento (por ejemplo, ya existe un evento para esa fecha o evento no encontrado).
  *         content:
  *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: Evento no encontrado en este hotel
- *       '500':
+ *             example:
+ *               message: "Error al actualizar el evento"
+ *               error: "Ya existe un evento para esta fecha"
+ *       500:
  *         description: Error interno del servidor.
  *         content:
  *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: Error al actualizar evento
- *                 error:
- *                   type: string
- *                   example: Internal server error
+ *             example:
+ *               message: "Error al actualizar evento"
+ *               error: "Descripción del error"
  */
-router.put('/edit/:hotelId/:eventId', editDeleteEventValidator, updateEvent);
+router.put('/editarEvento/:uid', editDeleteEventValidator, updateEvent);
 
 /**
  * @swagger
- * /event/delete/{hotelId}/{eventId}:
+ * /event/deleteEvent/{uid}:
  *   delete:
  *     tags:
  *       - Event
- *     summary: Eliminar un evento
+ *     summary: Eliminar (cancelar) un evento
  *     description: |
- *         Permite eliminar un evento asociado a un hotel.
+ *         Permite cancelar (eliminar lógicamente) un evento existente.
  *         
- *         **Roles permitidos:** ADMIN_ROLE, HOTEL_ADMIN_ROLE
+ *         **Roles permitidos:** USER_ROLE, ADMIN_ROLE, HOTEL_ADMIN_ROLE
  *         
  *         **Recomendaciones para optimizar el uso de la API:**
- *         - Verifique que los identificadores enviados sean correctos.
+ *         - Verifique que el identificador del evento sea correcto.
+ *         - No haga referencia a ningún modelo en la petición.
  *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
- *         - En caso de errores de validación, revise los mensajes detallados en la respuesta.
- *         - Para optimizar el rendimiento, evite realizar múltiples eliminaciones innecesarias.
  *     parameters:
  *       - in: path
- *         name: hotelId
- *         required: true
- *         schema:
- *           type: string
- *         description: Identificador único del hotel.
- *       - in: path
- *         name: eventId
+ *         name: uid
  *         required: true
  *         schema:
  *           type: string
  *         description: Identificador único del evento.
  *     responses:
- *       '200':
- *         description: Evento eliminado exitosamente.
+ *       200:
+ *         description: Evento cancelado con éxito.
  *         content:
  *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: Evento eliminado
- *       '404':
- *         description: Evento no encontrado.
+ *             example:
+ *               message: "Evento ah sido cancelado con exito "
+ *               event:
+ *                 nombre: "Conferencia de Tecnología"
+ *                 descripcion: "Evento sobre innovación tecnológica."
+ *                 fecha: "2025-06-15"
+ *                 servicios: ["WiFi", "Coffe Break"]
+ *       400:
+ *         description: Error al eliminar el evento (evento no encontrado).
  *         content:
  *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: Evento no encontrado en este hotel
- *       '500':
+ *             example:
+ *               message: "Error al eliminar el evento"
+ *               error: "Evento no encontrado"
+ *       500:
  *         description: Error interno del servidor.
  *         content:
  *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: Error al eliminar evento
- *                 error:
- *                   type: string
- *                   example: Internal server error
+ *             example:
+ *               message: "Error al eliminar el evento"
+ *               error: "Descripción del error"
  */
-router.delete('/delete/:hotelId/:eventId', DeleteEventValidator, deleteEvent);
-
-/**
- * @swagger
- * /event/hotel/{hotelId}:
- *   get:
- *     tags:
- *       - Event
- *     summary: Obtener eventos por hotel
- *     description: |
- *         Permite obtener todos los eventos asociados a un hotel.
- *         
- *         **Roles permitidos:** ADMIN_ROLE, HOTEL_ADMIN_ROLE
- *         
- *         **Recomendaciones para optimizar el uso de la API:**
- *         - Utilice filtros o paginación si espera una gran cantidad de eventos.
- *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
- *         - Valide que el identificador del hotel sea correcto.
- *         - Para optimizar el rendimiento, solicite solo los datos necesarios.
- *     parameters:
- *       - in: path
- *         name: hotelId
- *         required: true
- *         schema:
- *           type: string
- *         description: Identificador único del hotel.
- *     responses:
- *       '200':
- *         description: Lista de eventos obtenida exitosamente.
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 type: object
- *                 properties:
- *                   nombre:
- *                     type: string
- *                     description: Nombre del evento.
- *                   descripcion:
- *                     type: string
- *                     description: Descripción del evento.
- *                   fecha:
- *                     type: string
- *                     format: date
- *                     description: Fecha del evento.
- *       '404':
- *         description: No se encontraron eventos para el hotel indicado.
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: No se encontraron eventos para este hotel
- *       '500':
- *         description: Error interno del servidor.
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: Error al obtener eventos
- *                 error:
- *                   type: string
- *                   example: Internal server error
- */
-router.get('/hotel/:hotelId', getEventsByHotel);
+router.delete('/deleteEvent/:uid', DeleteEventValidator, deleteEvent);
 
 /**
  * @swagger

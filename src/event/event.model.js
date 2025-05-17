@@ -12,12 +12,11 @@ const eventoSchema = new Schema({
     },
     fecha: {
         type: Date,
-        required: [true, "Event date is required"]
+        required: [true, "Event date is required"],
     },
     servicios: [{
         type: Schema.Types.ObjectId,
         ref: 'Service',
-        required: true
     }],
 
     hotel: {
@@ -31,10 +30,9 @@ const eventoSchema = new Schema({
             required: true
         },
     status: {
-        type: String,
+        type: Boolean,
         required: true,
-        enum: ['ACTIVO', 'CANCELADO'],
-        default: 'ACTIVO'
+        default: true
     }
 }, {
     versionKey: false,
