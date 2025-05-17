@@ -25,6 +25,29 @@ export const listEvent = async (req, res) =>{
     }
 };
 
+export const listEventUser = async (req, res) =>{
+    try{
+        
+        const events = await Event.find({status: true}).populate({path: 'user', match:{role:'USER_ROLE'}});
+
+        if(!events){
+            return res.status(404).json({
+                message: "Events not found"
+            })
+        }
+
+        return res.status(200).json({
+            events
+        })
+
+    }catch(err){
+        return res.status(500).json({
+            succes: false,
+            message: "Error al obtener los eventos",
+            error: err.message
+        });
+    }
+};
 export const createEvent = async (req, res) => {
   try {
     const  uid  = req.usuario._id

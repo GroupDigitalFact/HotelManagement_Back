@@ -40,3 +40,10 @@ export const DeleteEventValidator = [
     handleErrors
 ]
 
+export const listEventValidator = [
+    validateJWT,
+    hasRoles("ADMIN_ROLE", "HOTEL_ADMIN_ROLE"),
+    validarCampos,
+    deleteFileOnError,
+    handleErrors
+]

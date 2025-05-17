@@ -1,12 +1,13 @@
 import { hash, verify } from "argon2";
 import User from "./user.model.js";
-import fs from "fs/promises";
+import {unlink } from "fs/promises";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import jwt from "jsonwebtoken";
 import argon2 from "argon2";
 import Reservation from "../reservation/reservation.model.js";
 import Room from "../room/room.model.js";
+
 
 
 const __dirname = dirname(fileURLToPath(import.meta.url));  
@@ -183,52 +184,45 @@ export const updatePassword = async (req, res) => {
 
 export const updateProfilePicture = async (req, res) => {
     try {
-        const token = req.header("Authorization");
-        if (!token) {
-            return res.status(401).json({
-                success: false,
-                msg: "Token no proporcionado",
-            });
-        }
-        const { uid } = jwt.verify(token.replace("Bearer ", ""), process.env.SECRETORPRIVATEKEY);
-        const newProfilePicture = req.file ? req.file.filename : null;
-
-        if (!newProfilePicture) {
-            return res.status(400).json({
-                success: false,
-                msg: "No se proporcionó una nueva foto de perfil",
-            });
-        }
+        const uid = req.usuario._id
+        const file = req.file ? req.file.filename : null;
         const user = await User.findById(uid);
-
         if (!user) {
-            return res.status(404).json({
-                success: false,
-                msg: "Usuario no encontrado",
-            });
+            return res.status(404).json({ success: false, message: "Publicación no encontrada" });
         }
-        if (user.profilePicture) {
+
+        if (file) {
+            if (user.profilePicture) {
             const oldProfilePicturePath = join(__dirname, "../../public/uploads/profile-pictures", user.profilePicture);
             try {
-                await fs.unlink(oldProfilePicturePath);
+                await unlink(oldProfilePicturePath);
             } catch (error) {
-                console.warn("No se pudo eliminar la imagen anterior, tal vez ya no existe.");
+                console.log("No se pudo eliminar la imagen anterior, tal vez ya no existe.");
             }
         }
-        user.profilePicture = newProfilePicture;
-        await user.save();
+            
 
-        res.status(200).json({
-            success: true,
-            msg: "Foto de perfil actualizada",
-            user,
+            user.profilePicture = file;
+        
+            await user.save();
+        
+            return res.status(200).json({ 
+                success: true, 
+                message: "Imagen actualizada correctamente",
+                user
+            });
+        }
+        
+        return res.status(400).json({ 
+            success: false, 
+            message: "No se envió una nueva imagen" 
         });
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({
-            success: false,
-            msg: "Error al actualizar la foto de perfil",
-            error: err.message,
+    
+    } catch (error) {
+        res.status(500).json({ 
+            success: false, 
+            message: "Error al actualizar la imagen", 
+            error: error.message
         });
     }
 };

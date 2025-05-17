@@ -92,3 +92,10 @@ export const getUserValidator = [
     validarCampos,
     handleErrors
 ];
+
+export const getUserEditValidator = [
+    validateJWT, 
+    hasRoles("USER_ROLE", "ADMIN_ROLE", "HOTEL_ADMIN_ROLE"),
+    validarCampos,
+    handleErrors
+];
