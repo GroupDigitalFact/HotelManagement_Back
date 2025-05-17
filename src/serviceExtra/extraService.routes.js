@@ -1,33 +1,25 @@
 import { Router } from "express"
-import { createExtraService, updateExtraService, deleteExtraService, getExtraServicesByHotel, listServiceExtra } from "./extraServices.controller.js"
+import { createExtraService, updateExtraService, deleteExtraService,  listServiceExtra } from "./extraServices.controller.js"
 import { createExtraServiceValidator, updateExtraServiceValidator, deleteExtraServiceValidator } from "../middlewares/extraService-validators.js"
 
 const router = Router()
 
-
 /**
  * @swagger
- * /extraService/addExtraService/{hotelId}:
+ * /extraService/addExtraService:
  *   post:
  *     tags:
  *       - ExtraService
- *     summary: Crear un servicio adicional para un hotel
+ *     summary: Crear un nuevo servicio extra
  *     description: |
- *         Permite crear un nuevo servicio adicional asociado a un hotel.
+ *         Permite crear un nuevo servicio adicional en el sistema.
  *         
  *         **Roles permitidos:** ADMIN_ROLE, HOTEL_ADMIN_ROLE
  *         
  *         **Recomendaciones para optimizar el uso de la API:**
  *         - Valide todos los campos requeridos antes de enviar la solicitud.
+ *         - No haga referencia a ningún modelo en la petición.
  *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
- *         - En caso de error de validación, revise los mensajes detallados en la respuesta.
- *     parameters:
- *       - in: path
- *         name: hotelId
- *         required: true
- *         schema:
- *           type: string
- *         description: Identificador único del hotel.
  *     requestBody:
  *       required: true
  *       content:
@@ -35,59 +27,70 @@ const router = Router()
  *           schema:
  *             type: object
  *             properties:
- *               name:
+ *               nombre:
  *                 type: string
- *                 description: Nombre del servicio adicional.
- *               cost:
+ *                 description: Nombre del servicio extra.
+ *               descripcion:
+ *                 type: string
+ *                 description: Descripción del servicio extra.
+ *               precio:
  *                 type: number
- *                 description: Costo del servicio adicional.
- *               description:
- *                 type: string
- *                 description: Descripción del servicio adicional.
+ *                 description: Precio del servicio extra.
  *           example:
- *             name: "Desayuno buffet"
- *             cost: 15.5
- *             description: "Desayuno buffet disponible de 7am a 10am."
+ *             nombre: "Desayuno buffet"
+ *             descripcion: "Acceso a desayuno buffet todos los días"
+ *             precio: 15.99
  *     responses:
- *       '201':
- *         description: Servicio adicional creado correctamente.
- *       '404':
- *         description: Hotel no encontrado.
- *       '500':
+ *       200:
+ *         description: Servicio extra creado con éxito.
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: "El servicio extra creado con exito"
+ *               extraService:
+ *                 nombre: "Desayuno buffet"
+ *                 descripcion: "Acceso a desayuno buffet todos los días"
+ *                 precio: 15.99
+ *       400:
+ *         description: Error al crear el servicio extra.
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: "Error al crear tu servicio extra"
+ *               error: "El servicio extra no ha sido encontrado"
+ *       500:
  *         description: Error interno del servidor.
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: "Error al crear sercvicio extra"
+ *               error: "Descripción del error"
  */
-router.post('/addExtraService/:hotelId', createExtraServiceValidator, createExtraService)
-
+router.post('/addExtraService', createExtraServiceValidator, createExtraService);
 
 /**
  * @swagger
- * /extraService/updateExtraService/{hotelId}/{extraServiceId}:
+ * /extraService/updateExtraService/{uid}:
  *   put:
  *     tags:
  *       - ExtraService
- *     summary: Actualizar un servicio adicional
+ *     summary: Actualizar un servicio extra
  *     description: |
  *         Permite actualizar los datos de un servicio adicional existente.
  *         
  *         **Roles permitidos:** ADMIN_ROLE, HOTEL_ADMIN_ROLE
  *         
  *         **Recomendaciones para optimizar el uso de la API:**
- *         - Valide los datos de entrada antes de enviarlos.
- *         - Actualice solo los campos necesarios para optimizar el rendimiento.
+ *         - Envíe solo los campos que desea actualizar.
+ *         - No haga referencia a ningún modelo en la petición.
  *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
  *     parameters:
  *       - in: path
- *         name: hotelId
+ *         name: uid
  *         required: true
  *         schema:
  *           type: string
- *         description: Identificador único del hotel.
- *       - in: path
- *         name: extraServiceId
- *         required: true
- *         schema:
- *           type: string
- *         description: Identificador único del servicio adicional.
+ *         description: Identificador único del servicio extra.
  *     requestBody:
  *       required: true
  *       content:
@@ -95,101 +98,97 @@ router.post('/addExtraService/:hotelId', createExtraServiceValidator, createExtr
  *           schema:
  *             type: object
  *             properties:
- *               name:
+ *               nombre:
  *                 type: string
- *                 description: Nombre del servicio adicional.
- *               cost:
+ *                 description: Nuevo nombre del servicio extra.
+ *               descripcion:
+ *                 type: string
+ *                 description: Nueva descripción del servicio extra.
+ *               precio:
  *                 type: number
- *                 description: Costo del servicio adicional.
- *               description:
- *                 type: string
- *                 description: Descripción del servicio adicional.
+ *                 description: Nuevo precio del servicio extra.
  *           example:
- *             name: "Desayuno buffet premium"
- *             cost: 20
- *             description: "Desayuno buffet con opciones premium."
+ *             nombre: "Desayuno continental"
+ *             descripcion: "Desayuno continental mejorado"
+ *             precio: 18.99
  *     responses:
- *       '200':
- *         description: Servicio adicional actualizado correctamente.
- *       '404':
- *         description: Servicio adicional no encontrado.
- *       '500':
+ *       200:
+ *         description: Servicio extra actualizado con éxito.
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: "El servicio actualizado con exito"
+ *               extraService:
+ *                 nombre: "Desayuno continental"
+ *                 descripcion: "Desayuno continental mejorado"
+ *                 precio: 18.99
+ *       400:
+ *         description: Error al actualizar el servicio extra.
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: "Error al actualizar el servicio extra"
+ *               error: "Servicio extra no encontrado"
+ *       500:
  *         description: Error interno del servidor.
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: "Error al actualizar el sersvicio extra"
+ *               error: "Descripción del error"
  */
-router.put('/updateExtraService/:hotelId/:extraServiceId', updateExtraServiceValidator, updateExtraService)
-
+router.put('/updateExtraService/:uid', updateExtraServiceValidator, updateExtraService);
 
 /**
  * @swagger
- * /extraService/DeleteExtraService/{hotelId}/{extraServiceId}:
+ * /extraService/deleteExtraService/{uid}:
  *   delete:
  *     tags:
  *       - ExtraService
- *     summary: Eliminar un servicio adicional
+ *     summary: Eliminar (cancelar) un servicio extra
  *     description: |
- *         Permite eliminar un servicio adicional de un hotel.
+ *         Permite cancelar (eliminar lógicamente) un servicio adicional existente.
  *         
  *         **Roles permitidos:** ADMIN_ROLE, HOTEL_ADMIN_ROLE
  *         
  *         **Recomendaciones para optimizar el uso de la API:**
- *         - Verifique que los identificadores enviados sean correctos.
+ *         - Verifique que el identificador del servicio extra sea correcto.
+ *         - No haga referencia a ningún modelo en la petición.
  *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
- *         - Evite realizar múltiples eliminaciones innecesarias para optimizar el rendimiento.
  *     parameters:
  *       - in: path
- *         name: hotelId
+ *         name: uid
  *         required: true
  *         schema:
  *           type: string
- *         description: Identificador único del hotel.
- *       - in: path
- *         name: extraServiceId
- *         required: true
- *         schema:
- *           type: string
- *         description: Identificador único del servicio adicional.
+ *         description: Identificador único del servicio extra.
  *     responses:
- *       '200':
- *         description: Servicio adicional eliminado correctamente.
- *       '404':
- *         description: Servicio adicional no encontrado.
- *       '500':
+ *       200:
+ *         description: Servicio extra cancelado con éxito.
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: "Servicio extra ah sido cancelado con exito "
+ *               event:
+ *                 nombre: "Desayuno buffet"
+ *                 descripcion: "Acceso a desayuno buffet todos los días"
+ *                 precio: 15.99
+ *       400:
+ *         description: Error al eliminar el servicio extra.
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: "Error al eliminar el servicio extra"
+ *               error: "Servicio extra no encontrado"
+ *       500:
  *         description: Error interno del servidor.
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: "Error al eliminar el servicio extra"
+ *               error: "Descripción del error"
  */
-router.delete('/DeleteExtraService/:hotelId/:extraServiceId', deleteExtraServiceValidator, deleteExtraService)
-
-
-/**
- * @swagger
- * /extraService/list/{hotelId}:
- *   get:
- *     tags:
- *       - ExtraService
- *     summary: Listar servicios adicionales por hotel
- *     description: |
- *         Obtiene todos los servicios adicionales asociados a un hotel.
- *         
- *         **Roles permitidos:** ADMIN_ROLE, HOTEL_ADMIN_ROLE
- *         
- *         **Recomendaciones para optimizar el uso de la API:**
- *         - Utilice filtros o paginación si espera una gran cantidad de servicios adicionales.
- *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
- *         - Valide que el identificador del hotel sea correcto.
- *     parameters:
- *       - in: path
- *         name: hotelId
- *         required: true
- *         schema:
- *           type: string
- *         description: Identificador único del hotel.
- *     responses:
- *       '200':
- *         description: Lista de servicios adicionales obtenida exitosamente.
- *       '500':
- *         description: Error interno del servidor.
- */
-router.get('/list/:hotelId', getExtraServicesByHotel)
-
+router.delete('/deleteExtraService/:uid', deleteExtraServiceValidator, deleteExtraService);
 
 /**
  * @swagger

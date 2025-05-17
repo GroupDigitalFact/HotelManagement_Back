@@ -85,6 +85,6 @@ export const initiServer = () => {
         console.log(`Server running on port ${process.env.PORT}`)
         console.log(`Swagger docs available at http://localhost:${process.env.PORT}/api-docs`);
     }catch(err){
-        console.log(`Server init failed: ${err}`)
+        console.log(`Server init failed: `, err)
     }
 }

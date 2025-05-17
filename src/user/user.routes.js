@@ -271,7 +271,7 @@ router.put("/updatePassword", updatePasswordValidator, updatePassword)
  *       '500':
  *         description: Error interno del servidor.
  */
-router.post("/getUsers", getUserAdminValidator, getUsers);
+router.get("/getUsers", getUserAdminValidator, getUsers);
 
 
 /**

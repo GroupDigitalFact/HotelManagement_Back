@@ -27,64 +27,75 @@ export const listServiceExtra = async (req, res) =>{
 };
 
 export const createExtraService = async (req, res) => {
-    const { hotelId } = req.params
-    const { name, cost, description } = req.body
-
     try {
-        const hotel = await Hotel.findById(hotelId)
-        if (!hotel) return res.status(404).json({ msg: 'Hotel no ncontrado' })
+    const data = req.body;
 
-        const extraService = new ExtraService({ name, cost, description, hotel: hotelId })
-        await extraService.save();
-
-        res.status(201).json({ msg: 'Servicio adicional creado correctamente', extraService })
-    } catch (error) {
-        res.status(500).json({ msg: 'Error al crear servicio adicional' })
+    const extraService = await ExtraService.create(data);
+    
+    if (!extraService) {
+      return res.status(400).json({
+        message: "Error al crear tu servicio extra",
+        error: "El servicio extra no ha sido encontrado"
+      })
     }
+    return res.status(200).json({
+      message: "El servicio extra creado con exito",
+      extraService
+    })
+  }catch (e){
+    return res.status(500).json({
+      message: "Error al crear sercvicio extra",
+      error: e.message
+    })
+  }
 }
 
-
 export const updateExtraService = async (req, res) => {
-    const { hotelId, extraServiceId } = req.params
-    const { name, cost, description } = req.body
-
     try {
-        const extraService = await ExtraService.findOneAndUpdate(
-            { _id: extraServiceId, hotel: hotelId },
-            { name, cost, description },
-            { new: true }
-        )
-
-        if (!extraService) return res.status(404).json({ msg: 'Servicio adicional no encontrado' })
-
-        res.status(200).json({ msg: 'Servicio adicional actualizado', extraService })
-    } catch (error) {
-        res.status(500).json({ msg: 'Error al actualizar servicio adicional' })
-    }
+        const { uid } = req.params;
+        const data = req.body;
+        
+        const extraService = await ExtraService.findByIdAndUpdate(uid, data, { new: true });
+    
+            if (!extraService) {
+                return res.status(400).json({
+                    message: "Error al actualizar el servicio extra",
+                    error: "Servicio extra no encontrado"
+                })
+            }
+            
+            return res.status(200).json({
+                message: "El servicio actualizado con exito",
+                extraService 
+            })
+        }catch (e){
+            return res.status(500).json({
+                message: "Error al actualizar el sersvicio extra",
+                error: e.message
+            })
+      }
 }
 
 export const deleteExtraService = async (req, res) => {
-    const { hotelId, extraServiceId } = req.params
-
     try {
-        const extraService = await ExtraService.findOneAndDelete({ _id: extraServiceId, hotel: hotelId })
+        const { uid } = req.params;
+        const event = await Event.findByIdAndUpdate(uid, { status: false }, { new: true });
 
-        if (!extraService) return res.status(404).json({ msg: 'Servicio adicional no encontrado' })
-
-        res.status(200).json({ msg: 'Servicio adicional eliminado correctamente' })
-    } catch (error) {
-        res.status(500).json({ msg: 'Error al eliminar servicio adicional' })
-    }
-}
-
-export const getExtraServicesByHotel = async (req, res) => {
-    const { hotelId } = req.params;
-
-    try {
-        const extraServices = await ExtraService.find({ hotel: hotelId });
-        res.status(200).json(extraServices)
-    } catch (error) {
-        res.status(500).json({ msg: 'Error al obtener servicios adicional' })
-    }
-}
+            if (!event) {
+                return res.status(400).json({
+                    message: "Error al eliminar el servicio extra",
+                    error: "Servicio extra no encontrado"
+                })
+            }
+            return res.status(200).json({
+                message: "Servicio extra ah sido cancelado con exito ",
+                event
+            })
+        }catch (e){
+            return res.status(500).json({
+                message: "Error al eliminar el servicio extra",
+                error: e.message
+            })
+        }
+};
 

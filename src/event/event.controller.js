@@ -64,35 +64,34 @@ export const createEvent = async (req, res) => {
 export const updateEvent = async (req, res) => {
   try {
     const { uid } = req.params;
-        const data = req.body;
-        const date = data.fecha;
-        const eventDate = await Event.findOne({date});
-
-        if (eventDate) {
-            return res.status(400).json({
-                message: "Error al actualizar el evento",
-                error: "Ya existe un evento para esta fecha"
-            })
-        }
-
-        const event = await Event.findByIdAndUpdate(uid, data, { new: true });
-
-        if (!event) {
-            return res.status(400).json({
-                message: "Error al actualizar el evento",
-                error: "Evento no encontrado"
-            })
-        }
-        
-        return res.status(200).json({
-            message: "Evento actualizado con exito",
-            event 
-        })
-    }catch (e){
-        return res.status(500).json({
-            message: "Error al actualizar evento",
-            error: e.message
-        })
+    const data = req.body;
+    const date = data.fecha;
+    const eventDate = await Event.findOne({date});
+    if (eventDate) {
+       return res.status(400).json({
+        message: "Error al actualizar el evento",
+        error: "Ya existe un evento para esta fecha"
+      })
+    }
+    
+    const event = await Event.findByIdAndUpdate(uid, data, { new: true });
+    
+    if (!event) {
+      return res.status(400).json({
+        message: "Error al actualizar el evento",
+        error: "Evento no encontrado"
+      })
+    }
+    
+    return res.status(200).json({
+      message: "Evento actualizado con exito",
+      event 
+    })
+  }catch (e){
+    return res.status(500).json({
+      message: "Error al actualizar evento",
+      error: e.message
+    })
   }
 };
 

@@ -18,7 +18,6 @@ const eventoSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Service',
     }],
-
     hotel: {
         type: Schema.Types.ObjectId,
         ref: 'Hotel',

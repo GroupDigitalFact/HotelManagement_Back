@@ -1,6 +1,6 @@
 import User from "../user/user.model.js"
 import Room from "../room/room.model.js"
-
+import Hotel from "../hotel/hotel.model.js"
 
 export const emailExist = async(email = "") =>{
     const existe = await User.findOne({email})
@@ -23,3 +23,9 @@ export const userExists = async (uid =" ") =>{
     }
 }
 
+export const hotelExists = async (uid =" ") =>{
+    const existe = await Hotel.findById(uid)
+    if(!existe){
+        throw new Error("El hotel no existe")
+    }
+}
