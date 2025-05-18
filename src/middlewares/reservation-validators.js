@@ -46,6 +46,22 @@ export const AdminReservationValidator = [
     handleErrors
 ];
 
+export const listReservationValidator = [
+    validateJWT, 
+    hasRoles("ADMIN_ROLE"),
+    validarCampos,
+    deleteFileOnError,
+    handleErrors
+];
+
+export const ReservationValidator = [
+    validateJWT, 
+    hasRoles("ADMIN_ROLE", "HOTEL_ADMIN_ROLE"),
+    validarCampos,
+    deleteFileOnError,
+    handleErrors
+];
+
 export const ManagerReservationValidator = [
     validateJWT, 
     hasRoles("HOTEL_ADMIN_ROLE", "ADMIN_ROLE"),

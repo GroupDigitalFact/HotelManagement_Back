@@ -5,6 +5,203 @@ import ExtraService from "../serviceExtra/extraServices.model.js";
 import User from "../user/user.model.js";
 import Hotel from "../hotel/hotel.model.js";
 
+export const editReservation = async (req, res) => {
+  try {
+    const { idreservation, username, hotelName, numeroCuarto, dateEntry, departureDate, cardNumber, CVV, expired, extraServices } = req.body;
+
+    const reservation = await Reservation.findById(idreservation);
+    if (!reservation) return res.status(404).json({ message: 'Reservación no encontrada' });
+
+    const user = await User.findOne({ username });
+    if (!user) return res.status(404).json({ message: 'Usuario no encontrado' });
+
+    const hotel = await Hotel.findOne({ name: hotelName });
+    if (!hotel) return res.status(404).json({ message: 'Hotel no encontrado' });
+
+    const room = await Room.findOne({ hotel: hotel._id, numeroCuarto });
+    if (!room) return res.status(404).json({ message: 'Habitación no encontrada' });
+
+    const expiredDate = new Date(expired);
+    if (isNaN(expiredDate)) return res.status(400).json({ message: 'Fecha de expiración inválida' });
+
+    const overlappingReservations = await Reservation.find({
+      _id: { $ne: idreservation },
+      room: room._id,
+      state: 'activa',
+      $or: [
+        { dateEntry: { $lt: departureDate }, departureDate: { $gt: dateEntry } },
+        { dateEntry: { $gte: dateEntry }, departureDate: { $lte: departureDate } }
+      ]
+    });
+
+    if (overlappingReservations.length > 0) {
+      return res.status(400).json({ message: 'La habitación ya está reservada en las fechas seleccionadas' });
+    }
+
+    let validExtraServiceIds = [];
+    if (extraServices && extraServices.length > 0) {
+      const foundServices = await ExtraService.find({
+        name: { $in: extraServices },
+        hotel: hotel._id
+      });
+
+      if (foundServices.length !== extraServices.length) {
+        return res.status(400).json({ message: 'Algunos servicios extra no pertenecen al hotel' });
+      }
+
+      validExtraServiceIds = foundServices.map(s => s._id);
+    }
+
+    reservation.user = user._id;
+    reservation.room = room._id;
+    reservation.dateEntry = dateEntry;
+    reservation.departureDate = departureDate;
+    reservation.cardNumber = cardNumber;
+    reservation.CVV = CVV;
+    reservation.expired = expiredDate;
+    reservation.extraServices = validExtraServiceIds;
+
+    await reservation.save();
+
+    res.status(200).json({ message: 'Reservación actualizada correctamente', reservation });
+
+  } catch (err) {
+    console.error('Error al editar:', err);
+    res.status(500).json({ message: 'Error al editar la reservación', error: err.message });
+  }
+};
+
+
+export const createReservationRoom = async (req, res) => {
+  try {
+    const { username, hotelName, numeroCuarto, dateEntry, departureDate, cardNumber, CVV, expired, extraServices } = req.body;
+
+    const user = await User.findOne({ username });
+    if (!user) return res.status(404).json({ message: 'Usuario no encontrado' });
+
+    const hotel = await Hotel.findOne({ name: hotelName });
+    if (!hotel) return res.status(404).json({ message: 'Hotel no encontrado' });
+
+    const room = await Room.findOne({ hotel: hotel._id, numeroCuarto });
+    if (!room) return res.status(404).json({ message: 'Habitación no encontrada en el hotel' });
+
+    const expiredDate = new Date(expired);
+    if (isNaN(expiredDate)) return res.status(400).json({ message: 'Fecha de expiración inválida' });
+
+    const overlappingReservations = await Reservation.find({
+      room: room._id,
+      state: 'activa',
+      $or: [
+        { dateEntry: { $lt: departureDate }, departureDate: { $gt: dateEntry } },
+        { dateEntry: { $gte: dateEntry }, departureDate: { $lte: departureDate } }
+      ]
+    });
+
+    if (overlappingReservations.length > 0) {
+      return res.status(400).json({ message: 'La habitación ya está reservada en las fechas seleccionadas' });
+    }
+
+    let validExtraServiceIds = [];
+    if (extraServices && extraServices.length > 0) {
+      const foundServices = await ExtraService.find({
+        name: { $in: extraServices },
+        hotel: hotel._id
+      });
+
+      if (foundServices.length !== extraServices.length) {
+        return res.status(400).json({ message: 'Algunos servicios extra no pertenecen al hotel' });
+      }
+
+      validExtraServiceIds = foundServices.map(s => s._id);
+    }
+
+    const newReservation = new Reservation({
+      user: user._id,
+      room: room._id,
+      dateEntry,
+      departureDate,
+      cardNumber,
+      CVV,
+      expired: expiredDate,
+      extraServices: validExtraServiceIds
+    });
+
+    await newReservation.save();
+    room.status = 'OCUPADA';
+    await room.save();
+
+    res.status(201).json({ message: 'Reservación creada correctamente', reservation: newReservation });
+
+  } catch (err) {
+    console.error('Error en creación:', err);
+    res.status(500).json({ message: 'Error al crear la reservación', error: err.message });
+  }
+};
+
+
+export const listarReservation = async (req, res) => {
+    try {
+      const reservas = await Reservation.find({ state: 'activa' }) 
+        .populate({
+          path: 'user',
+          select: 'username name surname phone'
+        })
+        .populate({
+          path: 'room',
+          select: 'tipo precio numeroCuarto hotel',
+          populate: {
+            path: 'hotel',
+            select: 'name address'
+          }
+        })
+        .populate({
+          path: 'extraServices',
+          select: 'name cost',
+        });
+
+      res.status(200).json(reservas);
+    } catch (error) {
+      console.error('Error al listar las reservas:', error);
+      res.status(500).json({ message: 'Error al obtener las reservaciones' });
+    }
+};
+
+  export const cancelReservationAdmin = async (req, res) => {
+  try {
+    const { id } = req.body; 
+
+    const reservation = await Reservation.findById(id);
+    if (!reservation) {
+      return res.status(404).json({ message: 'Reservación no encontrada' });
+    }
+
+    if (reservation.state !== 'activa') {
+      return res.status(400).json({ message: 'Solo se pueden cancelar reservaciones activas' });
+    }
+
+    reservation.state = 'cancelada';
+    await reservation.save();
+
+    const otrasReservasActivas = await Reservation.find({
+      room: reservation.room,
+      state: 'activa',
+      _id: { $ne: reservation._id }
+    });
+
+    if (otrasReservasActivas.length === 0) {
+      await Room.findByIdAndUpdate(reservation.room, { status: 'DISPONIBLE' });
+    }
+
+    res.status(200).json({
+      message: 'Reservación cancelada correctamente',
+      reservation
+    });
+  } catch (error) {
+    console.error('Error al cancelar la reservación:', error);
+    res.status(500).json({ message: 'Error al cancelar la reservación' });
+  }
+};
+
 export const reserveRoom = async (req, res) => {
     try {
       const token = req.header('Authorization');

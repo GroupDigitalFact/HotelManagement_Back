@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "ce325b24-be0b-4880-af61-3c3c6b829ded",
+		"_postman_id": "e3aa59f5-6463-4933-9f29-1e5db2eb7619",
 		"name": "Hotel Management",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "41958993"
@@ -869,208 +869,6 @@
 								"room",
 								"managerUpdate",
 								"6817da3250f1fcb2508c230d"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Reservation",
-			"item": [
-				{
-					"name": "reservationRoom",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODE3YzRhODBlNDY3NTY3N2NiZWE3N2QiLCJpYXQiOjE3NDY0MDA2NjUsImV4cCI6MTc0NjQwNDI2NX0.UKzV2XemW9ACjB1JQ0tUQbYTwB0xQSFMz61fmhxVAvw",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"roomId\": \"6817d8e050f1fcb2508c22bb\",\r\n  \"dateEntry\": \"2025/05/05\",\r\n  \"departureDate\": \"2025/05/10\",\r\n  \"cardNumber\": \"1234567812345678\",\r\n  \"CVV\": \"123\",\r\n  \"expired\": \"2025/01/04\",\r\n  \"extraServices\": [\"6817d2653c3d3be5d2bb69ec\"]\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://127.0.0.1:3001/hotelManagement/v1/reservation/Reserve",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "3001",
-							"path": [
-								"hotelManagement",
-								"v1",
-								"reservation",
-								"Reserve"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "cancelReservation",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODE3YzRhODBlNDY3NTY3N2NiZWE3N2QiLCJpYXQiOjE3NDY0MDA2NjUsImV4cCI6MTc0NjQwNDI2NX0.UKzV2XemW9ACjB1JQ0tUQbYTwB0xQSFMz61fmhxVAvw",
-									"type": "string"
-								}
-							]
-						},
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://127.0.0.1:3001/hotelManagement/v1/reservation/Cancel/6817f9614ad0ba5692ff8e00",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "3001",
-							"path": [
-								"hotelManagement",
-								"v1",
-								"reservation",
-								"Cancel",
-								"6817f9614ad0ba5692ff8e00"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "myReservations",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODE3YzRhODBlNDY3NTY3N2NiZWE3N2QiLCJpYXQiOjE3NDY0MDA2NjUsImV4cCI6MTc0NjQwNDI2NX0.UKzV2XemW9ACjB1JQ0tUQbYTwB0xQSFMz61fmhxVAvw",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://127.0.0.1:3001/hotelManagement/v1/reservation/my-reservations",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "3001",
-							"path": [
-								"hotelManagement",
-								"v1",
-								"reservation",
-								"my-reservations"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "user-reservations",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODE3YzI3NGY4N2M1YjI0NDQwZjJhNWIiLCJpYXQiOjE3NDY0MDE5MzEsImV4cCI6MTc0NjQwNTUzMX0.pEM0Mb9b5keYCNeBKUJDIByxL_qmfz301051nfdTqGI",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://127.0.0.1:3001/hotelManagement/v1/reservation/user-reservations/6817cd1aa1c7cacb1bc7c8ec",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "3001",
-							"path": [
-								"hotelManagement",
-								"v1",
-								"reservation",
-								"user-reservations",
-								"6817cd1aa1c7cacb1bc7c8ec"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "hotel-reservations",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODE3YzI3NGY4N2M1YjI0NDQwZjJhNWMiLCJpYXQiOjE3NDY0MDI0NTksImV4cCI6MTc0NjQwNjA1OX0.-AeZk1E0mAX66nrQ9Rchswux4qlt65n_hcqsJeeiyQg",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://127.0.0.1:3001/hotelManagement/v1/reservation/admin/hotel-reservations/6817c4a80e4675677cbea77d",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "3001",
-							"path": [
-								"hotelManagement",
-								"v1",
-								"reservation",
-								"admin",
-								"hotel-reservations",
-								"6817c4a80e4675677cbea77d"
 							]
 						}
 					},
@@ -2037,6 +1835,375 @@
 								"event",
 								"hotel",
 								"6817d28c3c3d3be5d2bb69ef"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reservation",
+			"item": [
+				{
+					"name": "reservationRoom",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODE3YzRhODBlNDY3NTY3N2NiZWE3N2QiLCJpYXQiOjE3NDY0MDA2NjUsImV4cCI6MTc0NjQwNDI2NX0.UKzV2XemW9ACjB1JQ0tUQbYTwB0xQSFMz61fmhxVAvw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"roomId\": \"6817d8e050f1fcb2508c22bb\",\r\n  \"dateEntry\": \"2025/05/05\",\r\n  \"departureDate\": \"2025/05/10\",\r\n  \"cardNumber\": \"1234567812345678\",\r\n  \"CVV\": \"123\",\r\n  \"expired\": \"2025/01/04\",\r\n  \"extraServices\": [\"6817d2653c3d3be5d2bb69ec\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3001/hotelManagement/v1/reservation/Reserve",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3001",
+							"path": [
+								"hotelManagement",
+								"v1",
+								"reservation",
+								"Reserve"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cancelReservation",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODE3YzRhODBlNDY3NTY3N2NiZWE3N2QiLCJpYXQiOjE3NDY0MDA2NjUsImV4cCI6MTc0NjQwNDI2NX0.UKzV2XemW9ACjB1JQ0tUQbYTwB0xQSFMz61fmhxVAvw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3001/hotelManagement/v1/reservation/Cancel/6817f9614ad0ba5692ff8e00",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3001",
+							"path": [
+								"hotelManagement",
+								"v1",
+								"reservation",
+								"Cancel",
+								"6817f9614ad0ba5692ff8e00"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "myReservations",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODE3YzRhODBlNDY3NTY3N2NiZWE3N2QiLCJpYXQiOjE3NDY0MDA2NjUsImV4cCI6MTc0NjQwNDI2NX0.UKzV2XemW9ACjB1JQ0tUQbYTwB0xQSFMz61fmhxVAvw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:3001/hotelManagement/v1/reservation/my-reservations",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3001",
+							"path": [
+								"hotelManagement",
+								"v1",
+								"reservation",
+								"my-reservations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user-reservations",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODE3YzI3NGY4N2M1YjI0NDQwZjJhNWIiLCJpYXQiOjE3NDY0MDE5MzEsImV4cCI6MTc0NjQwNTUzMX0.pEM0Mb9b5keYCNeBKUJDIByxL_qmfz301051nfdTqGI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:3001/hotelManagement/v1/reservation/user-reservations/6817cd1aa1c7cacb1bc7c8ec",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3001",
+							"path": [
+								"hotelManagement",
+								"v1",
+								"reservation",
+								"user-reservations",
+								"6817cd1aa1c7cacb1bc7c8ec"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "hotel-reservations",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODE3YzI3NGY4N2M1YjI0NDQwZjJhNWMiLCJpYXQiOjE3NDY0MDI0NTksImV4cCI6MTc0NjQwNjA1OX0.-AeZk1E0mAX66nrQ9Rchswux4qlt65n_hcqsJeeiyQg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:3001/hotelManagement/v1/reservation/admin/hotel-reservations/6817c4a80e4675677cbea77d",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3001",
+							"path": [
+								"hotelManagement",
+								"v1",
+								"reservation",
+								"admin",
+								"hotel-reservations",
+								"6817c4a80e4675677cbea77d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "modificarReservation",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODI0MWMxNjQzODg2ZjFiMWFlZTk4ZDEiLCJpYXQiOjE3NDc1NDYwMTAsImV4cCI6MTc0NzU0OTYxMH0.tYkMSG9gQQyy6knEX2qoyXY88fvXB3APggC18VPrY5Y",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"idreservation\" : \"682922c40899b590958b1bbf\",\r\n  \"username\": \"Boli\",\r\n  \"hotelName\": \"Hotel San Miguel\",\r\n  \"numeroCuarto\": 101,\r\n  \"dateEntry\": \"2025-05-21\",\r\n  \"departureDate\": \"2025-05-25\",\r\n  \"cardNumber\": \"1234567812345678\",\r\n  \"CVV\": \"123\",\r\n  \"expired\": \"2025-12-01\",\r\n  \"extraServices\": [ \"Desayuno Buffet\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3001/hotelManagement/v1/reservation/modific",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3001",
+							"path": [
+								"hotelManagement",
+								"v1",
+								"reservation",
+								"modific"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createReservationAdmin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODI0MWMxNjQzODg2ZjFiMWFlZTk4ZDEiLCJpYXQiOjE3NDc1MjYzMjgsImV4cCI6MTc0NzUyOTkyOH0.5TQQ5xoWFhrcYTBxXIIxyKdV1zwRCChnkrGOqa7KTKY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"Boli\",\r\n  \"hotelName\": \"Hotel San Miguel\",\r\n  \"numeroCuarto\": 101,\r\n  \"dateEntry\": \"2025-05-21\",\r\n  \"departureDate\": \"2025-05-25\",\r\n  \"cardNumber\": \"1234567812345678\",\r\n  \"CVV\": \"123\",\r\n  \"expired\": \"2025-12-01\",\r\n  \"extraServices\": [\"Parqueo VIP\", \"Desayuno Buffet\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3001/hotelManagement/v1/reservation/createAdmin",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3001",
+							"path": [
+								"hotelManagement",
+								"v1",
+								"reservation",
+								"createAdmin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reservationList",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODI0MWMxNjQzODg2ZjFiMWFlZTk4ZDEiLCJpYXQiOjE3NDc1MzUzNDYsImV4cCI6MTc0NzUzODk0Nn0.ecu53mApA5BSPBRogR8L1N3xIvlpKQ0_mhYNmTqJP5E",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:3001/hotelManagement/v1/reservation/activas",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3001",
+							"path": [
+								"hotelManagement",
+								"v1",
+								"reservation",
+								"activas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cancelarReservacionAdmin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODI0MWMxNjQzODg2ZjFiMWFlZTk4ZDEiLCJpYXQiOjE3NDc1MjA2NDIsImV4cCI6MTc0NzUyNDI0Mn0.gCOXu6OrIu52CNATm2W7MwEqM8b3oeKB4RzU9eMUFG4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":\"6817f6304ad0ba5692ff8dbf\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3001/hotelManagement/v1/reservation/cancelar",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3001",
+							"path": [
+								"hotelManagement",
+								"v1",
+								"reservation",
+								"cancelar"
 							]
 						}
 					},
