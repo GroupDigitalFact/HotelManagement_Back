@@ -8,7 +8,6 @@ import { hasRoles } from "../middlewares/validate-roles.js";
 export const createEventValidator = [
     validateJWT,
     hasRoles("USER_ROLE", "ADMIN_ROLE", "HOTEL_ADMIN_ROLE"),
-    body("hotelId").notEmpty().withMessage("El hotel es requerido"),
     body("nombre").notEmpty().withMessage("El nombre del evento es requerido"),
     body("descripcion").notEmpty().withMessage("La descripcion del evento es requerida"),
     body("fecha").notEmpty().withMessage("La fecha del evento es requerida"),
@@ -22,27 +21,20 @@ export const createEventValidator = [
 export const editDeleteEventValidator = [
     validateJWT,
     hasRoles("USER_ROLE", "ADMIN_ROLE", "HOTEL_ADMIN_ROLE"),
-    param("eventId").notEmpty().withMessage("El evento es requerido"),
-    body("name").optional().notEmpty().withMessage("El nombre del evento es requerido"),
-    body("description").optional().notEmpty().withMessage("La descripcion del evento es requerida"),
-    body("fecha").optional().custom().withMessage("La fecha del evento es requerida"),
+    param("uid").notEmpty().withMessage("El evento es requerido"),
+    body("nombre").optional().notEmpty().withMessage("El nombre del evento es requerido"), 
+    body("descripcion").optional().notEmpty().withMessage("La descripcion del evento es requerida"), 
+    body("fecha").optional(),
     validarCampos,
     deleteFileOnError,
     handleErrors
 ];
 
+
 export const DeleteEventValidator = [
     validateJWT,
     hasRoles("USER_ROLE","ADMIN_ROLE", "HOTEL_ADMIN_ROLE"),
-    param("eventId").notEmpty().withMessage("El evento es requerido"),
-    validarCampos,
-    deleteFileOnError,
-    handleErrors
-]
-
-export const listEventValidator = [
-    validateJWT,
-    hasRoles("ADMIN_ROLE", "HOTEL_ADMIN_ROLE"),
+    param("uid").notEmpty().withMessage("El evento es requerido"),
     validarCampos,
     deleteFileOnError,
     handleErrors

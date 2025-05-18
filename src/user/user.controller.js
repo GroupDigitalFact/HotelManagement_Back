@@ -1,6 +1,6 @@
 import { hash, verify } from "argon2";
 import User from "./user.model.js";
-import {unlink } from "fs/promises";
+import fs from "fs/promises";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import jwt from "jsonwebtoken";
@@ -10,7 +10,8 @@ import Room from "../room/room.model.js";
 
 
 
-const __dirname = dirname(fileURLToPath(import.meta.url));  
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const profileDirname = join(__dirname, "../../public/uploads/profile-picture");
 
 export const getUserClient = async (req, res) =>{
     try{
@@ -184,48 +185,51 @@ export const updatePassword = async (req, res) => {
 
 export const updateProfilePicture = async (req, res) => {
     try {
-        const uid = req.usuario._id
-        const file = req.file ? req.file.filename : null;
+        const uid = req.usuario._id;
+        const file = req.file?.filename;
+
         const user = await User.findById(uid);
         if (!user) {
-            return res.status(404).json({ success: false, message: "Publicación no encontrada" });
+            return res.status(404).json({ success: false, message: "Usuario no encontrado" });
         }
 
         if (file) {
             if (user.profilePicture) {
-            const oldProfilePicturePath = join(__dirname, "../../public/uploads/profile-pictures", user.profilePicture);
-            try {
-                await unlink(oldProfilePicturePath);
-            } catch (error) {
-                console.log("No se pudo eliminar la imagen anterior, tal vez ya no existe.");
+                const oldPath = join(profileDirname, user.profilePicture);
+
+                try {
+                    await fs.access(oldPath);
+                    await fs.unlink(oldPath);
+                    console.log("Imagen anterior eliminada");
+                } catch (error) {
+                    console.log("La imagen anterior no existe o ya fue eliminada");
+                }
             }
-        }
-            
 
             user.profilePicture = file;
-        
             await user.save();
-        
-            return res.status(200).json({ 
-                success: true, 
+
+            return res.status(200).json({
+                success: true,
                 message: "Imagen actualizada correctamente",
                 user
             });
         }
-        
-        return res.status(400).json({ 
-            success: false, 
-            message: "No se envió una nueva imagen" 
+
+        return res.status(400).json({
+            success: false,
+            message: "No se envió una nueva imagen"
         });
-    
+
     } catch (error) {
-        res.status(500).json({ 
-            success: false, 
-            message: "Error al actualizar la imagen", 
+        return res.status(500).json({
+            success: false,
+            message: "Error al actualizar la imagen",
             error: error.message
         });
     }
 };
+
 
 export const editProfile = async (req, res) => {
     try {

@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { createEvent, updateEvent, deleteEvent, listEvent, listEventUser } from './event.controller.js';
-import { createEventValidator, editDeleteEventValidator, DeleteEventValidator, listEventValidator } from '../middlewares/event-validators.js';
+import { createEvent, updateEvent, deleteEvent, listEvent } from './event.controller.js';
+import { createEventValidator, editDeleteEventValidator, DeleteEventValidator } from '../middlewares/event-validators.js';
 
 const router = Router();
 
@@ -238,48 +238,5 @@ router.delete('/deleteEvent/:uid', DeleteEventValidator, deleteEvent);
  *         description: Error interno del servidor.
  */
 router.get('/listEvent/', listEvent);
-/**
- * @swagger
- * /event/listEventUser/:
- *   get:
- *     tags:
- *       - Event
- *     summary: Listar eventos creados por usuarios con rol USER_ROLE
- *     description: |
- *         Obtiene la lista de todos los eventos registrados por usuarios con el rol USER_ROLE.
- *         
- *         **Roles permitidos:** ADMIN_ROLE, HOTEL_ADMIN_ROLE
- *         
- *         **Recomendaciones para optimizar el uso de la API:**
- *         - Utilice filtros o paginación si espera una gran cantidad de eventos.
- *         - No haga referencia a ningún modelo en la petición.
- *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
- *     responses:
- *       200:
- *         description: Lista de eventos de usuarios obtenida exitosamente.
- *         content:
- *           application/json:
- *             example:
- *               events:
- *                 - nombre: "Conferencia de Tecnología"
- *                   descripcion: "Evento sobre innovación tecnológica."
- *                   fecha: "2025-06-15"
- *                   servicios: ["WiFi", "Coffe Break"]
- *       404:
- *         description: No se encontraron eventos.
- *         content:
- *           application/json:
- *             example:
- *               message: "Events not found"
- *       500:
- *         description: Error interno del servidor.
- *         content:
- *           application/json:
- *             example:
- *               succes: false
- *               message: "Error al obtener los eventos"
- *               error: "Descripción del error"
- */
-router.get('/listEventUser/', listEventValidator, listEventUser)
 
 export default router;

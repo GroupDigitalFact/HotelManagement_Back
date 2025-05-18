@@ -2,10 +2,9 @@ import Hotel from '../hotel/hotel.model.js';
 import Event from './event.model.js';
 
 export const listEvent = async (req, res) =>{
-    try{
-        
-        const events = await Event.find({status: true});
-
+    try{        
+        const events = await Event.find({status: true}).populate('hotel','name').populate('user','email')
+          .populate('servicios','name')
         if(!events){
             return res.status(404).json({
                 message: "Events not found"
@@ -25,98 +24,88 @@ export const listEvent = async (req, res) =>{
     }
 };
 
-export const listEventUser = async (req, res) =>{
-    try{
-        
-        const events = await Event.find({status: true}).populate({path: 'user', match:{role:'USER_ROLE'}});
-
-        if(!events){
-            return res.status(404).json({
-                message: "Events not found"
-            })
-        }
-
-        return res.status(200).json({
-            events
-        })
-
-    }catch(err){
-        return res.status(500).json({
-            succes: false,
-            message: "Error al obtener los eventos",
-            error: err.message
-        });
-    }
-};
 export const createEvent = async (req, res) => {
   try {
-    const  uid  = req.usuario._id
     const data = req.body;
-    data.user = uid;
-    const date = data.fecha;
-    
-    const eventDate = await Event.findOne({date});
+
+    if (!data.user) {
+      return res.status(400).json({
+        message: "Error al crear el evento",
+        error: "El usuario es requerido para crear un evento"
+      });
+    }
+
+    const eventDate = await Event.findOne({ fecha: data.fecha });
     if (eventDate) {
       return res.status(400).json({
         message: "Error al crear el evento",
         error: "Ya existe un evento para esta fecha"
-      })
+      });
     }
 
     const event = await Event.create(data);
-    
+
     if (!event) {
       return res.status(400).json({
         message: "Error al crear tu evento",
         error: "El evento no ha sido encontrado"
-      })
+      });
     }
+
     return res.status(200).json({
-      message: "Evento creado con exito",
+      message: "Evento creado con éxito",
       event
-    
-    })
-  }catch (e){
+    });
+
+  } catch (e) {
     return res.status(500).json({
       message: "Error al crear evento",
       error: e.message
-    })
+    });
   }
 };
 
 export const updateEvent = async (req, res) => {
+  const { uid } = req.params;
+  const data = req.body;
+
   try {
-    const { uid } = req.params;
-    const data = req.body;
-    const date = data.fecha;
-    const eventDate = await Event.findOne({date});
-    if (eventDate) {
-       return res.status(400).json({
-        message: "Error al actualizar el evento",
-        error: "Ya existe un evento para esta fecha"
-      })
-    }
-    
-    const event = await Event.findByIdAndUpdate(uid, data, { new: true });
-    
+    const event = await Event.findById(uid);
+
     if (!event) {
+      return res.status(404).json({
+        message: "Evento no encontrado"
+      });
+    }
+
+    const date = data.fecha;
+
+    const eventDate = await Event.findOne({ fecha: date, _id: { $ne: uid } });
+
+    if (eventDate) {
       return res.status(400).json({
         message: "Error al actualizar el evento",
-        error: "Evento no encontrado"
-      })
+        error: "Ya existe un evento para esta fecha"
+      });
     }
-    
-    return res.status(200).json({
-      message: "Evento actualizado con exito",
-      event 
-    })
-  }catch (e){
-    return res.status(500).json({
-      message: "Error al actualizar evento",
-      error: e.message
-    })
+
+    await Event.findByIdAndUpdate(uid, data, { new: true });
+
+    const eventUpdated = await Event.findById(uid);
+
+    res.status(200).json({
+      message: "Evento actualizado con éxito",
+      event: eventUpdated
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      message: "Error en el servidor al actualizar evento",
+      error: error.message
+    });
   }
 };
+
 
 export const deleteEvent = async (req, res) => {
   try {
