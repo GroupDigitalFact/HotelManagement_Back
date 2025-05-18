@@ -321,30 +321,35 @@ export const editUserAdmin = async (req, res) => {
 export const deleteUserAdmin = async (req, res) => {
     try {
         const { uid, username } = req.body;
+
         if (!uid && !username) {
             return res.status(400).json({
                 success: false,
                 message: 'Debe proporcionar un ID o un nombre de usuario'
             });
         }
+
         let user;
         if (uid) {
             user = await User.findById(uid);
         } else if (username) {
             user = await User.findOne({ username });
         }
+
         if (!user) {
             return res.status(404).json({
                 success: false,
                 message: 'Usuario no encontrado'
             });
         }
-        if (user.role === 'ADMIN_ROLE' ) {
+
+        if (user.role === 'ADMIN_ROLE') {
             return res.status(403).json({
                 success: false,
-                message: 'No se puede eliminar a un usuario administrador'
+                message: 'No se puede desactivar a un usuario administrador'
             });
         }
+
         const reservas = await Reservation.find({ user: user._id });
         for (const reserva of reservas) {
             if (reserva.room) {
@@ -352,18 +357,19 @@ export const deleteUserAdmin = async (req, res) => {
             }
             await Reservation.findByIdAndDelete(reserva._id);
         }
-        await User.findByIdAndDelete(user._id);
+
+        await User.findByIdAndUpdate(user._id, { status: false });
 
         return res.status(200).json({
             success: true,
-            message: 'Usuario y sus reservaciones eliminadas correctamente'
+            message: 'Usuario desactivado y sus reservaciones eliminadas correctamente'
         });
 
     } catch (err) {
         console.error(err);
         return res.status(500).json({
             success: false,
-            message: 'Error al eliminar el usuario y sus datos relacionados',
+            message: 'Error al desactivar el usuario y eliminar sus reservaciones',
             error: err.message
         });
     }
