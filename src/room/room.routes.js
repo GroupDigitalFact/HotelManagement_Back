@@ -1,11 +1,8 @@
 import { Router } from "express";
 import { AllRoomsByHotel, 
         registerRoom, 
-        deleteAdminRoom, 
-        updateRoomAdmin, 
-        createRoomManager, 
-        deleteRoomManager, 
-        updateRoomManager,
+        deleteRoom,
+        updateRoom,
         getRoom
         } from "./room.controller.js";
 import { searchRoomValidator,registerValidator, RoomAdminValidator,updateRoomValidator } from "../middlewares/room-validators.js";
@@ -45,7 +42,6 @@ const router = Router();
  *         description: Error interno del servidor.
  */
 router.get("/available/:idHotel?", searchRoomValidator, AllRoomsByHotel);
-
 
 /**
  * @swagger
@@ -95,8 +91,7 @@ router.get("/available/:idHotel?", searchRoomValidator, AllRoomsByHotel);
  *       '500':
  *         description: Error interno del servidor.
  */
-router.post('/registerAdmin', RoomAdminValidator, registerRoom);
-
+router.post('/registerRoom', RoomAdminValidator, registerRoom);
 
 /**
  * @swagger
@@ -129,8 +124,7 @@ router.post('/registerAdmin', RoomAdminValidator, registerRoom);
  *       '500':
  *         description: Error interno del servidor.
  */
-router.delete('/admin/:roomId', RoomAdminValidator, deleteAdminRoom);
-
+router.delete('/deleteRoom/:roomId', RoomAdminValidator, deleteRoom);
 
 /**
  * @swagger
@@ -182,146 +176,7 @@ router.delete('/admin/:roomId', RoomAdminValidator, deleteAdminRoom);
  *       '500':
  *         description: Error interno del servidor.
  */
-router.put('/adminUpdate/:roomId', RoomAdminValidator, updateRoomAdmin);
-
-
-/**
- * @swagger
- * /room/registerManager:
- *   post:
- *     tags:
- *       - Room
- *     summary: Registrar una habitación (Manager)
- *     description: |
- *         Permite a un manager registrar una nueva habitación para el hotel en el que el sea encargado.
- *         
- *         **Roles permitidos:** HOTEL_ADMIN_ROLE, ADMIN_ROLE
- *         
- *         **Recomendaciones para optimizar el uso de la API:**
- *         - Valide todos los campos requeridos antes de enviar la solicitud.
- *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
- *         - En caso de error de validación, revise los mensajes detallados en la respuesta.
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               hotelId:
- *                 type: string
- *                 description: Identificador único del hotel.
- *               tipo:
- *                 type: string
- *                 description: Tipo de habitación.
- *               capacidad:
- *                 type: integer
- *                 description: Capacidad de la habitación.
- *               precio:
- *                 type: number
- *                 description: Precio de la habitación.
- *               numeroCuarto:
- *                 type: integer
- *                 description: Número de la habitación.
- *     responses:
- *       '201':
- *         description: Habitación registrada exitosamente.
- *       '400':
- *         description: Ya existe una habitación con el mismo número en este hotel.
- *       '404':
- *         description: Hotel no encontrado.
- *       '500':
- *         description: Error interno del servidor.
- */
-router.post('/registerManager', registerValidator, createRoomManager);
-
-
-/**
- * @swagger
- * /room/manager/{roomId}:
- *   delete:
- *     tags:
- *       - Room
- *     summary: Eliminar una habitación (Manager)
- *     description: |
- *         Permite a un manager eliminar una habitación específica.
- *         
- *         **Roles permitidos:** HOTEL_ADMIN_ROLE, ADMIN_ROLE
- *         
- *         **Recomendaciones para optimizar el uso de la API:**
- *         - Verifique que el identificador enviado sea correcto.
- *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
- *         - Evite realizar múltiples eliminaciones innecesarias para optimizar el rendimiento.
- *     parameters:
- *       - in: path
- *         name: roomId
- *         required: true
- *         schema:
- *           type: string
- *         description: Identificador único de la habitación.
- *     responses:
- *       '200':
- *         description: Habitación eliminada exitosamente.
- *       '404':
- *         description: Habitación no encontrada.
- *       '500':
- *         description: Error interno del servidor.
- */
-router.delete('/manager/:roomId', updateRoomValidator, deleteRoomManager);
-
-
-/**
- * @swagger
- * /room/managerUpdate/{roomId}:
- *   put:
- *     tags:
- *       - Room
- *     summary: Actualizar una habitación (Manager)
- *     description: |
- *         Permite a un manager actualizar los datos de una habitación específica.
- *         
- *         **Roles permitidos:** HOTEL_ADMIN_ROLE, ADMIN_ROLE
- *         
- *         **Recomendaciones para optimizar el uso de la API:**
- *         - Valide los datos de entrada antes de enviarlos.
- *         - Actualice solo los campos necesarios para optimizar el rendimiento.
- *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
- *     parameters:
- *       - in: path
- *         name: roomId
- *         required: true
- *         schema:
- *           type: string
- *         description: Identificador único de la habitación.
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               tipo:
- *                 type: string
- *                 description: Tipo de habitación.
- *               capacidad:
- *                 type: integer
- *                 description: Capacidad de la habitación.
- *               precio:
- *                 type: number
- *                 description: Precio de la habitación.
- *               numeroCuarto:
- *                 type: integer
- *                 description: Número de la habitación.
- *     responses:
- *       '200':
- *         description: Habitación actualizada exitosamente.
- *       '404':
- *         description: Habitación no encontrada.
- *       '500':
- *         description: Error interno del servidor.
- */
-router.put('/managerUpdate/:roomId', updateRoomValidator, updateRoomManager);
-
+router.put('/updateRoom/:roomId', RoomAdminValidator, updateRoom);
 
 /**
  * @swagger

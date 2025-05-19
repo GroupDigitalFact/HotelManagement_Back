@@ -89,7 +89,7 @@ export const AllRoomsByHotel = async (req, res) => {
     }
 };
 
-export const deleteAdminRoom = async (req, res) => {
+export const deleteRoom = async (req, res) => {
   try {
       const { roomId } = req.params;
 
@@ -150,7 +150,7 @@ export const deleteAdminRoom = async (req, res) => {
   }
 };
 
-export const updateRoomAdmin = async (req, res) => {
+export const updateRoom = async (req, res) => {
   try {
     const { roomId } = req.params;
     const updates = req.body;
@@ -195,120 +195,5 @@ export const updateRoomAdmin = async (req, res) => {
   }
 };
 
-export const createRoomManager= async (req, res) => {
-  try {
-    const token = req.header("Authorization");
-    if (!token) return res.status(401).json({ message: "Token no proporcionado" });
 
-    const { uid } = jwt.verify(token.replace("Bearer ", ""), process.env.SECRETORPRIVATEKEY);
-    const { hotelId } = req.body;
-    const data = req.body;
 
-    const hotel = await Hotel.findById(hotelId);
-    if (!hotel) return res.status(404).json({ message: "Hotel no encontrado" });
-    if (hotel.admin.toString() !== uid) {
-      return res.status(403).json({ message: "No autorizado para crear habitaciones en este hotel" });
-    }
-
-    const roomExists = await Room.findOne({ hotel: hotelId, numeroCuarto: data.numeroCuarto });
-    if (roomExists) {
-      return res.status(400).json({ message: "Ya existe una habitación con ese número en este hotel" });
-    }
-
-    const newRoom = await Room.create({ ...data, hotel: hotelId });
-    return res.status(201).json({ message: "Habitación registrada correctamente", room: newRoom });
-  } catch (err) {
-    return res.status(500).json({ message: "Error al registrar habitación", error: err.message });
-  }
-};
-
-export const deleteRoomManager = async (req, res) => {
-  try {
-      const token = req.header("Authorization");
-      if (!token) return res.status(401).json({ message: "Token no proporcionado" });
-
-      const { uid } = jwt.verify(token.replace("Bearer ", ""), process.env.SECRETORPRIVATEKEY);
-      const { roomId } = req.params;
-
-      const room = await Room.findById(roomId);
-      if (!room) return res.status(404).json({ message: "Habitación no encontrada" });
-
-      const hotel = await Hotel.findById(room.hotel);
-      if (!hotel || hotel.admin.toString() !== uid) {
-          return res.status(403).json({ message: "No autorizado para eliminar esta habitación" });
-      }
-
-      const reservations = await Reservation.find({ room: roomId, state: 'activa' });
-
-      for (const reservation of reservations) {
-          const conflictingReservations = await Reservation.find({
-              room: { $ne: roomId },
-              state: 'activa',
-              dateEntry: { $lt: reservation.departureDate },
-              departureDate: { $gt: reservation.dateEntry }
-          });
-          const busyRoomIds = conflictingReservations.map(r => r.room.toString());
-          const replacementRoom = await Room.findOne({
-              _id: { $nin: busyRoomIds.concat([roomId]) },
-              tipo: room.tipo,
-              hotel: room.hotel,
-              status: 'DISPONIBLE'
-          });
-
-          if (replacementRoom) {
-              reservation.room = replacementRoom._id;
-              await reservation.save();
-          } else {
-              reservation.state = 'cancelada';
-              await reservation.save();
-          }
-      }
-
-      await Room.findByIdAndDelete(roomId);
-      return res.status(200).json({
-          message: `Habitación eliminada correctamente. Reservaciones afectadas: ${reservations.length}`
-      });
-  } catch (err) {
-      return res.status(500).json({
-          message: "Error al eliminar la habitación",
-          error: err.message
-      });
-  }
-};
-
-export const updateRoomManager = async (req, res) => {
-  try {
-      const token = req.header("Authorization");
-      if (!token) return res.status(401).json({ message: "Token no proporcionado" });
-
-      const { uid } = jwt.verify(token.replace("Bearer ", ""), process.env.SECRETORPRIVATEKEY);
-      const { roomId } = req.params;
-      const updates = req.body;
-
-      const room = await Room.findById(roomId);
-      if (!room) return res.status(404).json({ message: "Habitación no encontrada" });
-
-      const hotel = await Hotel.findById(room.hotel);
-      if (!hotel || hotel.admin.toString() !== uid) {
-          return res.status(403).json({ message: "No autorizado para modificar esta habitación" });
-      }
-      if (updates.numeroCuarto && updates.numeroCuarto !== room.numeroCuarto) {
-          const existingRoom = await Room.findOne({
-              _id: { $ne: roomId },
-              hotel: room.hotel,
-              numeroCuarto: updates.numeroCuarto
-          });
-          if (existingRoom) {
-              return res.status(400).json({ message: "Ya existe una habitación con ese número en el hotel" });
-          }
-      }
-
-      const updatedRoom = await Room.findByIdAndUpdate(roomId, updates, { new: true });
-      return res.status(200).json({ message: "Habitación actualizada correctamente", room: updatedRoom });
-  } catch (err) {
-      return res.status(500).json({
-          message: "Error al actualizar la habitación",
-          error: err.message
-      });
-  }
-};
