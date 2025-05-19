@@ -35,11 +35,31 @@ export const createEvent = async (req, res) => {
       });
     }
 
-    const eventDate = await Event.findOne({ fecha: data.fecha });
-    if (eventDate) {
+    if (!data.hotel) {
       return res.status(400).json({
         message: "Error al crear el evento",
-        error: "Ya existe un evento para esta fecha"
+        error: "El hotel es requerido para crear un evento"
+      });
+    }
+
+    const hotel = await Hotel.findById(data.hotel);
+    if (!hotel) {
+      return res.status(404).json({
+        message: "Error al crear el evento",
+        error: "Hotel no encontrado"
+      });
+    }
+
+    const eventosEnFecha = await Event.countDocuments({
+      fecha: data.fecha,
+      status: true,
+      hotel: data.hotel
+    });
+
+    if (eventosEnFecha >= hotel.quantitySalons) {
+      return res.status(400).json({
+        message: "Error al crear el evento",
+        error: "No hay salones disponibles para esta fecha en este hotel"
       });
     }
 
@@ -48,7 +68,7 @@ export const createEvent = async (req, res) => {
     if (!event) {
       return res.status(400).json({
         message: "Error al crear tu evento",
-        error: "El evento no ha sido encontrado"
+        error: "El evento no ha sido creado"
       });
     }
 
@@ -64,6 +84,7 @@ export const createEvent = async (req, res) => {
     });
   }
 };
+
 
 export const updateEvent = async (req, res) => {
   const { uid } = req.params;
