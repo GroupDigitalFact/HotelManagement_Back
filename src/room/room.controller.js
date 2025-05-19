@@ -5,15 +5,12 @@ import jwt from 'jsonwebtoken';
 
 export const getRoom = async (req, res) =>{
     try{
-        
-        const rooms = await Room.find();
-
+        const rooms = await Room.find().populate('hotel','name');;
         if(!rooms){
             return res.status(404).json({
                 message: "Rooms not found"
             })
         }
-
         return res.status(200).json({
             rooms
         })

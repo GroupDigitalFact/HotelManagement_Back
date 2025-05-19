@@ -4,7 +4,17 @@ const habitacionSchema = Schema({
     tipo: {
         type: String,
         required: true,
-        enum: ['simple', 'doble', 'suite', 'familiar', 'lujo'],
+        enum: [
+        'individual',
+        'doble',
+        'twin',
+        'triple',
+        'familiar',
+        'suite',
+        'junior suite',
+        'deluxe',
+        'presidencial'
+        ],
         default: 'simple'
     },
     capacidad: {
