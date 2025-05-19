@@ -27,7 +27,10 @@ const hotelSchema = new Schema({
         type: [String], 
         default: []
     },
-
+    quantitySalons: {
+        type: Number,
+        required: true
+    },
     admin: {
         type: Schema.Types.ObjectId,
         ref: 'User',
