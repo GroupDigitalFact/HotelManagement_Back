@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { deleteUser, deleteUserAdmin, editProfile, editUserAdmin, getUserAdminHotel, updateProfilePicture, updatePassword, getUsers, getUserClient, getUserHotel } from "./user.controller.js";
+import { deleteUser, deleteUserAdmin, editProfile, editUserAdmin, getUserAdminHotel, updateProfilePicture, updatePassword, getUsers, getUserClient, getUserHotel, deleteProfilePicture } from "./user.controller.js";
 import { deleteUserValidator, deleteUserAdminValidator, updateUserValidator, updateUserAdminValidator, getUserEditValidator, updatePasswordValidator, getUserAdminValidator, getUserValidator} from "../middlewares/user-validators.js";
 import { uploadProfilePicture } from "../middlewares/multer-uploads.js";
 
@@ -344,7 +344,9 @@ router.get("/getUserAdminHotel", getUserAdminHotel);
  *         description: Error interno del servidor.
  */
 router.get("/getUserHotel/", getUserHotel);
-// filepath: c:\Users\rmora\OneDrive\Documentos\IN6BM\DigitalFact\HotelManagement_Back\src\user\user.routes.js
+
+router.delete("/deleteProfilePicture", getUserEditValidator, deleteProfilePicture,)
+
 
 export default router;
 

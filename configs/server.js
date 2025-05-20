@@ -1,4 +1,6 @@
 "use strict"
+import path from 'path';
+import { fileURLToPath } from 'url';
 import swaggerUi from "swagger-ui-express"
 import swaggerJsDoc from "swagger-jsdoc";
 import express from "express"
@@ -17,6 +19,8 @@ import extraServiceRoutes from "../src/serviceExtra/extraService.routes.js"
 import serviceRoutes from "../src/service/service.routes.js"
 import eventRoutes from "../src/event/event.routes.js"
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const swaggerDefinition = {
     openapi: "3.0.0",
@@ -35,13 +39,14 @@ const swaggerDefinition = {
 
 const swaggerOptions = {
     swaggerDefinition,
-    apis: ["./src/**/*.routes.js", "./src/**/*.model.js"], 
+    apis: ["./src/**/*.routes.js", "./src/**/*.model.js"],
 };
 
 const swaggerSpec = swaggerJsDoc(swaggerOptions);
 
 const middlewares = (app) => {
-    app.use(express.urlencoded({extended: false}))
+    app.use('/public', express.static(path.join(__dirname, '../public')));
+    app.use(express.urlencoded({ extended: false }))
     app.use(express.json())
     app.use(cors())
     app.use(helmet())
@@ -53,7 +58,7 @@ const middlewares = (app) => {
 }
 
 
-const routes = (app) =>{
+const routes = (app) => {
     app.use("/hotelManagement/v1/auth", authRoutes);
     app.use("/hotelManagement/v1/user", userRoutes);
     app.use("/hotelManagement/v1/hotel", hotelRoutes);
@@ -66,10 +71,10 @@ const routes = (app) =>{
 }
 
 
-const conectarDB = async () =>{
-    try{
+const conectarDB = async () => {
+    try {
         await dbConnection()
-    }catch(err){
+    } catch (err) {
         console.log(`Database connection failed: ${err}`)
         process.exit(1)
     }
@@ -77,14 +82,14 @@ const conectarDB = async () =>{
 
 export const initiServer = () => {
     const app = express()
-    try{
+    try {
         middlewares(app)
         conectarDB()
         routes(app)
         app.listen(process.env.PORT)
         console.log(`Server running on port ${process.env.PORT}`)
         console.log(`Swagger docs available at http://localhost:${process.env.PORT}/api-docs`);
-    }catch(err){
+    } catch (err) {
         console.log(`Server init failed: `, err)
     }
 }

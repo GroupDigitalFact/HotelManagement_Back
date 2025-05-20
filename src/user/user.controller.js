@@ -230,6 +230,43 @@ export const updateProfilePicture = async (req, res) => {
     }
 };
 
+export const deleteProfilePicture = async (req, res) => {
+    try{
+        const uid = req.usuario._id;
+        const user = await User.findById(uid);
+
+        if (!user) {
+            return res.status(404).json({ success: false, message: "Usuario no encontrado" });
+        }
+
+        if(user.profilePicture ){
+            const oldPath = join(profileDirname, user.profilePicture);
+            
+            await fs.access(oldPath);
+            await fs.unlink(oldPath);
+            
+            user.profilePicture = null;
+            await user.save();
+            
+            return res.status(200).json({
+                success: true,
+                message: "Imagen eliminada correctamente",
+                user
+            });
+        }
+        return res.status(201).json({
+            success: false,
+            message: "No contiene imagen"
+        });
+    }catch(error){
+        return res.status(500).json({
+            success: false,
+            message: "Error al eliminar la imagen",
+            error: error.message
+        });
+    }
+}
+
 
 export const editProfile = async (req, res) => {
     try {
