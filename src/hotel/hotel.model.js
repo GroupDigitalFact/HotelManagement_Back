@@ -36,6 +36,9 @@ const hotelSchema = new Schema({
         ref: 'User',
         required: true
     },
+    hotelPicture:{
+        type: String,
+    },
     status: {
         type: Boolean,
         default: true

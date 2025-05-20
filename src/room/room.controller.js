@@ -57,6 +57,7 @@ export const AllRoomsByHotel = async (req, res) => {
   export const registerRoom = async (req, res) => {
     try {
         const { hotelId } = req.body;
+        const file = req.file?.filename;
         const data = req.body;
 
         const hotelExists = await Hotel.findById(hotelId);
@@ -72,6 +73,7 @@ export const AllRoomsByHotel = async (req, res) => {
             });
         }
         data.hotel = hotelId;
+        data.roomPicture = file;
         const room = await Room.create(data);
 
         return res.status(201).json({

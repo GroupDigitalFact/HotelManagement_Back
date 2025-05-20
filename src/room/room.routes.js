@@ -7,6 +7,8 @@ import { AllRoomsByHotel,
         } from "./room.controller.js";
 import { searchRoomValidator,registerValidator, RoomAdminValidator,updateRoomValidator } from "../middlewares/room-validators.js";
 
+import { uploadRoomPicture } from "../middlewares/multer-uploads.js";
+
 const router = Router();
 
 
@@ -91,7 +93,7 @@ router.get("/available/:idHotel?", searchRoomValidator, AllRoomsByHotel);
  *       '500':
  *         description: Error interno del servidor.
  */
-router.post('/registerRoom', RoomAdminValidator, registerRoom);
+router.post('/registerRoom', uploadRoomPicture.single("roomPicture"),  RoomAdminValidator, registerRoom);
 
 /**
  * @swagger

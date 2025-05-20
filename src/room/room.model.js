@@ -36,6 +36,9 @@ const habitacionSchema = Schema({
         type: Number,
         required: true
     },
+    roomPicture: {
+        type: String,
+    },
     status: {
         type: String,
         required: true,

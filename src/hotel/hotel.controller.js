@@ -49,6 +49,7 @@ export const searchHotel = async (req, res) => {
 export const registerHotel = async (req, res) => {
   try {
     const { name, address, qualification, category, amenities, quantitySalons, admin } = req.body;
+    const file = req.file?.filename;
 
     if (!name || !address || !qualification || !category || !admin || !quantitySalons) {
       return res.status(400).json({ message: 'Faltan datos obligatorios' });
@@ -61,7 +62,8 @@ export const registerHotel = async (req, res) => {
       category,
       amenities,
       quantitySalons,
-      admin
+      admin, 
+      file
     });
 
     await newHotel.save();
