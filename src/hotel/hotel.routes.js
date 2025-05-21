@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { searchHotel, deleteHotel, searchHotelsAdmin, updateHotel, registerHotel, obtenerEstadisticasHotel, obtenerEstadisticasPorHotelId, getHotels } from "./hotel.controller.js";
+import { searchHotel, deleteHotel, searchHotelsAdmin, updateHotel, registerHotel,  obtenerEstadisticasHotel, obtenerEstadisticasPorHotelId, getHotels } from "./hotel.controller.js";
 import { searchHotelValidator, registerHotelValidator, updateHotelValidator, searchHotelManagerValidator, delteHotelValidator, estadisticasHotelValidator, estadisticasHotelAdminValidator } from "../middlewares/hotel-validators.js";
 import { uploadHotelPicture } from "../middlewares/multer-uploads.js";
 

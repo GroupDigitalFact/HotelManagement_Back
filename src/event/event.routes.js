@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { createEvent, updateEvent, deleteEvent, listEvent } from './event.controller.js';
-import { createEventValidator, editDeleteEventValidator, DeleteEventValidator } from '../middlewares/event-validators.js';
+import { createEvent, updateEvent, deleteEvent, listUserEvents, listEvent } from './event.controller.js';
+import { createEventValidator, editDeleteEventValidator, getEventByUserValidator, DeleteEventValidator } from '../middlewares/event-validators.js';
 
 const router = Router();
 
@@ -238,5 +238,7 @@ router.delete('/deleteEvent/:uid', DeleteEventValidator, deleteEvent);
  *         description: Error interno del servidor.
  */
 router.get('/listEvent/', listEvent);
+
+router.get('/eventByUser', getEventByUserValidator, listUserEvents);
 
 export default router;

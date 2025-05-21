@@ -150,3 +150,30 @@ export const deleteEvent = async (req, res) => {
         })
     }
 };
+
+export const listUserEvents = async (req, res) => {
+  try {
+    const usuarioId = req.usuario._id;
+
+    const events = await Event.find({ user: usuarioId, status: true })
+      .populate('hotel', 'name')
+      .populate('servicios', 'name');
+
+    if (!events || events.length === 0) {
+      return res.status(404).json({
+        message: 'No tienes eventos registrados.'
+      });
+    }
+
+    return res.status(200).json({
+      message: 'Eventos encontrados',
+      events
+    });
+
+  } catch (error) {
+    return res.status(500).json({
+      message: 'Error al obtener eventos del usuario',
+      error: error.message
+    });
+  }
+};

@@ -13,6 +13,7 @@ export const getHotels = async (req, res) => {
     }
   };
 
+
 export const searchHotel = async (req, res) => {
     try {
       const { name, address, qualification, category } = req.body;
@@ -48,27 +49,13 @@ export const searchHotel = async (req, res) => {
 
 export const registerHotel = async (req, res) => {
   try {
-    const { name, address, qualification, category, amenities, quantitySalons, admin } = req.body;
+    const data = req.body;
     const file = req.file?.filename;
+    
+    data.hotelPicture = file;
+    const hotel = await Hotel.create(data);
 
-    if (!name || !address || !qualification || !category || !admin || !quantitySalons) {
-      return res.status(400).json({ message: 'Faltan datos obligatorios' });
-    }
-
-    const newHotel = new Hotel({
-      name,
-      address,
-      qualification,
-      category,
-      amenities,
-      quantitySalons,
-      admin, 
-      file
-    });
-
-    await newHotel.save();
-
-    res.status(201).json({ message: 'Hotel registrado correctamente', hotel: newHotel });
+    res.status(201).json({ message: 'Hotel registrado correctamente', hotel });
   } catch (error) {
     console.error('Error al registrar el hotel:', error);
     res.status(500).json({ message: 'Error al registrar el hotel', error: error.message });

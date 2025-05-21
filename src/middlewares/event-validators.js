@@ -39,3 +39,8 @@ export const DeleteEventValidator = [
     deleteFileOnError,
     handleErrors
 ]
+
+
+export const getEventByUserValidator = [
+    validateJWT,
+]
