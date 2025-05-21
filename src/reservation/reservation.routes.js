@@ -1,8 +1,238 @@
 import { Router } from "express";
-import { reserveRoom, cancelReservation, MyReservations, ReservationAdmin,UserReservationsAdminHotel, listarReservation, cancelReservationAdmin, createReservationRoom, editReservation } from "./reservation.controller.js";
+import { reserveRoom, cancelReservation, MyReservations, ReservationAdmin,UserReservationsAdminHotel, listarReservation, cancelReservationAdmin, createReservationRoom, editReservation, listarHotelesSugerence, listarReservaionManager, listarHotelManagger} from "./reservation.controller.js";
 import { reservationValidator, cancelReservationValidator, UserReservationValidator, ManagerReservationValidator, AdminReservationValidator, listReservationValidator, ReservationValidator } from "../middlewares/reservation-validators.js";
 
 const router = Router();
+
+
+/**
+ * @swagger
+ * /reservation/reservationHotel:
+ *   get:
+ *     tags:
+ *       - Reservation
+ *     summary: Obtener reservaciones activas del hotel administrado
+ *     description: |
+ *         Devuelve todas las reservaciones activas asociadas a las habitaciones del hotel administrado por el usuario autenticado.
+ *         
+ *         **Roles permitidos:** ADMIN_ROLE, HOTEL_ADMIN_ROLE
+ *         
+ *         **Recomendaciones:**
+ *         - Utilice esta ruta para que un administrador de hotel consulte las reservaciones de su hotel.
+ *         - Asegúrese de enviar el token de autenticación correcto.
+ *         - Si el hotel no tiene habitaciones registradas, la respuesta será un error 404.
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       '200':
+ *         description: Lista de reservaciones activas del hotel obtenida exitosamente.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   _id:
+ *                     type: string
+ *                   user:
+ *                     type: object
+ *                     properties:
+ *                       username:
+ *                         type: string
+ *                       name:
+ *                         type: string
+ *                       surname:
+ *                         type: string
+ *                       phone:
+ *                         type: string
+ *                   room:
+ *                     type: object
+ *                     properties:
+ *                       tipo:
+ *                         type: string
+ *                       precio:
+ *                         type: number
+ *                       numeroCuarto:
+ *                         type: string
+ *                       hotel:
+ *                         type: object
+ *                         properties:
+ *                           name:
+ *                             type: string
+ *                           address:
+ *                             type: string
+ *                   extraServices:
+ *                     type: array
+ *                     items:
+ *                       type: object
+ *                       properties:
+ *                         name:
+ *                           type: string
+ *                         cost:
+ *                           type: number
+ *       '401':
+ *         description: Token no proporcionado o inválido.
+ *       '403':
+ *         description: No autorizado.
+ *       '404':
+ *         description: No se encontró un hotel administrado o no hay habitaciones registradas.
+ *       '500':
+ *         description: Error interno del servidor.
+ */
+router.get('/reservationHotel', ReservationValidator,listarReservaionManager);
+
+
+/**
+ * @swagger
+ * /reservation/hotelSugerenceManagger:
+ *   get:
+ *     tags:
+ *       - Reservation
+ *     summary: Obtener detalles completos del hotel administrado
+ *     description: |
+ *         Devuelve la información completa del hotel administrado por el usuario autenticado, incluyendo habitaciones y servicios extra.
+ *         
+ *         **Roles permitidos:** ADMIN_ROLE, HOTEL_ADMIN_ROLE
+ *         
+ *         **Recomendaciones:**
+ *         - Utilice esta ruta para mostrar información detallada del hotel administrado.
+ *         - Asegúrese de enviar el token de autenticación correcto.
+ *         - Si el usuario no administra ningún hotel, la respuesta será un error 404.
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       '200':
+ *         description: Detalles del hotel obtenidos exitosamente.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   _id:
+ *                     type: string
+ *                   name:
+ *                     type: string
+ *                   address:
+ *                     type: string
+ *                   rooms:
+ *                     type: array
+ *                     items:
+ *                       type: object
+ *                       properties:
+ *                         tipo:
+ *                           type: string
+ *                         capacidad:
+ *                           type: integer
+ *                         precio:
+ *                           type: number
+ *                         numeroCuarto:
+ *                           type: string
+ *                         status:
+ *                           type: string
+ *                   extraServices:
+ *                     type: array
+ *                     items:
+ *                       type: object
+ *                       properties:
+ *                         name:
+ *                           type: string
+ *                         description:
+ *                           type: string
+ *                         cost:
+ *                           type: number
+ *                         status:
+ *                           type: string
+ *       '401':
+ *         description: Token no proporcionado o inválido.
+ *       '403':
+ *         description: No autorizado.
+ *       '404':
+ *         description: No se encontró un hotel administrado por este usuario.
+ *       '500':
+ *         description: Error interno del servidor.
+ */
+router.get('/hotelSugerenceManagger', ReservationValidator,listarHotelManagger);
+
+
+/**
+ * @swagger
+ * /reservation/hotelSugerence:
+ *   get:
+ *     tags:
+ *       - Reservation
+ *     summary: Obtener sugerencias de hoteles con detalles completos
+ *     description: |
+ *         Devuelve una lista de hoteles con sus habitaciones y servicios extra disponibles.
+ *         
+ *         **Roles permitidos:** ADMIN_ROLE
+ *         
+ *         **Detalles de la respuesta:**
+ *         - Cada hotel incluye información básica, habitaciones y servicios extra asociados.
+ *         - Solo usuarios autenticados con rol ADMIN_ROLE pueden acceder a esta ruta.
+ *         
+ *         **Recomendaciones:**
+ *         - Utilice esta ruta para mostrar opciones completas de hoteles y sus servicios.
+ *         - Asegúrese de enviar el token de autenticación correcto.
+ *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       '200':
+ *         description: Lista de hoteles con detalles obtenida exitosamente.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   _id:
+ *                     type: string
+ *                   name:
+ *                     type: string
+ *                   address:
+ *                     type: string
+ *                   rooms:
+ *                     type: array
+ *                     items:
+ *                       type: object
+ *                       properties:
+ *                         tipo:
+ *                           type: string
+ *                         capacidad:
+ *                           type: integer
+ *                         precio:
+ *                           type: number
+ *                         numeroCuarto:
+ *                           type: string
+ *                         status:
+ *                           type: string
+ *                   extraServices:
+ *                     type: array
+ *                     items:
+ *                       type: object
+ *                       properties:
+ *                         name:
+ *                           type: string
+ *                         description:
+ *                           type: string
+ *                         cost:
+ *                           type: number
+ *                         status:
+ *                           type: string
+ *       '401':
+ *         description: Token no proporcionado o inválido.
+ *       '403':
+ *         description: No autorizado.
+ *       '404':
+ *         description: No se encontraron hoteles.
+ *       '500':
+ *         description: Error interno del servidor.
+ */
+router.get('/hotelSugerence', listReservationValidator,listarHotelesSugerence);
 
 /**
  * @swagger
@@ -10,19 +240,66 @@ const router = Router();
  *   get:
  *     tags:
  *       - Reservation
- *     summary: Listar todas las reservaciones activas
+ *     summary: Obtener todas las reservaciones activas
  *     description: |
- *         Permite a un administrador obtener todas las reservaciones activas del sistema.
+ *         Devuelve una lista de todas las reservaciones activas, incluyendo detalles del usuario, habitación y servicios extra asociados.
  *         
  *         **Roles permitidos:** ADMIN_ROLE
  *         
- *         **Recomendaciones para optimizar el uso de la API:**
- *         - Utilice filtros o paginación si espera una gran cantidad de reservaciones.
+ *         **Recomendaciones:**
+ *         - Utilice esta ruta para obtener un listado general de todas las reservaciones activas.
  *         - Asegúrese de enviar el token de autenticación correcto.
- *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
+ *         - Puede utilizar filtros o paginación si espera una gran cantidad de resultados.
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       '200':
  *         description: Lista de reservaciones activas obtenida exitosamente.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   _id:
+ *                     type: string
+ *                   user:
+ *                     type: object
+ *                     properties:
+ *                       username:
+ *                         type: string
+ *                       name:
+ *                         type: string
+ *                       surname:
+ *                         type: string
+ *                       phone:
+ *                         type: string
+ *                   room:
+ *                     type: object
+ *                     properties:
+ *                       tipo:
+ *                         type: string
+ *                       precio:
+ *                         type: number
+ *                       numeroCuarto:
+ *                         type: string
+ *                       hotel:
+ *                         type: object
+ *                         properties:
+ *                           name:
+ *                             type: string
+ *                           address:
+ *                             type: string
+ *                   extraServices:
+ *                     type: array
+ *                     items:
+ *                       type: object
+ *                       properties:
+ *                         name:
+ *                           type: string
+ *                         cost:
+ *                           type: number
  *       '401':
  *         description: Token no proporcionado o inválido.
  *       '403':
@@ -432,3 +709,4 @@ router.get('/admin/hotel-reservations/:identifier', ManagerReservationValidator,
 
 
 export default router
+

@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "e3aa59f5-6463-4933-9f29-1e5db2eb7619",
+		"_postman_id": "91c6c6b3-6ccf-4578-8245-d5a662e8b8b3",
 		"name": "Hotel Management",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "41958993"
@@ -2204,6 +2204,111 @@
 								"v1",
 								"reservation",
 								"cancelar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "hotelSugerence",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODI0MWMxNjQzODg2ZjFiMWFlZTk4ZDEiLCJpYXQiOjE3NDc3MTcxNTQsImV4cCI6MTc0NzcyMDc1NH0.uSm_QGvxssEhFUUpM_JJbzpmhCKG7vRVMTkgFDyz8mQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:3001/hotelManagement/v1/reservation/hotelSugerence",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3001",
+							"path": [
+								"hotelManagement",
+								"v1",
+								"reservation",
+								"hotelSugerence"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reservationHotelManager",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODI0MWMxNjQzODg2ZjFiMWFlZTk4ZDIiLCJpYXQiOjE3NDc4MDE4MzAsImV4cCI6MTc0NzgwNTQzMH0.2oeBQir5MdPA_7zQX_9CNcJ6DZabwDO4kVJC850-2sE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:3001/hotelManagement/v1/reservation/reservationHotel",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3001",
+							"path": [
+								"hotelManagement",
+								"v1",
+								"reservation",
+								"reservationHotel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "hotelSugerenceManagger",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODI0MWMxNjQzODg2ZjFiMWFlZTk4ZDIiLCJpYXQiOjE3NDc4MDMyMTEsImV4cCI6MTc0NzgwNjgxMX0.ILujJ8ixh3bkleBzjLFZnimGYrz1d3ZClwO1Mzw4vTY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:3001/hotelManagement/v1/reservation/hotelSugerenceManagger",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3001",
+							"path": [
+								"hotelManagement",
+								"v1",
+								"reservation",
+								"hotelSugerenceManagger"
 							]
 						}
 					},
