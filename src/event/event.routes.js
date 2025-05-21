@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { createEvent, updateEvent, deleteEvent, listUserEvents, listEvent } from './event.controller.js';
-import { createEventValidator, editDeleteEventValidator, getEventByUserValidator, DeleteEventValidator } from '../middlewares/event-validators.js';
+import { createEventUser,createEvent, updateEvent, deleteEvent, listEvent, listUserEvents } from './event.controller.js';
+import { createEventUserValidator,createEventValidator, editDeleteEventValidator, DeleteEventValidator, getEventByUserValidator} from '../middlewares/event-validators.js';
 
 const router = Router();
 
@@ -240,5 +240,7 @@ router.delete('/deleteEvent/:uid', DeleteEventValidator, deleteEvent);
 router.get('/listEvent/', listEvent);
 
 router.get('/eventByUser', getEventByUserValidator, listUserEvents);
+
+router.post('/registerEventUser', createEventUserValidator, createEventUser);
 
 export default router;

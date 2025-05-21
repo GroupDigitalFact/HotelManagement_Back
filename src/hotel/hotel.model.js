@@ -31,6 +31,10 @@ const hotelSchema = new Schema({
         type: Number,
         required: true
     },
+    priceBaseEvent: {
+        type: Number,
+        required: true
+    },
     admin: {
         type: Schema.Types.ObjectId,
         ref: 'User',

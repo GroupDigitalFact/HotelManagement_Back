@@ -177,3 +177,65 @@ export const listUserEvents = async (req, res) => {
     });
   }
 };
+
+
+export const createEventUser = async (req, res) => {
+  try {
+    const data = req.body;
+
+    const userId = req.usuario._id;
+
+    data.user = userId;
+
+    if (!data.hotel) {
+      return res.status(400).json({
+        message: "Error al crear el evento",
+        error: "El hotel es requerido para crear un evento"
+      });
+    }
+
+    const hotel = await Hotel.findById(data.hotel);
+    if (!hotel) {
+      return res.status(404).json({
+        message: "Error al crear el evento",
+        error: "Hotel no encontrado"
+      });
+    }
+
+    const eventosEnFecha = await Event.countDocuments({
+      fecha: data.fecha,
+      status: true,
+      hotel: data.hotel
+    });
+
+    if (eventosEnFecha >= hotel.quantitySalons) {
+      return res.status(400).json({
+        message: "Error al crear el evento",
+        error: "No hay salones disponibles para esta fecha en este hotel"
+      });
+    }
+
+    const event = await Event.create(data);
+
+    if (!event) {
+      return res.status(400).json({
+        message: "Error al crear tu evento",
+        error: "El evento no ha sido creado"
+      });
+    }
+
+    return res.status(200).json({
+      message: "Evento creado con éxito",
+      event
+    });
+
+  } catch (e) {
+    return res.status(500).json({
+      message: "Error al crear evento",
+      error: e.message
+    });
+  }
+};
+ 
+
+

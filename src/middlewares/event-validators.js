@@ -18,6 +18,19 @@ export const createEventValidator = [
     handleErrors
 ];
 
+export const createEventUserValidator = [
+    validateJWT,
+    hasRoles("USER_ROLE", "ADMIN_ROLE", "HOTEL_ADMIN_ROLE"),
+    body("nombre").notEmpty().withMessage("El nombre del evento es requerido"),
+    body("descripcion").notEmpty().withMessage("La descripcion del evento es requerida"),
+    body("fecha").notEmpty().withMessage("La fecha del evento es requerida"),
+    body("servicios").optional().notEmpty().withMessage("Los servicios son requeridos"),
+    body("hotel").notEmpty().isMongoId().withMessage("El hotel es requerido"),
+    validarCampos,
+    deleteFileOnError,
+    handleErrors
+];
+
 export const editDeleteEventValidator = [
     validateJWT,
     hasRoles("USER_ROLE", "ADMIN_ROLE", "HOTEL_ADMIN_ROLE"),
@@ -40,7 +53,6 @@ export const DeleteEventValidator = [
     handleErrors
 ]
 
-
 export const getEventByUserValidator = [
     validateJWT,
-]
+] 

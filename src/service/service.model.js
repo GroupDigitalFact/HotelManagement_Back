@@ -9,6 +9,10 @@ const serviceSchema = new Schema({
         type: String,
         required: [true, "Service description is mandatory"]
     },
+    priceService: {
+        type: Number,
+        required: [true, "Service price is mandatory"]
+    },
     status: {
         type: Boolean,
         default: true
