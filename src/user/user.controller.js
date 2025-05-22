@@ -89,10 +89,9 @@ export const getUserHotel = async (req, res) =>{
     }
 };
 
-
 export const getUsers = async (req, res) => {
     try {
-        const { username } = req.body;
+        const { username } = req.query;
         let query = { status: true };
         if (username) {
             query.username = username;
@@ -123,8 +122,6 @@ export const getUsers = async (req, res) => {
         });
     }
 };
-
-
 
 export const updatePassword = async (req, res) => {
     try {

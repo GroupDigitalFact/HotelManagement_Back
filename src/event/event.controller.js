@@ -1,5 +1,6 @@
 import Hotel from '../hotel/hotel.model.js';
 import Event from './event.model.js';
+import Service from '../service/service.model.js';
 
 export const listEvent = async (req, res) =>{
     try{        
@@ -63,6 +64,17 @@ export const createEvent = async (req, res) => {
       });
     }
 
+    let totalServicios = 0;
+
+    if (Array.isArray(data.servicios) && data.servicios.length > 0) {
+      const serviciosDB = await Service.find({ _id: { $in: data.servicios }, status: true });
+      totalServicios = serviciosDB.reduce((acc, servicio) => acc + servicio.priceService, 0);
+    }
+
+    const totalPrice = hotel.priceBaseEvent + totalServicios;
+
+    data.totalPrice = totalPrice;
+
     const event = await Event.create(data);
 
     if (!event) {
@@ -84,7 +96,6 @@ export const createEvent = async (req, res) => {
     });
   }
 };
-
 
 export const updateEvent = async (req, res) => {
   const { uid } = req.params;
@@ -178,13 +189,10 @@ export const listUserEvents = async (req, res) => {
   }
 };
 
-
 export const createEventUser = async (req, res) => {
   try {
     const data = req.body;
-
     const userId = req.usuario._id;
-
     data.user = userId;
 
     if (!data.hotel) {
@@ -215,6 +223,17 @@ export const createEventUser = async (req, res) => {
       });
     }
 
+    let totalPrice = 0;
+
+    if (data.servicios && data.servicios.length > 0) {
+      const servicios = await Service.find({ _id: { $in: data.servicios } });
+      totalPrice = servicios.reduce((total, serv) => total + serv.priceService, 0);
+    }
+
+    totalPrice += hotel.priceBaseEvent;
+
+    data.totalPrice = totalPrice;
+
     const event = await Event.create(data);
 
     if (!event) {
@@ -236,6 +255,3 @@ export const createEventUser = async (req, res) => {
     });
   }
 };
- 
-
-

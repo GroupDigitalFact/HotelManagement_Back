@@ -24,10 +24,14 @@ const eventoSchema = new Schema({
         required: true
     },
     user: {
-            type: Schema.Types.ObjectId,
-            ref: 'User',
-            required: true
-        },
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
+    totalPrice: {
+        type: Number,
+        default: 0
+    },
     status: {
         type: Boolean,
         required: true,
