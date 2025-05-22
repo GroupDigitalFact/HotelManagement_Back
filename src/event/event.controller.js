@@ -1,6 +1,7 @@
 import Hotel from '../hotel/hotel.model.js';
 import Event from './event.model.js';
 import Service from '../service/service.model.js';
+import { startOfDay, endOfDay } from 'date-fns';
 
 export const listEvent = async (req, res) =>{
     try{        
@@ -254,4 +255,35 @@ export const createEventUser = async (req, res) => {
       error: e.message
     });
   }
+};
+
+export const listTodayEvents = async (req, res) => {
+    try {
+
+        const todayStart = startOfDay(new Date());
+        const todayEnd = endOfDay(new Date());
+
+  
+        const filter = {
+            status: true,
+            fecha: {
+                $gte: todayStart,
+                $lte: todayEnd
+            }
+        };
+
+        const events = await Event.find(filter)
+            .populate('hotel', 'name')
+            .populate('user', 'email')
+            .populate('servicios', 'name');
+
+        return res.status(200).json({ events });
+
+    } catch (err) {
+        return res.status(500).json({
+            success: false,
+            message: "Error al obtener los eventos de hoy",
+            error: err.message
+        });
+    }
 };
