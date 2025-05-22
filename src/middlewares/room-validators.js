@@ -35,6 +35,7 @@ export const updateRoomValidator = [
 ];
 
 export const searchRoomValidator = [
+    validateJWT,
     validarCampos,
     deleteFileOnError,
     handleErrors

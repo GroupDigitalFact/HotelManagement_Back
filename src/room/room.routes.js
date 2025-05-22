@@ -22,9 +22,9 @@ const router = Router();
  *     description: |
  *         Obtiene todas las habitaciones disponibles de un hotel específico.
  *         
- *         **Roles permitidos:** Público (sin autenticación)
+ *         *Roles permitidos:* Público (sin autenticación)
  *         
- *         **Recomendaciones para optimizar el uso de la API:**
+ *         *Recomendaciones para optimizar el uso de la API:*
  *         - Utilice filtros adecuados para evitar consultas innecesariamente grandes.
  *         - Implemente paginación si espera grandes volúmenes de resultados.
  *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
@@ -43,7 +43,7 @@ const router = Router();
  *       '500':
  *         description: Error interno del servidor.
  */
-router.get("/available/:idHotel?", searchRoomValidator, AllRoomsByHotel);
+router.get("/hotel/:idHotel", searchRoomValidator, AllRoomsByHotel);
 
 /**
  * @swagger
@@ -55,9 +55,9 @@ router.get("/available/:idHotel?", searchRoomValidator, AllRoomsByHotel);
  *     description: |
  *         Permite a un administrador registrar una nueva habitación en un hotel.
  *         
- *         **Roles permitidos:** ADMIN_ROLE
+ *         *Roles permitidos:* ADMIN_ROLE
  *         
- *         **Recomendaciones para optimizar el uso de la API:**
+ *         *Recomendaciones para optimizar el uso de la API:*
  *         - Valide todos los campos requeridos antes de enviar la solicitud.
  *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
  *         - En caso de error de validación, revise los mensajes detallados en la respuesta.
@@ -105,9 +105,9 @@ router.post('/registerRoom', uploadRoomPicture.single("roomPicture"),  RoomAdmin
  *     description: |
  *         Permite a un administrador eliminar una habitación específica.
  *         
- *         **Roles permitidos:** ADMIN_ROLE
+ *         *Roles permitidos:* ADMIN_ROLE
  *         
- *         **Recomendaciones para optimizar el uso de la API:**
+ *         *Recomendaciones para optimizar el uso de la API:*
  *         - Verifique que el identificador enviado sea correcto.
  *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
  *         - Evite realizar múltiples eliminaciones innecesarias para optimizar el rendimiento.
@@ -138,9 +138,9 @@ router.delete('/deleteRoom/:roomId', RoomAdminValidator, deleteRoom);
  *     description: |
  *         Permite a un administrador actualizar los datos de una habitación específica.
  *         
- *         **Roles permitidos:** ADMIN_ROLE
+ *         *Roles permitidos:* ADMIN_ROLE
  *         
- *         **Recomendaciones para optimizar el uso de la API:**
+ *         *Recomendaciones para optimizar el uso de la API:*
  *         - Valide los datos de entrada antes de enviarlos.
  *         - Actualice solo los campos necesarios para optimizar el rendimiento.
  *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
@@ -190,9 +190,9 @@ router.put('/updateRoom/:roomId', RoomAdminValidator, updateRoom);
  *     description: |
  *         Permite obtener información detallada de una habitación específica.
  *         
- *         **Roles permitidos:** Público (sin autenticación)
+ *         *Roles permitidos:* Público (sin autenticación)
  *         
- *         **Recomendaciones para optimizar el uso de la API:**
+ *         *Recomendaciones para optimizar el uso de la API:*
  *         - Valide que el identificador de la habitación sea correcto.
  *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
  *     responses:
@@ -206,4 +206,3 @@ router.put('/updateRoom/:roomId', RoomAdminValidator, updateRoom);
 router.get('/getRoom/', getRoom)
 
 export default router
-

@@ -26,28 +26,13 @@ export const getRoom = async (req, res) =>{
 
 export const AllRoomsByHotel = async (req, res) => {
   try {
-    const { idHotel, hotelName } = req.body;
-    let hotel;
+    const  {idHotel}  = req.params;
 
-    if (idHotel) {
-      hotel = await Hotel.findOne({ _id: idHotel, status: true });
-    } else if (hotelName) {
-      hotel = await Hotel.findOne({ name: { $regex: hotelName, $options: 'i' }, status: true });
-    } else {
-      return res.status(400).json({ message: 'Se requiere identificación del hotel o nombre del hotel' });
-    }
+    const rooms = await Room.find({ hotel: idHotel });
 
-    if (!hotel) {
-      return res.status(404).json({ message: 'Hotel no encontrado' });
-    }
-
-    const rooms = await Room.find({ hotel: hotel._id });
-
-    if (rooms.length === 0) {
-      return res.status(404).json({ message: 'No se encontraron habitaciones en este hotel.' });
-    }
-
-    return res.status(200).json(rooms);
+    return res.status(200).json({
+      rooms
+    });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: 'Error al buscar habitaciones del hotel', error: error.message });
