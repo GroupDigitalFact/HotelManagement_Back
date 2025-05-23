@@ -3,7 +3,8 @@ import { AllRoomsByHotel,
         registerRoom, 
         deleteRoom,
         updateRoom,
-        getRoom
+        getRoom,
+        getAvailableRooms
         } from "./room.controller.js";
 import { searchRoomValidator,registerValidator, RoomAdminValidator,updateRoomValidator } from "../middlewares/room-validators.js";
 
@@ -93,7 +94,7 @@ router.get("/hotel/:idHotel", AllRoomsByHotel);
  *       '500':
  *         description: Error interno del servidor.
  */
-router.post('/registerRoom', uploadRoomPicture.single("roomPicture"),  RoomAdminValidator, registerRoom);
+router.post('/registerRoom', uploadRoomPicture.single("roomPicture"),  registerValidator, registerRoom);
 
 /**
  * @swagger
@@ -126,7 +127,7 @@ router.post('/registerRoom', uploadRoomPicture.single("roomPicture"),  RoomAdmin
  *       '500':
  *         description: Error interno del servidor.
  */
-router.delete('/deleteRoom/:roomId', RoomAdminValidator, deleteRoom);
+router.delete('/deleteRoom/:roomId', deleteRoom);
 
 /**
  * @swagger
@@ -178,7 +179,7 @@ router.delete('/deleteRoom/:roomId', RoomAdminValidator, deleteRoom);
  *       '500':
  *         description: Error interno del servidor.
  */
-router.put('/updateRoom/:roomId', RoomAdminValidator, updateRoom);
+router.put('/updateRoom/:roomId', updateRoomValidator, updateRoom);
 
 /**
  * @swagger
@@ -204,5 +205,7 @@ router.put('/updateRoom/:roomId', RoomAdminValidator, updateRoom);
  *         description: Error interno del servidor.
  */
 router.get('/getRoom/', getRoom)
+
+router.get('/getAvailableRooms', getAvailableRooms);
 
 export default router

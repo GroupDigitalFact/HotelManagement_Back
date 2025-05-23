@@ -179,5 +179,26 @@ export const updateRoom = async (req, res) => {
   }
 };
 
+export const getAvailableRooms = async (req, res) => {
+  try {
+    const availableRooms = await Room.find({ status: 'DISPONIBLE' })
+
+    if (!availableRooms || availableRooms.length === 0) {
+      return res.status(404).json({
+        message: "No hay habitaciones disponibles en este momento."
+      });
+    }
+
+    return res.status(200).json({
+      message: "Habitaciones disponibles encontradas",
+      rooms: availableRooms
+    });
+  } catch (err) {
+    return res.status(500).json({
+      message: "Error al obtener las habitaciones disponibles",
+      error: err.message
+    });
+  }
+};
 
 
