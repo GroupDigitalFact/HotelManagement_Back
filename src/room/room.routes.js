@@ -43,7 +43,7 @@ const router = Router();
  *       '500':
  *         description: Error interno del servidor.
  */
-router.get("/hotel/:idHotel", searchRoomValidator, AllRoomsByHotel);
+router.get("/hotel/:idHotel", AllRoomsByHotel);
 
 /**
  * @swagger

@@ -5,15 +5,15 @@ const habitacionSchema = Schema({
         type: String,
         required: true,
         enum: [
-        'individual',
-        'doble',
-        'twin',
-        'triple',
-        'familiar',
-        'suite',
-        'junior suite',
-        'deluxe',
-        'presidencial'
+        'Individual',
+        'Doble',
+        'Twin',
+        'Triple',
+        'Familiar',
+        'Suite',
+        'Junior suite',
+        'Deluxe',
+        'Presidencial'
         ],
         default: 'simple'
     },
