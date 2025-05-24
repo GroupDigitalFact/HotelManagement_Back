@@ -18,6 +18,8 @@ import invoiceRoutes from "../src/invoice/invoice.routes.js"
 import extraServiceRoutes from "../src/serviceExtra/extraService.routes.js"
 import serviceRoutes from "../src/service/service.routes.js"
 import eventRoutes from "../src/event/event.routes.js"
+import invoiceseventsRoutes from "../src/invoicesevents/invoicesevents.routes.js"
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -68,6 +70,7 @@ const routes = (app) => {
     app.use("/hotelManagement/v1/extraServices", extraServiceRoutes);
     app.use("/hotelManagement/v1/services", serviceRoutes);
     app.use("/hotelManagement/v1/event", eventRoutes);
+    app.use("/hotelManagement/v1/invoiceEvents", invoiceseventsRoutes);
 }
 
 

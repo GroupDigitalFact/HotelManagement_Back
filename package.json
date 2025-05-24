@@ -33,6 +33,7 @@
     "helmet": "^8.1.0",
     "hoteleria_api": "file:",
     "hotelmanagement_back": "file:",
+    "install": "^0.13.0",
     "jsonwebtoken": "^9.0.2",
     "moment": "^2.30.1",
     "mongoose": "^8.14.1",
