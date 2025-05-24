@@ -1,5 +1,4 @@
 import { Router } from "express";
-
 import { uploadProfilePicture } from "../middlewares/multer-uploads.js";
 import { deleteUserAdminValidator, deleteUserValidator, getUserAdminValidator, getUserEditValidator, getUserValidator, updatePasswordValidator, updateUserAdminValidator, updateUserValidator } from "../middlewares/user-validators.js";
 import { deleteProfilePicture, deleteUser, deleteUserAdmin, editProfile, editUserAdmin, getUserAdminHotel, getUserClient, getUserHotel, getUsers, updatePassword, updateProfilePicture } from "./user.controller.js";
