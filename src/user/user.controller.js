@@ -296,7 +296,8 @@ export const editProfile = async (req, res) => {
 
 export const editUserAdmin = async (req, res) => {
     try {
-        const { uid, username, ...updates } = req.body;
+        const { uid } = req.params;
+        const { username, ...updates } = req.body;
         if (!uid && !username) {
             return res.status(400).json({
                 success: false,
@@ -460,7 +461,6 @@ export const getUsersAll = async (req, res) => {
     try {
         const role = req.usuario.role;
         let users = {}
-
         if(role === 'ADMIN_ROLE'){
             users = await User.find({ status: true });
         }else{

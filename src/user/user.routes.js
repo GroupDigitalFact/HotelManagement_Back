@@ -1,7 +1,8 @@
 import { Router } from "express";
+
 import { uploadProfilePicture } from "../middlewares/multer-uploads.js";
 import { deleteUserAdminValidator, deleteUserValidator, getUserAdminValidator, getUserEditValidator, getUserValidator, updatePasswordValidator, updateUserAdminValidator, updateUserValidator } from "../middlewares/user-validators.js";
-import { deleteProfilePicture, deleteUser, deleteUserAdmin, editProfile, editUserAdmin, getUserAdminHotel, getUserClient, getUserHotel, getUsers, getUsersAll, updatePassword, updateProfilePicture, } from "./user.controller.js";
+import { deleteProfilePicture, deleteUser, deleteUserAdmin, editProfile, editUserAdmin, getUserAdminHotel, getUserClient, getUserHotel, getUsers, updatePassword, updateProfilePicture } from "./user.controller.js";
 
 
 const router = Router();
@@ -281,8 +282,7 @@ router.put("/editProfile", updateUserValidator, editProfile)
  *               message: "Error al actualizar el usuario"
  *               error: "Descripción del error"
  */
-router.put("/editUsers", updateUserAdminValidator, editUserAdmin)
-
+router.put("/editUsers/:uid", updateUserAdminValidator, editUserAdmin)
 /**
  * @swagger
  * /user/updateProfilePicture:
@@ -635,42 +635,6 @@ router.get("/getUserHotel/", getUserHotel);
  */
 router.delete("/deleteProfilePicture", getUserEditValidator, deleteProfilePicture)
 
-/**
- * @swagger
- * /user/getUsersAll:
- *   get:
- *     tags:
- *       - User
- *     summary: Obtener todos los usuarios (Administrador)
- *     description: |
- *         Permite a un administrador obtener la lista completa de todos los usuarios registrados.
- *         
- *         **Roles permitidos:** ADMIN_ROLE
- *         
- *         **Recomendaciones:**
- *         - Utilice filtros y paginación para optimizar el rendimiento en consultas grandes.
- *     responses:
- *       '200':
- *         description: Lista de todos los usuarios obtenida exitosamente.
- *         content:
- *           application/json:
- *             example:
- *               success: true
- *               total: 5
- *               users: [
- *                 { name: "Juan", username: "juan123", email: "juan@email.com" }
- *               ]
- *       '500':
- *         description: Error interno del servidor.
- *         content:
- *           application/json:
- *             example:
- *               success: false
- *               message: "Error al obtener los usuarios"
- *               error: "Descripción del error"
- */
-
-router.get("/getUsersAll", getUserAdminValidator, getUsersAll);
 
 export default router;
 

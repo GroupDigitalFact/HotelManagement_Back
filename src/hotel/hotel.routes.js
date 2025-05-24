@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { delteHotelValidator, estadisticasHotelAdminValidator, estadisticasHotelValidator, registerHotelValidator, searchHotelManagerValidator, searchHotelValidator, updateHotelValidator } from "../middlewares/hotel-validators.js";
+import { delteHotelValidator, estadisticasHotelValidator, registerHotelValidator, searchHotelManagerValidator, searchHotelValidator, updateHotelValidator } from "../middlewares/hotel-validators.js";
 import { uploadHotelPicture } from "../middlewares/multer-uploads.js";
 import { deleteHotel, getHotels, obtenerEstadisticasHotel, obtenerEstadisticasPorHotelId, registerHotel, searchHotel, searchHotelsAdmin, updateHotel } from "./hotel.controller.js";
 
@@ -416,7 +416,7 @@ router.get('/estadisticasManager', estadisticasHotelValidator, obtenerEstadistic
  *               message: "Error interno del servidor"
  *               error: "Descripción del error"
  */
-router.get('/estadisticasHotel/:id', estadisticasHotelAdminValidator, obtenerEstadisticasPorHotelId);
+router.get('/estadisticasHotel/:id', estadisticasHotelValidator, obtenerEstadisticasPorHotelId);
 
 /**
  * @swagger

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { reserveRoom, cancelReservation, MyReservations, ReservationAdmin,UserReservationsAdminHotel, listarReservation, cancelReservationAdmin, createReservationRoom, editReservation, listarHotelesSugerence, listarReservaionManager, listarHotelManagger} from "./reservation.controller.js";
+import { reserveRoom, cancelReservation, MyReservations, ReservationAdmin,UserReservationsAdminHotel, listarReservation, cancelReservationAdmin, createReservationRoom, editReservation, listarHotelesSugerence, listarReservaionManager, listarHotelManagger, TodayReservationsByHotelAdmin} from "./reservation.controller.js";
 import { reservationValidator, cancelReservationValidator, UserReservationValidator, ManagerReservationValidator, AdminReservationValidator, listReservationValidator, ReservationValidator } from "../middlewares/reservation-validators.js";
 
 const router = Router();
@@ -706,6 +706,8 @@ router.get('/user-reservations/:identifier', AdminReservationValidator, Reservat
  *         description: Error interno del servidor.
  */
 router.get('/admin/hotel-reservations/:identifier', ManagerReservationValidator, UserReservationsAdminHotel);
+
+router.get('/todayReservation', ReservationValidator, TodayReservationsByHotelAdmin);
 
 
 export default router

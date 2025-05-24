@@ -441,19 +441,25 @@ export const reserveRoom = async (req, res) => {
     try {
       const token = req.header("Authorization");
       if (!token) return res.status(401).json({ message: "Token no proporcionado" });
-  
+
       const { uid } = jwt.verify(token.replace("Bearer ", ""), process.env.SECRETORPRIVATEKEY);
-  
+
       const reservations = await Reservation.find({ user: uid })
         .populate("extraServices", "name _id")
-        .populate("room", "numeroCuarto hotel");
-  
+        .populate({
+          path: "room",
+          select: "numeroCuarto hotel",
+          populate: {
+            path: "hotel",
+            select: "name _id"
+          }
+        });
+
       res.json({ reservations });
     } catch (err) {
       res.status(500).json({ message: "Error al obtener las reservaciones", error: err.message });
     }
   };
-  
 
 export const ReservationAdmin = async (req, res) => {
   try {
@@ -512,6 +518,38 @@ export const UserReservationsAdminHotel = async (req, res) => {
     res.json({ reservations: filteredReservations });
   } catch (err) {
     res.status(500).json({ message: "Error al obtener reservaciones", error: err.message });
+  }
+};
+
+export const TodayReservationsByHotelAdmin = async (req, res) => {
+  try {
+    const token = req.header("Authorization");
+    if (!token) return res.status(401).json({ message: "Token no proporcionado" });
+
+    const { uid } = jwt.verify(token.replace("Bearer ", ""), process.env.SECRETORPRIVATEKEY);
+
+    const hotel = await Hotel.findOne({ admin: uid }).select("_id");
+    if (!hotel) return res.status(404).json({ message: "Hotel no encontrado para este administrador" });
+    const now = new Date();
+    const startOfDay = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 0, 0, 0));
+    const endOfDay = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 23, 59, 59, 999));
+
+    const reservations = await Reservation.find({
+      dateEntry: { $gte: startOfDay, $lte: endOfDay }
+    })
+      .populate({
+        path: "room",
+        match: { hotel: hotel._id },
+        select: "numeroCuarto hotel"
+      })
+      .populate("user", "username email") 
+      .populate("extraServices", "name _id");
+
+    const filteredReservations = reservations.filter(r => r.room !== null);
+
+    res.json({ reservations: filteredReservations });
+  } catch (err) {
+    res.status(500).json({ message: "Error al obtener reservaciones del día", error: err.message });
   }
 };
 
