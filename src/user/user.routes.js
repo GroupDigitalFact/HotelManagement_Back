@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { deleteUser, deleteUserAdmin, editProfile, editUserAdmin, getUserAdminHotel, updateProfilePicture, updatePassword, getUsers, getUserClient, getUserHotel, deleteProfilePicture } from "./user.controller.js";
+import { deleteUser, deleteUserAdmin, editProfile, editUserAdmin, getUserAdminHotel, updateProfilePicture, updatePassword, getUsers, getUserClient, getUserHotel, deleteProfilePicture ,getUsersAll} from "./user.controller.js";
 import { deleteUserValidator, deleteUserAdminValidator, updateUserValidator, updateUserAdminValidator, getUserEditValidator, updatePasswordValidator, getUserAdminValidator, getUserValidator} from "../middlewares/user-validators.js";
 import { uploadProfilePicture } from "../middlewares/multer-uploads.js";
 
@@ -159,8 +159,7 @@ router.put("/editProfile", updateUserValidator,editProfile)
  *       '500':
  *         description: Error interno del servidor.
  */
-router.put("/editUsers", updateUserAdminValidator, editUserAdmin)
-
+router.put("/editUsers/:uid", updateUserAdminValidator, editUserAdmin)
 /**
  * @swagger
  * /user/updateProfilePicture:
@@ -347,6 +346,7 @@ router.get("/getUserHotel/", getUserHotel);
 
 router.delete("/deleteProfilePicture", getUserEditValidator, deleteProfilePicture,)
 
+router.get("/getUsersAll", getUserAdminValidator, getUsersAll);
 
 export default router;
 

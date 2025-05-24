@@ -82,7 +82,7 @@ export const updatePasswordValidator = [
 
 export const getUserAdminValidator = [
     validateJWT, 
-    hasRoles("ADMIN_ROLE"),
+    hasRoles("ADMIN_ROLE", "HOTEL_ADMIN_ROLE"),
     validarCampos,
     handleErrors
 ];

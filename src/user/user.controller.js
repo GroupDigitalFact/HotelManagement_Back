@@ -297,7 +297,8 @@ export const editProfile = async (req, res) => {
 
 export const editUserAdmin = async (req, res) => {
     try {
-        const { uid, username, ...updates } = req.body;
+        const { uid } = req.params;
+        const { username, ...updates } = req.body;
         if (!uid && !username) {
             return res.status(400).json({
                 success: false,
@@ -457,4 +458,27 @@ export const deleteUser = async (req, res) => {
 };
 
 
+export const getUsersAll = async (req, res) => {
+    try {
+        const role = req.usuario.role;
+        let users = {}
+
+        if(role === 'ADMIN_ROLE'){
+            users = await User.find({ status: true });
+        }else{
+            users = await User.find({ status: true, role: 'USER_ROLE' });
+        }
+
+        return res.status(200).json({
+            success: true,
+            users
+        });
+    } catch (err) {
+        return res.status(500).json({
+            success: false,
+            message: "Error al obtener los usuarios",
+            error: err.message
+        });
+    }
+};
 
