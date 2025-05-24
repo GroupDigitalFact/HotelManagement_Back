@@ -1,6 +1,6 @@
-import { Router } from "express"
-import { createExtraService, updateExtraService, deleteExtraService,  listServiceExtra } from "./extraServices.controller.js"
-import { createExtraServiceValidator, updateExtraServiceValidator, deleteExtraServiceValidator } from "../middlewares/extraService-validators.js"
+import { Router } from "express";
+import { createExtraServiceValidator, deleteExtraServiceValidator, updateExtraServiceValidator } from "../middlewares/extraService-validators.js";
+import { createExtraService, deleteExtraService, listServiceExtra, updateExtraService } from "./extraServices.controller.js";
 
 const router = Router()
 

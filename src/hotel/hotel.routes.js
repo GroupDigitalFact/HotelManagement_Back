@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { searchHotel, deleteHotel, searchHotelsAdmin, updateHotel, registerHotel,  obtenerEstadisticasHotel, obtenerEstadisticasPorHotelId, getHotels } from "./hotel.controller.js";
-import { searchHotelValidator, registerHotelValidator, updateHotelValidator, searchHotelManagerValidator, delteHotelValidator, estadisticasHotelValidator, estadisticasHotelAdminValidator } from "../middlewares/hotel-validators.js";
+import { delteHotelValidator, estadisticasHotelAdminValidator, estadisticasHotelValidator, registerHotelValidator, searchHotelManagerValidator, searchHotelValidator, updateHotelValidator } from "../middlewares/hotel-validators.js";
 import { uploadHotelPicture } from "../middlewares/multer-uploads.js";
+import { deleteHotel, getHotels, obtenerEstadisticasHotel, obtenerEstadisticasPorHotelId, registerHotel, searchHotel, searchHotelsAdmin, updateHotel } from "./hotel.controller.js";
 
 const router = Router();
 
@@ -11,67 +11,109 @@ const router = Router();
  *   get:
  *     tags:
  *       - Hotel
- *     summary: Buscar hoteles
+ *     summary: Buscar hoteles por criterios
  *     description: |
- *         Permite buscar hoteles según criterios como nombre, dirección, calificación o categoría.  
- *         **Roles permitidos:** Público (sin autenticación)
+ *         Permite buscar hoteles por nombre, dirección, calificación o categoría.
  *         
- *         **Recomendaciones para optimizar el uso de la API:**
- *         - Valide los datos de entrada antes de enviarlos.
- *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
- *         - Utilice filtros adecuados para evitar consultas innecesariamente grandes.
- *         - Implemente paginación si espera grandes volúmenes de resultados.
- *     parameters:
- *       - in: query
- *         name: name
- *         schema:
- *           type: string
- *         description: Nombre del hotel.
- *       - in: query
- *         name: address
- *         schema:
- *           type: string
- *         description: Dirección del hotel.
- *       - in: query
- *         name: qualification
- *         schema:
- *           type: string
- *         description: Calificación del hotel.
- *       - in: query
- *         name: category
- *         schema:
- *           type: string
- *         description: Categoría del hotel.
+ *         **Roles permitidos:** Público (no requiere autenticación)
+ *         
+ *         **Recomendaciones:**
+ *         - Puede enviar uno o varios parámetros de búsqueda en el body.
+ *         - Si no se envía ningún parámetro, se listarán todos los hoteles.
+ *     requestBody:
+ *       required: false
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 description: Nombre del hotel.
+ *               address:
+ *                 type: string
+ *                 description: Dirección del hotel.
+ *               qualification:
+ *                 type: string
+ *                 description: Calificación (1 estrella, 2 estrellas, etc).
+ *               category:
+ *                 type: string
+ *                 description: Categoría (Económico, Estandar, Boutique, Lujoso).
+ *           example:
+ *             name: "Central"
+ *             category: "Estandar"
  *     responses:
  *       200:
  *         description: Lista de hoteles encontrados.
+ *         content:
+ *           application/json:
+ *             example:
+ *               - name: "Hotel Central"
+ *                 address: "Av. Principal 123"
+ *                 qualification: "3 estrellas"
+ *                 category: "Estandar"
+ *                 amenities: ["WiFi", "Piscina"]
  *       404:
  *         description: No se encontraron hoteles con los criterios indicados.
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: "No se encontraron hoteles con los criterios indicados"
  *       500:
- *         description: Error interno del servidor.
+ *         description: Error al buscar hoteles.
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: "Error al buscar hoteles"
  */
-
 router.get("/searchHotel",  searchHotelValidator, searchHotel);
+
 /**
  * @swagger
  * /hotel/searchHotelsAdmin:
  *   get:
  *     tags:
  *       - Hotel
- *     summary: Buscar hoteles para administradores
+ *     summary: Buscar hoteles administrados por el usuario autenticado
  *     description: |
- *         Permite a los administradores visualizar los hoteles en los cuales estos son encargados, buscando a partir del id del usuario del token.  
+ *         Devuelve los hoteles administrados por el usuario autenticado.
+ *         
  *         **Roles permitidos:** ADMIN_ROLE, HOTEL_ADMIN_ROLE
  *         
- *         **Recomendaciones para optimizar el uso de la API:**
- *         - Valide el token de autenticación antes de realizar la consulta.
- *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
- *         - Implemente paginación si espera grandes volúmenes de resultados.
+ *         **Recomendaciones:**
+ *         - Debe enviar el token de autenticación en el header Authorization.
  *     responses:
  *       200:
- *         description: Lista de hoteles obtenida exitosamente.
+ *         description: Lista de hoteles administrados por el usuario.
+ *         content:
+ *           application/json:
+ *             example:
+ *               hoteles: [
+ *                 {
+ *                   name: "Hotel Central",
+ *                   address: "Av. Principal 123",
+ *                   qualification: "3 estrellas",
+ *                   category: "Estandar"
+ *                 }
+ *               ]
+ *       401:
+ *         description: Token no proporcionado.
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: "Token no proporcionado"
+ *       404:
+ *         description: No se encontraron hoteles administrados por este usuario.
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: "No se encontraron hoteles administrados por este usuario"
  *       500:
- *         description: Error interno del servidor.
+ *         description: Error al obtener los hoteles.
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: "Error al obtener los hoteles"
  */
 router.get("/searchHotelsAdmin", searchHotelManagerValidator, searchHotelsAdmin);
 
@@ -83,31 +125,77 @@ router.get("/searchHotelsAdmin", searchHotelManagerValidator, searchHotelsAdmin)
  *       - Hotel
  *     summary: Registrar un nuevo hotel
  *     description: |
- *         Permite registrar un nuevo hotel en el sistema.  
+ *         Permite registrar un nuevo hotel en el sistema.
+ *         
  *         **Roles permitidos:** ADMIN_ROLE
  *         
- *         **Recomendaciones para optimizar el uso de la API:**
- *         - Valide todos los campos requeridos antes de enviar la solicitud.
- *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
- *         - En caso de error de validación, revise los mensajes detallados en la respuesta.
+ *         **Recomendaciones:**
+ *         - Envíe todos los campos requeridos y una imagen (campo hotelPicture) si desea agregar una foto.
+ *         - El campo amenities debe ser un array de strings.
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             required: [name, address, qualification, category, amenities, quantitySalons, priceBaseEvent, admin]
+ *             properties:
+ *               name:
+ *                 type: string
+ *               address:
+ *                 type: string
+ *               qualification:
+ *                 type: string
+ *                 enum: ['1 estrella', '2 estrellas', '3 estrellas', '4 estrellas', '5 estrellas']
+ *               category:
+ *                 type: string
+ *                 enum: ['Económico', 'Estandar', 'Boutique', 'Lujoso']
+ *               amenities:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *               quantitySalons:
+ *                 type: number
+ *               priceBaseEvent:
+ *                 type: number
+ *               admin:
+ *                 type: string
+ *               hotelPicture:
+ *                 type: string
+ *                 format: binary
  *           example:
  *             name: "Hotel Central"
- *             address: "Centro, Ciudad"
- *             qualification: "5"
- *             category: "Lujo"
- *             amenities: ["Piscina", "WiFi", "Gimnasio"]
- *             admin: "663b1c2f4b2e2a0012a3b456"
+ *             address: "Av. Principal 123"
+ *             qualification: "3 estrellas"
+ *             category: "Estandar"
+ *             amenities: ["WiFi", "Piscina"]
+ *             quantitySalons: 3
+ *             priceBaseEvent: 500
+ *             admin: "6650e1f2c8b4b2a1d4e8a789"
  *     responses:
  *       201:
- *         description: Hotel registrado exitosamente.
- *       400:
- *         description: Faltan datos obligatorios.
+ *         description: Hotel registrado correctamente.
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: "Hotel registrado correctamente"
+ *               hotel:
+ *                 name: "Hotel Central"
+ *                 address: "Av. Principal 123"
+ *                 qualification: "3 estrellas"
+ *                 category: "Estandar"
+ *                 amenities: ["WiFi", "Piscina"]
+ *                 quantitySalons: 3
+ *                 priceBaseEvent: 500
+ *                 admin: "6650e1f2c8b4b2a1d4e8a789"
+ *                 hotelPicture: "hotel.jpg"
  *       500:
- *         description: Error interno del servidor.
+ *         description: Error al registrar el hotel.
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: "Error al registrar el hotel"
+ *               error: "Descripción del error"
  */
 router.post("/registerHotel", uploadHotelPicture.single('hotelPicture'), registerHotelValidator, registerHotel);
 
@@ -117,39 +205,71 @@ router.post("/registerHotel", uploadHotelPicture.single('hotelPicture'), registe
  *   put:
  *     tags:
  *       - Hotel
- *     summary: Actualizar un hotel
+ *     summary: Actualizar información de un hotel
  *     description: |
- *         Permite actualizar los datos de un hotel existente.  
+ *         Permite actualizar los datos de un hotel existente.
+ *         
  *         **Roles permitidos:** ADMIN_ROLE, HOTEL_ADMIN_ROLE
  *         
- *         **Recomendaciones para optimizar el uso de la API:**
- *         - Valide los datos de entrada antes de enviarlos.
- *         - Actualice solo los campos necesarios para optimizar el rendimiento.
- *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
+ *         **Recomendaciones:**
+ *         - Envíe solo los campos que desea actualizar.
+ *         - El id debe ser válido y corresponder a un hotel existente.
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
  *         schema:
  *           type: string
- *         description: Identificador único del hotel.
+ *         description: ID del hotel a actualizar.
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               address:
+ *                 type: string
+ *               qualification:
+ *                 type: string
+ *               category:
+ *                 type: string
+ *               amenities:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *               quantitySalons:
+ *                 type: number
+ *               priceBaseEvent:
+ *                 type: number
  *           example:
  *             name: "Hotel Central Actualizado"
- *             address: "Zona 2, Ciudad"
- *             qualification: "4"
- *             category: "Negocios"
- *             amenities: ["WiFi", "Restaurante"]
+ *             address: "Nueva dirección 456"
  *     responses:
  *       200:
- *         description: Hotel actualizado exitosamente.
+ *         description: Hotel actualizado correctamente.
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: "Hotel actualizado correctamente"
+ *               hotel:
+ *                 name: "Hotel Central Actualizado"
+ *                 address: "Nueva dirección 456"
  *       404:
  *         description: Hotel no encontrado.
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: "Hotel no encontrado"
  *       500:
  *         description: Error interno del servidor.
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: "Error interno del servidor"
+ *               error: "Descripción del error"
  */
 router.put("/updateHotel/:id", updateHotelValidator, updateHotel);
 
@@ -161,29 +281,41 @@ router.put("/updateHotel/:id", updateHotelValidator, updateHotel);
  *       - Hotel
  *     summary: Eliminar un hotel
  *     description: |
- *         Permite eliminar un hotel y todas sus habitaciones y reservas asociadas.  
+ *         Permite eliminar un hotel, sus habitaciones y cancelar sus reservas.
+ *         
  *         **Roles permitidos:** ADMIN_ROLE, HOTEL_ADMIN_ROLE
  *         
- *         **Recomendaciones para optimizar el uso de la API:**
- *         - Verifique que el identificador enviado sea correcto.
- *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
- *         - Evite realizar múltiples eliminaciones innecesarias para optimizar el rendimiento.
+ *         **Recomendaciones:**
+ *         - El id debe ser válido y corresponder a un hotel existente.
+ *         - Esta acción elimina habitaciones y cancela reservas asociadas.
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
  *         schema:
  *           type: string
- *         description: Identificador único del hotel.
+ *         description: ID del hotel a eliminar.
  *     responses:
  *       200:
- *         description: Hotel eliminado exitosamente.
+ *         description: Hotel eliminado junto con sus habitaciones y reservas canceladas.
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: "Hotel eliminado junto con sus habitaciones y reservas canceladas"
  *       404:
  *         description: Hotel no encontrado.
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: "Hotel no encontrado"
  *       500:
- *         description: Error interno del servidor.
+ *         description: Error al eliminar el hotel.
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: "Error al eliminar el hotel"
+ *               error: "Descripción del error"
  */
-
 router.delete("/deleteHotel/:id", delteHotelValidator, deleteHotel);
 
 /**
@@ -192,23 +324,46 @@ router.delete("/deleteHotel/:id", delteHotelValidator, deleteHotel);
  *   get:
  *     tags:
  *       - Hotel
- *     summary: Obtener estadísticas generales de hoteles del manager
+ *     summary: Obtener estadísticas de hoteles administrados
  *     description: |
- *         Permite a los administradores obtener estadísticas generales de los hoteles.  
+ *         Devuelve estadísticas de todos los hoteles administrados por el usuario autenticado.
+ *         
  *         **Roles permitidos:** ADMIN_ROLE, HOTEL_ADMIN_ROLE
  *         
- *         **Recomendaciones para optimizar el uso de la API:**
- *         - Utilice filtros o paginación si espera una gran cantidad de hoteles.
- *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
- *         - Solicite solo los datos necesarios para optimizar el rendimiento.
+ *         **Recomendaciones:**
+ *         - Debe enviar el token de autenticación en el header Authorization.
  *     responses:
  *       200:
- *         description: Estadísticas obtenidas exitosamente.
+ *         description: Estadísticas obtenidas correctamente.
+ *         content:
+ *           application/json:
+ *             example:
+ *               estadisticas: [
+ *                 {
+ *                   hotelId: "6650e1f2c8b4b2a1d4e8a456",
+ *                   hotelNombre: "Hotel Central",
+ *                   totalHabitaciones: 10,
+ *                   habitacionesOcupadas: 5,
+ *                   totalReservas: 20,
+ *                   ingresosMensuales: [1000, 1200, 900, ...],
+ *                   serviciosMasUsados: [{ name: "WiFi", count: 15 }]
+ *                 }
+ *               ]
+ *       401:
+ *         description: Token no proporcionado.
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: "Token no proporcionado"
  *       500:
  *         description: Error interno del servidor.
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: "Error interno del servidor"
+ *               error: "Descripción del error"
  */
 router.get('/estadisticasManager', estadisticasHotelValidator, obtenerEstadisticasHotel);
-
 
 /**
  * @swagger
@@ -216,29 +371,50 @@ router.get('/estadisticasManager', estadisticasHotelValidator, obtenerEstadistic
  *   get:
  *     tags:
  *       - Hotel
- *     summary: Obtener estadísticas de un hotel específico
+ *     summary: Obtener estadísticas de un hotel por ID
  *     description: |
- *         Permite obtener estadísticas detalladas de un hotel específico.  
+ *         Devuelve estadísticas detalladas de un hotel específico.
+ *         
  *         **Roles permitidos:** ADMIN_ROLE
  *         
- *         **Recomendaciones para optimizar el uso de la API:**
- *         - Valide que el identificador del hotel sea correcto.
- *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
- *         - Solicite solo los datos necesarios para optimizar el rendimiento.
+ *         **Recomendaciones:**
+ *         - El id debe ser válido y corresponder a un hotel existente.
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
  *         schema:
  *           type: string
- *         description: Identificador único del hotel.
+ *         description: ID del hotel.
  *     responses:
  *       200:
- *         description: Estadísticas obtenidas exitosamente.
+ *         description: Estadísticas del hotel obtenidas correctamente.
+ *         content:
+ *           application/json:
+ *             example:
+ *               estadisticas:
+ *                 hotelId: "6650e1f2c8b4b2a1d4e8a456"
+ *                 hotelNombre: "Hotel Central"
+ *                 encargadoNombre: "Juan Pérez"
+ *                 encargadoEmail: "juan@email.com"
+ *                 totalHabitaciones: 10
+ *                 habitacionesOcupadas: 5
+ *                 totalReservas: 20
+ *                 ingresosMensuales: [1000, 1200, 900, ...]
+ *                 serviciosMasUsados: [{ name: "WiFi", count: 15 }]
  *       404:
  *         description: Hotel no encontrado.
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: "Hotel no encontrado"
  *       500:
  *         description: Error interno del servidor.
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: "Error interno del servidor"
+ *               error: "Descripción del error"
  */
 router.get('/estadisticasHotel/:id', estadisticasHotelAdminValidator, obtenerEstadisticasPorHotelId);
 
@@ -248,21 +424,36 @@ router.get('/estadisticasHotel/:id', estadisticasHotelAdminValidator, obtenerEst
  *   get:
  *     tags:
  *       - Hotel
- *     summary: Obtener lista de todos los hoteles
+ *     summary: Listar todos los hoteles activos
  *     description: |
- *         Permite obtener la lista completa de hoteles registrados en el sistema.
+ *         Devuelve la lista de todos los hoteles activos.
  *         
- *         **Roles permitidos:** ADMIN_ROLE, HOTEL_ADMIN_ROLE
+ *         **Roles permitidos:** Público (no requiere autenticación)
  *         
- *         **Recomendaciones para optimizar el uso de la API:**
- *         - Utilice filtros o paginación si espera una gran cantidad de hoteles.
- *         - Maneje los errores utilizando los códigos de estado y mensajes proporcionados por la API.
- *         - Solicite solo los datos necesarios para optimizar el rendimiento.
+ *         **Recomendaciones:**
+ *         - Puede usar este endpoint para mostrar hoteles en listados públicos.
  *     responses:
  *       200:
- *         description: Lista de hoteles obtenida exitosamente.
+ *         description: Lista de hoteles activos.
+ *         content:
+ *           application/json:
+ *             example:
+ *               hotels: [
+ *                 {
+ *                   name: "Hotel Central",
+ *                   address: "Av. Principal 123",
+ *                   qualification: "3 estrellas",
+ *                   category: "Estandar",
+ *                   amenities: ["WiFi", "Piscina"],
+ *                   status: true
+ *                 }
+ *               ]
  *       500:
- *         description: Error interno del servidor.
+ *         description: Error al obtener los hoteles.
+ *         content:
+ *           application/json:
+ *             example:
+ *               error: "Error to find it"
  */
 router.get("/getHotels", searchHotelValidator, getHotels);
 

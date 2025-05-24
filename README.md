@@ -1,14 +1,21 @@
+# Hoteleria Rooma - API (Backend)
 
-# Hotel_Management - API (Backend)
+Este proyecto corresponde al backend de **Hoteleria Rooma**, una plataforma centralizada para la gestión de hoteles, habitaciones, reservaciones y eventos.
 
-Este proyecto corresponde al backend de **Hotel_Management**, una plataforma centralizada para la gestión de hoteles, habitaciones, reservaciones y eventos.
+## 🔐 Credenciales por defecto (Administrador, Encargado de hotel y usuario)
 
-## 🔐 Credenciales por defecto (Administrador)
-
+Administrador
 - **Correo:** admin1@hotel.com  
 - **Contraseña:** Admin123**
 
-La contraseña del administrador es la misma para todos los usuarios que estan en la data para el testeo del proyecto.
+Encargado de hotel
+- **Correo:** claudia.morales@plazareforma.gt 
+- **Contraseña:** Admin123**
+
+Usuario
+- **Correo:** camila.gomez@example.com  
+- **Contraseña:** User123**
+
 
 ---
 
@@ -50,20 +57,11 @@ La contraseña del administrador es la misma para todos los usuarios que estan e
 
 ---
 
-## 📂 Carpeta Utils
-
-```
-En esa carpeta se encuentra la data de cada modelo de mongo para pruebas y la coleccion de endPoints
-
-```
-
----
-
 ## ⚙️ Instrucciones de instalación
 
 1. **Clonar el repositorio:**
    ```bash
-   git clone <url-del-repositorio>
+   git clone <https://github.com/GroupDigitalFact/HotelManagement_Back.git>
    ```
 
 2. **Abrir una terminal (cmd) en la carpeta donde se encuentra el proyecto.**
@@ -82,4 +80,4 @@ En esa carpeta se encuentra la data de cada modelo de mongo para pruebas y la co
 
 ## 📬 Contacto
 
-Este backend forma parte del proyecto **Hotel_Management**, desarrollado como solución integral para la administración hotelera moderna.
+Este backend forma parte del proyecto **Hoteleria Rooma**, desarrollado como solución integral para la administración hotelera moderna.

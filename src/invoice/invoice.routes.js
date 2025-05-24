@@ -1,6 +1,6 @@
 import { Router } from "express";
-import {generateInvoicePDF, generateInvoiceAdmin, ListInvoicesByHotelId, InvoicesByUserId, InvoicesForHotelAdmin, UserInvoicesForHotelAdmin} from "./invoice.controller.js";
-import { invoiceValidator, invoiceAdminsValidator, invoiceListHotelValidator, invoiceListUserValidator } from "../middlewares/invoice-validators.js";
+import { invoiceAdminsValidator, invoiceListHotelValidator, invoiceListUserValidator, invoiceValidator } from "../middlewares/invoice-validators.js";
+import { generateInvoiceAdmin, generateInvoicePDF, InvoicesByUserId, InvoicesForHotelAdmin, ListInvoicesByHotelId, UserInvoicesForHotelAdmin } from "./invoice.controller.js";
 
 const router = Router();
 
@@ -213,4 +213,3 @@ router.get('/usuarioHotelAdmin/:userUid', invoiceListUserValidator, UserInvoices
 
 
 export default router
-

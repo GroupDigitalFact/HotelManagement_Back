@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { register, login } from "./auth.controller.js";
-import { registerValidator, loginValidator } from "../middlewares/user-validators.js";
 import { uploadProfilePicture } from "../middlewares/multer-uploads.js";
+import { loginValidator, registerValidator } from "../middlewares/user-validators.js";
+import { login, register } from "./auth.controller.js";
 
 const router = Router();
 
