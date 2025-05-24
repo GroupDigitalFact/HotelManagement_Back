@@ -441,19 +441,25 @@ export const reserveRoom = async (req, res) => {
     try {
       const token = req.header("Authorization");
       if (!token) return res.status(401).json({ message: "Token no proporcionado" });
-  
+
       const { uid } = jwt.verify(token.replace("Bearer ", ""), process.env.SECRETORPRIVATEKEY);
-  
+
       const reservations = await Reservation.find({ user: uid })
         .populate("extraServices", "name _id")
-        .populate("room", "numeroCuarto hotel");
-  
+        .populate({
+          path: "room",
+          select: "numeroCuarto hotel",
+          populate: {
+            path: "hotel",
+            select: "name _id"
+          }
+        });
+
       res.json({ reservations });
     } catch (err) {
       res.status(500).json({ message: "Error al obtener las reservaciones", error: err.message });
     }
   };
-  
 
 export const ReservationAdmin = async (req, res) => {
   try {
